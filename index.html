@@ -1,0 +1,1877 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LMH Pre-Anaesthetic Clinic Reference</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* Light clinical theme (default) */
+    --bg: #f4f2ed;
+    --bg2: #ffffff;
+    --bg3: #efece4;
+    --bg-rail: #1c2433;
+    --border: rgba(28,36,51,0.10);
+    --border2: rgba(28,36,51,0.20);
+    --text: #1c2433;
+    --text2: #545d6e;
+    --text3: #8a91a0;
+    --accent: #1f5fbf;
+    --accent-soft: rgba(31,95,191,0.10);
+    --green: #1a7d4f;
+    --green-soft: rgba(26,125,79,0.12);
+    --amber: #b06d0a;
+    --amber-soft: rgba(176,109,10,0.12);
+    --red: #c0392b;
+    --red-soft: rgba(192,57,43,0.10);
+    --teal: #0d7d77;
+    --teal-soft: rgba(13,125,119,0.12);
+    --purple: #6b46c1;
+    --purple-soft: rgba(107,70,193,0.12);
+    --pink: #b83280;
+    --radius: 8px;
+    --radius-lg: 12px;
+    --sans: 'IBM Plex Sans', -apple-system, sans-serif;
+    --serif: 'IBM Plex Serif', Georgia, serif;
+    --mono: 'IBM Plex Mono', monospace;
+  }
+  html[data-theme="dark"] {
+    --bg: #11151c;
+    --bg2: #1a1f29;
+    --bg3: #232936;
+    --bg-rail: #0c0f15;
+    --border: rgba(255,255,255,0.09);
+    --border2: rgba(255,255,255,0.16);
+    --text: #e7ebf2;
+    --text2: #a3acbd;
+    --text3: #6e7689;
+    --accent: #5a9bf5;
+    --accent-soft: rgba(90,155,245,0.14);
+    --green: #41c98a;
+    --green-soft: rgba(65,201,138,0.14);
+    --amber: #e6a23c;
+    --amber-soft: rgba(230,162,60,0.14);
+    --red: #ec6a5e;
+    --red-soft: rgba(236,106,94,0.14);
+    --teal: #2cc4bc;
+    --teal-soft: rgba(44,196,188,0.14);
+    --purple: #a78bfa;
+    --purple-soft: rgba(167,139,250,0.14);
+    --pink: #f06fb0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    font-size: 14px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  .app { display: flex; height: 100vh; overflow: hidden; }
+
+  /* SIDEBAR */
+  .sidebar {
+    width: 236px;
+    flex-shrink: 0;
+    background: var(--bg-rail);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
+    color: #c8cedb;
+  }
+  .logo { padding: 18px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .logo-title { font-family: var(--serif); font-size: 16px; font-weight: 600; color: #fff; letter-spacing: 0.01em; }
+  .logo-sub { font-size: 11px; color: #8a91a0; margin-top: 3px; }
+  .logo-badge {
+    display: inline-block; margin-top: 8px;
+    background: rgba(90,155,245,0.18); color: #8db8f7;
+    font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 4px;
+    letter-spacing: 0.05em;
+  }
+  .nav-group { padding: 12px 0 2px; }
+  .nav-label {
+    font-size: 10px; font-weight: 600; color: #5d6679;
+    letter-spacing: 0.12em; text-transform: uppercase; padding: 0 18px; margin-bottom: 5px;
+  }
+  .nav-item {
+    display: flex; align-items: center; gap: 10px; padding: 7px 18px;
+    cursor: pointer; color: #b3baca; font-size: 13px; font-weight: 500;
+    border-left: 2px solid transparent; transition: all 0.12s; user-select: none;
+  }
+  .nav-item:hover { background: rgba(255,255,255,0.05); color: #fff; }
+  .nav-item.active { background: rgba(90,155,245,0.12); color: #fff; border-left-color: var(--accent); }
+  .nav-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .rail-foot { margin-top: auto; padding: 14px 18px; border-top: 1px solid rgba(255,255,255,0.08); }
+  .rail-foot-txt { font-size: 10px; color: #6e7689; line-height: 1.6; }
+
+  /* MAIN */
+  .main { flex: 1; overflow-y: auto; display: flex; flex-direction: column; }
+  .topbar {
+    position: sticky; top: 0; z-index: 20;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 28px; display: flex; align-items: center; gap: 14px;
+  }
+  .global-search {
+    flex: 1; display: flex; align-items: center; gap: 8px;
+    background: var(--bg2); border: 1px solid var(--border2); border-radius: var(--radius);
+    padding: 8px 12px; max-width: 460px;
+  }
+  .global-search input {
+    background: none; border: none; outline: none; color: var(--text);
+    font-size: 13px; flex: 1; font-family: inherit;
+  }
+  .global-search input::placeholder { color: var(--text3); }
+  .icon-btn {
+    width: 36px; height: 36px; border-radius: var(--radius);
+    border: 1px solid var(--border2); background: var(--bg2); color: var(--text2);
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    font-size: 16px; transition: all 0.12s;
+  }
+  .icon-btn:hover { background: var(--bg3); color: var(--text); }
+  .content { padding: 24px 28px 60px; }
+
+  /* SEARCH RESULTS */
+  .search-results { display: none; }
+  .search-results.active { display: block; }
+  .sr-item {
+    background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 12px 16px; margin-bottom: 8px; cursor: pointer; transition: all 0.12s;
+  }
+  .sr-item:hover { border-color: var(--accent); background: var(--accent-soft); }
+  .sr-page { font-size: 11px; color: var(--accent); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+  .sr-text { font-size: 13px; color: var(--text); margin-top: 3px; }
+
+  /* PAGE */
+  .page { display: none; }
+  .page.active { display: block; animation: fade 0.18s ease; }
+  @keyframes fade { from { opacity: 0; transform: translateY(4px);} to { opacity: 1; transform: none;} }
+  .page-title { font-family: var(--serif); font-size: 24px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
+  .page-sub { font-size: 13px; color: var(--text3); margin-bottom: 18px; }
+  .tag-strip { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 18px; }
+  .source-badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: var(--bg3); border: 1px solid var(--border2); color: var(--text2);
+    font-size: 11px; padding: 3px 9px; border-radius: 5px; font-weight: 500;
+  }
+
+  /* CARDS */
+  .card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 18px 20px; margin-bottom: 14px; }
+  .card-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 12px; display: flex; align-items: center; gap: 9px; }
+  .card-title-icon { width: 24px; height: 24px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0; font-weight: 700; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: start; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; align-items: start; }
+
+  /* TABLES */
+  .table-wrap { overflow-x: auto; border-radius: var(--radius); }
+  table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  th { background: var(--bg3); color: var(--text2); font-weight: 600; font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.06em; padding: 8px 11px; text-align: left; border-bottom: 1px solid var(--border2); }
+  td { padding: 9px 11px; border-bottom: 1px solid var(--border); color: var(--text); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tbody tr:hover td { background: var(--bg3); }
+
+  /* PILLS */
+  .pill { display: inline-block; padding: 2px 9px; border-radius: 20px; font-size: 11px; font-weight: 600; letter-spacing: 0.01em; white-space: nowrap; }
+  .pill-green { background: var(--green-soft); color: var(--green); }
+  .pill-red { background: var(--red-soft); color: var(--red); }
+  .pill-amber { background: var(--amber-soft); color: var(--amber); }
+  .pill-blue { background: var(--accent-soft); color: var(--accent); }
+  .pill-purple { background: var(--purple-soft); color: var(--purple); }
+  .pill-teal { background: var(--teal-soft); color: var(--teal); }
+  .pill-gray { background: var(--bg3); color: var(--text2); }
+
+  /* ALERTS */
+  .alert { border-radius: var(--radius); padding: 11px 14px; font-size: 13px; margin-bottom: 12px; border-left: 3px solid; }
+  .alert-red { background: var(--red-soft); border-color: var(--red); }
+  .alert-amber { background: var(--amber-soft); border-color: var(--amber); }
+  .alert-green { background: var(--green-soft); border-color: var(--green); }
+  .alert-blue { background: var(--accent-soft); border-color: var(--accent); }
+  .alert-teal { background: var(--teal-soft); border-color: var(--teal); }
+  .alert strong { font-weight: 600; }
+
+  /* LISTS */
+  .steps { list-style: none; }
+  .steps li { display: flex; gap: 12px; margin-bottom: 10px; align-items: flex-start; }
+  .step-num { width: 22px; height: 22px; border-radius: 50%; background: var(--accent-soft); border: 1px solid var(--accent); color: var(--accent); font-size: 11px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+  .steps li .step-text { font-size: 13px; color: var(--text); }
+  .blist { list-style: none; }
+  .blist li { padding: 5px 0 5px 16px; position: relative; font-size: 13px; color: var(--text); border-bottom: 1px solid var(--border); }
+  .blist li:last-child { border-bottom: none; }
+  .blist li::before { content: ''; position: absolute; left: 0; top: 12px; width: 5px; height: 5px; border-radius: 50%; background: var(--text3); }
+
+  /* SECTION HEADER */
+  .section-header { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); margin: 20px 0 10px; display: flex; align-items: center; gap: 10px; }
+  .section-header::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  /* FLOW */
+  .flow-box { background: var(--bg2); border: 1px solid var(--border2); border-radius: 8px; padding: 9px 12px; font-size: 12px; text-align: center; flex: 1; min-width: 110px; }
+  .flow-arrow { display: flex; align-items: center; color: var(--text3); padding: 0 4px; font-size: 14px; }
+
+  /* CALCULATOR */
+  .calc-box { background: var(--bg2); border: 1px solid var(--border2); border-radius: var(--radius-lg); padding: 18px 20px; }
+  .calc-row { display: flex; align-items: flex-start; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--border); }
+  .calc-row:last-of-type { border-bottom: none; }
+  .calc-row label { font-size: 13px; color: var(--text); flex: 1; cursor: pointer; }
+  .calc-row label .pts { color: var(--text3); font-size: 11px; font-family: var(--mono); margin-left: 4px; }
+  .calc-row input[type=checkbox] { width: 17px; height: 17px; accent-color: var(--accent); cursor: pointer; margin-top: 1px; flex-shrink: 0; }
+  .calc-seg { display: flex; gap: 4px; margin-top: 4px; }
+  .seg-btn { flex: 1; padding: 6px 4px; font-size: 11.5px; border: 1px solid var(--border2); background: var(--bg); color: var(--text2); border-radius: 6px; cursor: pointer; font-family: inherit; text-align: center; transition: all 0.1s; }
+  .seg-btn.on { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .calc-score { font-family: var(--mono); font-size: 34px; font-weight: 600; color: var(--accent); line-height: 1; }
+  .calc-result { background: var(--bg3); border: 1px solid var(--border2); border-radius: var(--radius); padding: 13px 15px; margin-top: 14px; }
+
+  /* DRUG CARD */
+  .drug-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 12px 16px; margin-bottom: 8px; display: flex; align-items: flex-start; gap: 12px; }
+  .drug-info { flex: 1; }
+  .drug-name { font-size: 13px; font-weight: 600; color: var(--text); }
+  .drug-class { font-size: 11px; color: var(--text3); margin-top: 2px; }
+  .drug-action { font-size: 12.5px; color: var(--text2); margin-top: 6px; }
+
+  /* ACCORDION */
+  .acc-item { border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 8px; overflow: hidden; }
+  .acc-header { padding: 11px 15px; background: var(--bg2); cursor: pointer; display: flex; align-items: center; justify-content: space-between; font-size: 13px; font-weight: 600; color: var(--text); user-select: none; transition: background 0.12s; }
+  .acc-header:hover { background: var(--bg3); }
+  .acc-header.open { color: var(--accent); }
+  .acc-body { display: none; padding: 13px 15px; background: var(--bg); border-top: 1px solid var(--border); }
+  .acc-body.open { display: block; }
+  .acc-arrow { font-size: 11px; color: var(--text3); transition: transform 0.2s; }
+  .acc-header.open .acc-arrow { transform: rotate(180deg); }
+
+  /* MISC */
+  .sublabel { font-size: 11px; color: var(--text3); margin-top: 3px; }
+  code { font-family: var(--mono); font-size: 11px; background: var(--bg3); padding: 1px 5px; border-radius: 3px; color: var(--teal); }
+  hr { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
+  mark { background: rgba(31,95,191,0.22); color: inherit; border-radius: 2px; padding: 0 2px; }
+  .hero-tile { cursor: pointer; transition: all 0.12s; }
+  .hero-tile:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .hero-num { font-family: var(--mono); font-size: 26px; font-weight: 600; }
+
+  ::-webkit-scrollbar { width: 7px; height: 7px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 10px; }
+
+  @media (max-width: 920px) {
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    .sidebar { width: 56px; }
+    .logo-title, .logo-sub, .logo-badge, .nav-label, .nav-item span, .rail-foot { display: none; }
+    .nav-item { justify-content: center; padding: 10px 0; }
+    .content, .topbar { padding-left: 16px; padding-right: 16px; }
+  }
+
+  /* PRINT */
+  @media print {
+    .sidebar, .topbar, .no-print { display: none !important; }
+    .app, .main { display: block; height: auto; overflow: visible; }
+    .page { display: block !important; page-break-after: always; }
+    .content { padding: 0; }
+    body { background: #fff; color: #000; font-size: 11px; }
+    .card { border: 1px solid #ccc; break-inside: avoid; }
+    .page-title { font-size: 18px; }
+    .hero-tile { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+<aside class="sidebar">
+  <div class="logo">
+    <div class="logo-title">Pre-Anaesthetic Clinic</div>
+    <div class="logo-sub">Lyell McEwin Hospital · NALHN</div>
+    <span class="logo-badge">SA HEALTH</span>
+  </div>
+  <nav id="nav">
+    <div class="nav-group">
+      <div class="nav-label">Overview</div>
+      <div class="nav-item active" data-page="home"><span class="nav-dot" style="background:#5a9bf5"></span><span>Dashboard</span></div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-label">Calculators</div>
+      <div class="nav-item" data-page="rcri"><span class="nav-dot" style="background:#a78bfa"></span><span>RCRI — cardiac risk</span></div>
+      <div class="nav-item" data-page="dasi"><span class="nav-dot" style="background:#a78bfa"></span><span>DASI / METs</span></div>
+      <div class="nav-item" data-page="chads"><span class="nav-dot" style="background:#a78bfa"></span><span>CHA₂DS₂-VASc</span></div>
+      <div class="nav-item" data-page="hasbled"><span class="nav-dot" style="background:#a78bfa"></span><span>HAS-BLED</span></div>
+      <div class="nav-item" data-page="stopbang"><span class="nav-dot" style="background:#a78bfa"></span><span>STOP-BANG (OSA)</span></div>
+      <div class="nav-item" data-page="asa"><span class="nav-dot" style="background:#a78bfa"></span><span>ASA Physical Status</span></div>
+      <div class="nav-item" data-page="childpugh"><span class="nav-dot" style="background:#a78bfa"></span><span>Child-Pugh</span></div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-label">Conditions</div>
+      <div class="nav-item" data-page="cardiac"><span class="nav-dot" style="background:#ec6a5e"></span><span>Cardiac</span></div>
+      <div class="nav-item" data-page="hypertension"><span class="nav-dot" style="background:#e6a23c"></span><span>Hypertension</span></div>
+      <div class="nav-item" data-page="diabetes"><span class="nav-dot" style="background:#41c98a"></span><span>Diabetes</span></div>
+      <div class="nav-item" data-page="respiratory"><span class="nav-dot" style="background:#2cc4bc"></span><span>Respiratory</span></div>
+      <div class="nav-item" data-page="renal"><span class="nav-dot" style="background:#a78bfa"></span><span>Renal / Hepatic</span></div>
+      <div class="nav-item" data-page="obesity"><span class="nav-dot" style="background:#f06fb0"></span><span>Obesity / OSA</span></div>
+      <div class="nav-item" data-page="frailty"><span class="nav-dot" style="background:#8a91a0"></span><span>Frailty &amp; Elderly</span></div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-label">Medications</div>
+      <div class="nav-item" data-page="meds"><span class="nav-dot" style="background:#5a9bf5"></span><span>Hold / Continue</span></div>
+      <div class="nav-item" data-page="anticoag"><span class="nav-dot" style="background:#ec6a5e"></span><span>Anticoagulation</span></div>
+      <div class="nav-item" data-page="glp1"><span class="nav-dot" style="background:#41c98a"></span><span>GLP-1 / SGLT2i</span></div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-label">Tools</div>
+      <div class="nav-item" data-page="fasting"><span class="nav-dot" style="background:#2cc4bc"></span><span>Fasting</span></div>
+      <div class="nav-item" data-page="bloods"><span class="nav-dot" style="background:#ec6a5e"></span><span>Pre-op bloods (NG45)</span></div>
+      <div class="nav-item" data-page="investigations"><span class="nav-dot" style="background:#a78bfa"></span><span>Investigations</span></div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-label">Planning</div>
+      <div class="nav-item" data-page="medtiming"><span class="nav-dot" style="background:#2cc4bc"></span><span>Med timing calculator</span></div>
+      <div class="nav-item" data-page="vte"><span class="nav-dot" style="background:#ec6a5e"></span><span>VTE prophylaxis</span></div>
+      <div class="nav-item" data-page="referral"><span class="nav-dot" style="background:#41c98a"></span><span>Referral builder</span></div>
+    </div>
+  </nav>
+  <div class="rail-foot">
+    <div class="rail-foot-txt">
+      ANZCA PG07 2024 · ADS-ANZCA 2022 · ACC/AHA 2024 · ANZCA/ADS GLP-1 2025 · CHEST 2022
+      <br><br><span style="color:#ec6a5e">⚠ Reference only — verify against local NALHN policy.</span>
+    </div>
+  </div>
+</aside>
+
+<main class="main">
+  <div class="topbar no-print">
+    <div class="global-search">
+      <span style="color:var(--text3)">🔍</span>
+      <input type="text" id="gsearch" placeholder="Search all content — drugs, conditions, thresholds…" oninput="globalSearch()">
+    </div>
+    <button class="icon-btn" onclick="window.print()" title="Print / save as PDF">🖨</button>
+    <button class="icon-btn" id="themeBtn" onclick="toggleTheme()" title="Toggle light/dark">🌙</button>
+  </div>
+
+  <div class="content">
+
+  <!-- SEARCH RESULTS -->
+  <div id="search-results" class="search-results">
+    <div class="page-title">Search results</div>
+    <div class="page-sub" id="sr-count"></div>
+    <div id="sr-list"></div>
+  </div>
+
+  <!-- HOME -->
+  <div id="page-home" class="page active">
+    <div class="page-title">Pre-Anaesthetic Clinic Reference</div>
+    <div class="page-sub">Lyell McEwin Hospital · NALHN · South Australia — current perioperative guidance</div>
+
+    <div class="alert alert-blue">
+      <strong>2024–25 guideline highlights:</strong> ACC/AHA 2024 perioperative cardiac guideline supersedes 2014 · ANZCA/ADS GLP-1 guidance updated 2025 (now continue, manage aspiration risk) · ACEi/ARB hold 24h before elevated-risk surgery · ANZCA PG07 pre-anaesthesia consultation updated 2024.
+    </div>
+
+    <div class="grid-3" style="margin-bottom:6px">
+      <div class="card hero-tile" data-jump="rcri"><div class="hero-num" style="color:var(--purple)">RCRI</div><div style="font-size:13px;font-weight:600;margin:4px 0 2px">Cardiac risk calculator</div><div style="font-size:12px;color:var(--text3)">Plus DASI, CHA₂DS₂-VASc, HAS-BLED</div></div>
+      <div class="card hero-tile" data-jump="meds"><div class="hero-num" style="color:var(--amber)">Rx</div><div style="font-size:13px;font-weight:600;margin:4px 0 2px">Medication guide</div><div style="font-size:12px;color:var(--text3)">Searchable hold / continue rules</div></div>
+      <div class="card hero-tile" data-jump="fasting"><div class="hero-num" style="color:var(--green)">6/2</div><div style="font-size:13px;font-weight:600;margin:4px 0 2px">Fasting rules</div><div style="font-size:12px;color:var(--text3)">ANZCA PG07 + high-risk groups</div></div>
+    </div>
+
+    <div class="section-header">Quick reference — common decision points</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title"><div class="card-title-icon" style="background:var(--red-soft);color:var(--red)">♥</div>Cardiac: when to delay</div>
+        <ul class="blist">
+          <li>Decompensated heart failure (NYHA IV, acute pulmonary oedema)</li>
+          <li>Unstable / severe angina, recent ACS (within 60 days)</li>
+          <li>Symptomatic or uncontrolled significant arrhythmia</li>
+          <li>Severe symptomatic valvular disease (esp. AS with HF)</li>
+          <li>Recent PCI: BMS &lt;30 days; DES &lt;3 months (ideally 6–12 months)</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="card-title-icon" style="background:var(--amber-soft);color:var(--amber)">⬆</div>Hypertension thresholds</div>
+        <ul class="blist">
+          <li>Proceed if BP &lt;180/110 — optimise but don't delay</li>
+          <li>180–200 / 110–120: discuss, optimise, reassess</li>
+          <li>&gt;200/120: delay elective surgery, urgent review</li>
+          <li>No evidence cancelling stage 1–2 HTN improves outcomes (ESAIC 2024)</li>
+          <li>ACEi/ARB: hold 24h before elevated-risk surgery</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="card-title-icon" style="background:var(--green-soft);color:var(--green)">⬡</div>Diabetes key rules</div>
+        <ul class="blist">
+          <li>Target peri-op BGL 6–10 mmol/L</li>
+          <li>HbA1c &gt;9% (75 mmol/mol): consider deferring elective</li>
+          <li>SGLT2i: cease 3 days pre major surgery; ketones day of</li>
+          <li>GLP-1: continue (2025) + 24h clear fluid diet pre-op</li>
+          <li>Metformin: hold day of surgery only; sulfonylureas: hold day of</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="card-title-icon" style="background:var(--purple-soft);color:var(--purple)">✚</div>Anticoagulation snapshot</div>
+        <ul class="blist">
+          <li>Warfarin: cease 5 days pre-op; INR &lt;1.5 target</li>
+          <li>Apixaban/rivaroxaban: hold 1 day (low-bleed) / 2 days (high)</li>
+          <li>Dabigatran: hold 2–4 days by CrCl</li>
+          <li>No bridging for DOACs (PAUSE)</li>
+          <li>Bridge warfarin only if high-risk (mech MVR, recent VTE)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section-header">Functional capacity (METs)</div>
+    <div class="card">
+      <div style="display:flex;gap:24px;flex-wrap:wrap">
+        <div style="flex:1;min-width:190px"><div style="font-size:12px;color:var(--text3);margin-bottom:6px;font-weight:600;text-transform:uppercase;letter-spacing:.05em">Poor &lt;4 METs — high risk</div><ul class="blist"><li>Cannot climb one flight of stairs</li><li>Cannot walk at 6 km/h on flat</li><li>Limited to basic ADLs</li></ul></div>
+        <div style="flex:1;min-width:190px"><div style="font-size:12px;color:var(--amber);margin-bottom:6px;font-weight:600;text-transform:uppercase;letter-spacing:.05em">Moderate 4–10 METs</div><ul class="blist"><li>Climb a flight / walk uphill</li><li>Golf, doubles tennis, dancing</li><li>Walk 6 km/h on flat</li></ul></div>
+        <div style="flex:1;min-width:190px"><div style="font-size:12px;color:var(--green);margin-bottom:6px;font-weight:600;text-transform:uppercase;letter-spacing:.05em">Good ≥10 METs — low risk</div><ul class="blist"><li>Swimming, singles tennis, football</li><li>Jogging / running</li><li>Heavy manual labour</li></ul></div>
+      </div>
+      <div class="alert alert-blue" style="margin-top:12px;margin-bottom:0">
+        <strong>ACC/AHA 2024:</strong> assess functional capacity with the DASI questionnaire (preferred over clinical estimate). <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="dasi">Open the DASI calculator →</span> Consider BNP/NT-proBNP if elevated risk + poor functional capacity.
+      </div>
+    </div>
+  </div>
+
+  <!-- RCRI -->
+  <div id="page-rcri" class="page">
+    <div class="page-title">Revised Cardiac Risk Index (RCRI)</div>
+    <div class="page-sub">Lee 1999 — endorsed ACC/AHA 2024 (Class IIa). Estimates MACE risk for non-cardiac surgery.</div>
+    <div class="tag-strip"><span class="source-badge">ACC/AHA 2024</span><span class="source-badge">ANZCA PG07 2024</span></div>
+    <div class="grid-2">
+      <div class="calc-box">
+        <div style="font-size:13px;font-weight:600;margin-bottom:10px">Risk factors present</div>
+        <div class="calc-row"><input type="checkbox" id="rcri1" onchange="calcRCRI()"><label for="rcri1">High-risk surgery <span class="pts">+1</span><br><span style="font-size:11px;color:var(--text3)">intraperitoneal, intrathoracic, suprainguinal vascular</span></label></div>
+        <div class="calc-row"><input type="checkbox" id="rcri2" onchange="calcRCRI()"><label for="rcri2">Ischaemic heart disease <span class="pts">+1</span><br><span style="font-size:11px;color:var(--text3)">prior MI, +ve stress test, current angina, nitrate use, Q waves</span></label></div>
+        <div class="calc-row"><input type="checkbox" id="rcri3" onchange="calcRCRI()"><label for="rcri3">Congestive heart failure <span class="pts">+1</span><br><span style="font-size:11px;color:var(--text3)">Hx HF, pulmonary oedema, PND, bilateral creps, S3</span></label></div>
+        <div class="calc-row"><input type="checkbox" id="rcri4" onchange="calcRCRI()"><label for="rcri4">Cerebrovascular disease <span class="pts">+1</span><br><span style="font-size:11px;color:var(--text3)">prior stroke or TIA</span></label></div>
+        <div class="calc-row"><input type="checkbox" id="rcri5" onchange="calcRCRI()"><label for="rcri5">Insulin-treated diabetes <span class="pts">+1</span></label></div>
+        <div class="calc-row"><input type="checkbox" id="rcri6" onchange="calcRCRI()"><label for="rcri6">Creatinine &gt;177 µmol/L <span class="pts">+1</span></label></div>
+        <hr>
+        <div style="display:flex;align-items:baseline;gap:12px"><div class="calc-score" id="rcri-score">0</div><div style="color:var(--text3)">/ 6 points</div></div>
+        <div class="calc-result" id="rcri-result"><div style="font-size:13px;color:var(--text2)">Select risk factors to estimate MACE risk.</div></div>
+      </div>
+      <div>
+        <div class="card">
+          <div class="card-title">Interpretation</div>
+          <div class="table-wrap"><table><thead><tr><th>Score</th><th>MACE risk</th><th>Action</th></tr></thead><tbody>
+            <tr><td><span class="pill pill-green">0</span></td><td>&lt;1%</td><td>Proceed; no cardiac testing</td></tr>
+            <tr><td><span class="pill pill-green">1</span></td><td>~1%</td><td>Proceed; testing rarely changes management</td></tr>
+            <tr><td><span class="pill pill-amber">2</span></td><td>~2–4%</td><td>Weigh risk; cardiology if poor function</td></tr>
+            <tr><td><span class="pill pill-red">≥3</span></td><td>&gt;5%</td><td>Cardiology review; biomarkers ± stress testing</td></tr>
+          </tbody></table></div>
+        </div>
+        <div class="card" style="margin-top:14px">
+          <div class="card-title">When to request further testing</div>
+          <div class="alert alert-amber" style="margin-bottom:10px"><strong>ACC/AHA 2024:</strong> test only when the result will change management — typically RCRI ≥3 + poor functional capacity + elevated-risk surgery.</div>
+          <ul class="blist">
+            <li>Stress echo/nuclear: symptomatic, known CAD, multiple risk factors</li>
+            <li>Echo: suspected severe valve disease, new HF, unexplained dyspnoea</li>
+            <li>BNP/NT-proBNP: elevated-risk patients; if high → cardiology</li>
+            <li>ECG: known CVD, age &gt;45 with risk factors, arrhythmia symptoms</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DASI -->
+  <div id="page-dasi" class="page">
+    <div class="page-title">Duke Activity Status Index (DASI → METs)</div>
+    <div class="page-sub">Hlatky 1989 · functional capacity estimate. ≥4 METs = adequate for most surgery; DASI ≥34 = lower peri-op risk (METS trial, Wijeysundera).</div>
+    <div class="tag-strip"><span class="source-badge">ACC/AHA 2024</span><span class="source-badge">METS trial</span></div>
+    <div class="grid-2">
+      <div class="calc-box">
+        <div style="font-size:13px;font-weight:600;margin-bottom:6px">Can the patient…</div>
+        <div class="calc-row"><input type="checkbox" data-w="2.75" onchange="calcDASI()"><label>Take care of self (eat, dress, bathe, toilet) <span class="pts">2.75</span></label></div>
+        <div class="calc-row"><input type="checkbox" data-w="1.75" onchange="calcDASI()"><label>Walk indoors <span class="pts">1.75</span></label></div>
+        <div class="calc-row"><input type="checkbox" data-w="2.75" onchange="calcDASI()"><label>Walk 1–2 blocks on level ground <span class="pts">2.75</span></label></div>
+        <div class="calc-row"><input type="checkbox" data-w="5.5" onchange="calcDASI()"><label>Climb a flight of stairs / walk up a hill <span class="pts">5.50</span></label></div>
+        <div class="calc-row"><input type="checkbox" data-w="8" onchange="calcDASI()"><label>Run a short distance <span class="pts">8.00</span></label></div>
+        <div class="calc-row"><input type="checkbox" data-w="2.7" onchange="calcDASI()"><label>Light housework (dusting, dishes) <span class="pts">2.70</span></label></div>
+        <div class="calc-row"><input type="checkbox" data-w="3.5" onchange="calcDASI()"><label>Moderate housework (vacuum, groceries) <span class="pts">3.50</span></label></div>
+        <div class="calc-row"><input type="checkbox" data-w="8" onchange="calcDASI()"><label>Heavy housework (scrub floors, move furniture) <span class="pts">8.00</span></label></div>
+        <div class="calc-row"><input type="checkbox" data-w="4.5" onchange="calcDASI()"><label>Yardwork (rake, weed, mow) <span class="pts">4.50</span></label></div>
+        <div class="calc-row"><input type="checkbox" data-w="5.25" onchange="calcDASI()"><label>Have sexual relations <span class="pts">5.25</span></label></div>
+        <div class="calc-row"><input type="checkbox" data-w="6" onchange="calcDASI()"><label>Moderate recreation (golf, bowling, dancing, doubles tennis) <span class="pts">6.00</span></label></div>
+        <div class="calc-row"><input type="checkbox" data-w="7.5" onchange="calcDASI()"><label>Strenuous sport (swimming, singles tennis, football, skiing) <span class="pts">7.50</span></label></div>
+      </div>
+      <div>
+        <div class="calc-box">
+          <div style="display:flex;gap:24px;align-items:baseline">
+            <div><div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em">DASI score</div><div class="calc-score" id="dasi-score">0</div><div style="font-size:11px;color:var(--text3)">/ 58.2</div></div>
+            <div><div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em">Estimated METs</div><div class="calc-score" id="dasi-mets" style="color:var(--teal)">2.7</div></div>
+            <div><div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em">VO₂ peak</div><div class="calc-score" id="dasi-vo2" style="color:var(--purple);font-size:22px">9.6</div><div style="font-size:11px;color:var(--text3)">mL/kg/min</div></div>
+          </div>
+          <div class="calc-result" id="dasi-result"><div style="font-size:13px;color:var(--text2)">Tick the activities the patient can perform.</div></div>
+        </div>
+        <div class="card" style="margin-top:14px">
+          <div class="card-title">Formula &amp; thresholds</div>
+          <ul class="blist">
+            <li><code>VO₂ = 0.43 × DASI + 9.6</code> · <code>METs = VO₂ / 3.5</code></li>
+            <li>≥4 METs (DASI ≈ 10+): adequate for most non-cardiac surgery</li>
+            <li>DASI ≥34 (≈7 METs): lower 30-day mortality/MI &amp; 1-year mortality (METS trial)</li>
+            <li>&lt;4 METs + elevated-risk surgery: consider biomarkers ± cardiology</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHADSVASC -->
+  <div id="page-chads" class="page">
+    <div class="page-title">CHA₂DS₂-VASc — stroke risk in AF</div>
+    <div class="page-sub">Guides anticoagulation need &amp; perioperative bridging-risk stratification in atrial fibrillation.</div>
+    <div class="tag-strip"><span class="source-badge">ESC AF</span><span class="source-badge">CHEST 2022</span></div>
+    <div class="grid-2">
+      <div class="calc-box">
+        <div style="font-size:13px;font-weight:600;margin-bottom:6px">Risk factors</div>
+        <div class="calc-row"><input type="checkbox" data-w="1" onchange="calcCHADS()"><label>Congestive heart failure / LV dysfunction <span class="pts">+1</span></label></div>
+        <div class="calc-row"><input type="checkbox" data-w="1" onchange="calcCHADS()"><label>Hypertension <span class="pts">+1</span></label></div>
+        <div class="calc-row"><input type="checkbox" data-w="2" onchange="calcCHADS()"><label>Age ≥75 <span class="pts">+2</span></label></div>
+        <div class="calc-row"><input type="checkbox" data-w="1" onchange="calcCHADS()"><label>Diabetes mellitus <span class="pts">+1</span></label></div>
+        <div class="calc-row"><input type="checkbox" data-w="2" onchange="calcCHADS()"><label>Prior stroke / TIA / thromboembolism <span class="pts">+2</span></label></div>
+        <div class="calc-row"><input type="checkbox" data-w="1" onchange="calcCHADS()"><label>Vascular disease (MI, PAD, aortic plaque) <span class="pts">+1</span></label></div>
+        <div class="calc-row"><input type="checkbox" data-w="1" onchange="calcCHADS()"><label>Age 65–74 <span class="pts">+1</span></label></div>
+        <div class="calc-row"><input type="checkbox" data-w="1" onchange="calcCHADS()"><label>Sex category female <span class="pts">+1</span></label></div>
+        <hr>
+        <div style="display:flex;align-items:baseline;gap:12px"><div class="calc-score" id="chads-score">0</div><div style="color:var(--text3)">/ 9 points</div></div>
+        <div class="calc-result" id="chads-result"><div style="font-size:13px;color:var(--text2)">Select factors to estimate annual stroke risk.</div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Perioperative relevance</div>
+        <div class="alert alert-blue">For warfarin patients, score feeds the bridging decision: AF + CHA₂DS₂-VASc <strong>≥7</strong> (or recent stroke) = high thrombotic risk → consider bridging. Score ≤4 → bridging not indicated (BRIDGE trial).</div>
+        <div class="table-wrap"><table><thead><tr><th>Score</th><th>Adjusted annual stroke risk</th></tr></thead><tbody>
+          <tr><td>0</td><td>~0.2%</td></tr><tr><td>1</td><td>~0.6%</td></tr><tr><td>2</td><td>~2.2%</td></tr><tr><td>3</td><td>~3.2%</td></tr><tr><td>4</td><td>~4.8%</td></tr><tr><td>5</td><td>~7.2%</td></tr><tr><td>6</td><td>~9.7%</td></tr><tr><td>7</td><td>~11.2%</td></tr><tr><td>8</td><td>~10.8%</td></tr><tr><td>9</td><td>~12.2%</td></tr>
+        </tbody></table></div>
+        <div class="sublabel" style="margin-top:8px">See the <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="anticoag">Anticoagulation page</span> for the full bridging table.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HASBLED -->
+  <div id="page-hasbled" class="page">
+    <div class="page-title">HAS-BLED — bleeding risk in AF</div>
+    <div class="page-sub">Estimates 1-year major bleeding risk on anticoagulation. Score ≥3 = high risk — flag, don't withhold; address modifiable factors.</div>
+    <div class="tag-strip"><span class="source-badge">ESC AF</span></div>
+    <div class="grid-2">
+      <div class="calc-box">
+        <div class="calc-row"><input type="checkbox" data-w="1" onchange="calcHB()"><label>Hypertension (uncontrolled, SBP &gt;160) <span class="pts">+1</span></label></div>
+        <div class="calc-row"><input type="checkbox" data-w="1" onchange="calcHB()"><label>Abnormal renal function (dialysis, transplant, Cr &gt;200) <span class="pts">+1</span></label></div>
+        <div class="calc-row"><input type="checkbox" data-w="1" onchange="calcHB()"><label>Abnormal liver function (cirrhosis, bili &gt;2×, AST/ALT &gt;3×) <span class="pts">+1</span></label></div>
+        <div class="calc-row"><input type="checkbox" data-w="1" onchange="calcHB()"><label>Stroke history <span class="pts">+1</span></label></div>
+        <div class="calc-row"><input type="checkbox" data-w="1" onchange="calcHB()"><label>Bleeding history or predisposition <span class="pts">+1</span></label></div>
+        <div class="calc-row"><input type="checkbox" data-w="1" onchange="calcHB()"><label>Labile INR (TTR &lt;60%) <span class="pts">+1</span></label></div>
+        <div class="calc-row"><input type="checkbox" data-w="1" onchange="calcHB()"><label>Elderly (age &gt;65) <span class="pts">+1</span></label></div>
+        <div class="calc-row"><input type="checkbox" data-w="1" onchange="calcHB()"><label>Drugs (antiplatelet/NSAID) <span class="pts">+1</span></label></div>
+        <div class="calc-row"><input type="checkbox" data-w="1" onchange="calcHB()"><label>Alcohol ≥8 units/week <span class="pts">+1</span></label></div>
+        <hr>
+        <div style="display:flex;align-items:baseline;gap:12px"><div class="calc-score" id="hb-score">0</div><div style="color:var(--text3)">/ 9 points</div></div>
+        <div class="calc-result" id="hb-result"><div style="font-size:13px;color:var(--text2)">Select factors to estimate bleeding risk.</div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Interpretation</div>
+        <div class="table-wrap"><table><thead><tr><th>Score</th><th>Risk</th><th>Major bleeds /100 pt-yr</th></tr></thead><tbody>
+          <tr><td>0–1</td><td><span class="pill pill-green">Low</span></td><td>~1</td></tr>
+          <tr><td>2</td><td><span class="pill pill-amber">Moderate</span></td><td>~1.9</td></tr>
+          <tr><td>≥3</td><td><span class="pill pill-red">High</span></td><td>~3.7–8.7</td></tr>
+        </tbody></table></div>
+        <div class="alert alert-amber" style="margin-top:12px;margin-bottom:0">A high HAS-BLED score is <strong>not</strong> a reason to withhold anticoagulation — it identifies patients needing closer review and correction of modifiable factors (BP control, stopping concurrent NSAIDs/antiplatelets, alcohol reduction, INR stability).</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STOP-BANG -->
+  <div id="page-stopbang" class="page">
+    <div class="page-title">STOP-BANG — OSA screening</div>
+    <div class="page-sub">Score ≥3 = high risk for moderate–severe obstructive sleep apnoea. Notify anaesthetics.</div>
+    <div class="grid-2">
+      <div class="calc-box">
+        <div class="calc-row"><input type="checkbox" data-w="1" onchange="calcSB()"><label><strong>S</strong> — Snoring loudly (heard through a closed door) <span class="pts">+1</span></label></div>
+        <div class="calc-row"><input type="checkbox" data-w="1" onchange="calcSB()"><label><strong>T</strong> — Tiredness / daytime sleepiness <span class="pts">+1</span></label></div>
+        <div class="calc-row"><input type="checkbox" data-w="1" onchange="calcSB()"><label><strong>O</strong> — Observed apnoeas during sleep <span class="pts">+1</span></label></div>
+        <div class="calc-row"><input type="checkbox" data-w="1" onchange="calcSB()"><label><strong>P</strong> — Pressure (treated/untreated hypertension) <span class="pts">+1</span></label></div>
+        <div class="calc-row"><input type="checkbox" data-w="1" onchange="calcSB()"><label><strong>B</strong> — BMI &gt; 35 <span class="pts">+1</span></label></div>
+        <div class="calc-row"><input type="checkbox" data-w="1" onchange="calcSB()"><label><strong>A</strong> — Age &gt; 50 <span class="pts">+1</span></label></div>
+        <div class="calc-row"><input type="checkbox" data-w="1" onchange="calcSB()"><label><strong>N</strong> — Neck circumference &gt; 40 cm <span class="pts">+1</span></label></div>
+        <div class="calc-row"><input type="checkbox" data-w="1" onchange="calcSB()"><label><strong>G</strong> — Gender male <span class="pts">+1</span></label></div>
+        <hr>
+        <div style="display:flex;align-items:baseline;gap:12px"><div class="calc-score" id="sb-score">0</div><div style="color:var(--text3)">/ 8 points</div></div>
+        <div class="calc-result" id="sb-result"><div style="font-size:13px;color:var(--text2)">Select positive criteria.</div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Action by risk band</div>
+        <div class="table-wrap"><table><thead><tr><th>Score</th><th>Risk</th><th>Action</th></tr></thead><tbody>
+          <tr><td>0–2</td><td><span class="pill pill-green">Low</span></td><td>Standard perioperative planning</td></tr>
+          <tr><td>3–4</td><td><span class="pill pill-amber">Intermediate</span></td><td>Document, flag anaesthetics; CPAP if known OSA; consider sleep study for major elective</td></tr>
+          <tr><td>5–8</td><td><span class="pill pill-red">High</span></td><td>Airway assessment; notify anaesthetics; sleep study if time; post-op CPAP/monitoring plan</td></tr>
+        </tbody></table></div>
+        <div class="alert alert-amber" style="margin-top:12px;margin-bottom:0">OSA + GLP-1 agonist + obesity compounds aspiration and airway risk — see the GLP-1/SGLT2i and Obesity pages.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ASA -->
+  <div id="page-asa" class="page">
+    <div class="page-title">ASA Physical Status classification</div>
+    <div class="page-sub">American Society of Anesthesiologists — standard documentation of pre-operative physical status. Add "E" for emergency.</div>
+    <div class="grid-2">
+      <div>
+        <div class="card">
+          <div class="card-title">Classes</div>
+          <div class="table-wrap"><table><thead><tr><th>Class</th><th>Definition</th><th>Examples</th></tr></thead><tbody>
+            <tr><td><span class="pill pill-green">I</span></td><td>Normal healthy patient</td><td>Healthy, non-smoking, no/minimal alcohol</td></tr>
+            <tr><td><span class="pill pill-green">II</span></td><td>Mild systemic disease</td><td>Smoker, social alcohol, pregnancy, obesity (30–40), well-controlled DM/HTN, mild lung disease</td></tr>
+            <tr><td><span class="pill pill-amber">III</span></td><td>Severe systemic disease</td><td>Poorly controlled DM/HTN, COPD, BMI ≥40, active hepatitis, pacemaker, ESRD on dialysis, MI/CVA/TIA &gt;3 months ago</td></tr>
+            <tr><td><span class="pill pill-red">IV</span></td><td>Severe disease, constant threat to life</td><td>Recent (&lt;3 months) MI/CVA/TIA, ongoing cardiac ischaemia, severe valve dysfunction, sepsis, DIC, ESRD not dialysed</td></tr>
+            <tr><td><span class="pill pill-red">V</span></td><td>Moribund, not expected to survive without operation</td><td>Ruptured AAA, massive trauma, intracranial bleed with mass effect, ischaemic bowel with multi-organ dysfunction</td></tr>
+            <tr><td><span class="pill pill-gray">VI</span></td><td>Brain-dead, organ donor</td><td>Organ retrieval</td></tr>
+          </tbody></table></div>
+          <div class="alert alert-blue" style="margin-top:12px;margin-bottom:0"><strong>E modifier:</strong> append to any class for emergency surgery (delay would increase threat to life/body part), e.g. ASA III-E.</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Quick classifier</div>
+        <div style="font-size:13px;color:var(--text2);margin-bottom:10px">Select the description that best fits:</div>
+        <div id="asa-opts">
+          <div class="seg-btn" style="text-align:left;margin-bottom:6px" data-asa="I" onclick="pickASA(this)">Healthy — no systemic disease</div>
+          <div class="seg-btn" style="text-align:left;margin-bottom:6px" data-asa="II" onclick="pickASA(this)">Mild, well-controlled systemic disease</div>
+          <div class="seg-btn" style="text-align:left;margin-bottom:6px" data-asa="III" onclick="pickASA(this)">Severe systemic disease, not immediately life-threatening</div>
+          <div class="seg-btn" style="text-align:left;margin-bottom:6px" data-asa="IV" onclick="pickASA(this)">Severe disease, constant threat to life</div>
+          <div class="seg-btn" style="text-align:left;margin-bottom:6px" data-asa="V" onclick="pickASA(this)">Moribund, not expected to survive without surgery</div>
+        </div>
+        <label style="display:flex;align-items:center;gap:8px;margin-top:10px;font-size:13px;cursor:pointer"><input type="checkbox" id="asa-e" onchange="renderASA()" style="width:16px;height:16px;accent-color:var(--accent)"> Emergency surgery (add E)</label>
+        <div class="calc-result" id="asa-result"><div style="font-size:13px;color:var(--text2)">Make a selection.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARDIAC -->
+  <div id="page-cardiac" class="page">
+    <div class="page-title">Cardiac disease — perioperative management</div>
+    <div class="page-sub">ACC/AHA 2024 Perioperative Cardiovascular Management Guideline (supersedes 2014)</div>
+    <div class="tag-strip"><span class="source-badge">ACC/AHA 2024</span><span class="source-badge">ESAIC 2024–25</span><span class="source-badge">ANZCA PG07 2024</span></div>
+    <div class="section-header">Stepwise risk assessment</div>
+    <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:16px">
+      <div class="flow-box" style="background:var(--red-soft);border-color:var(--red)"><div style="font-size:11px;color:var(--text3)">Step 1</div><div style="font-weight:600">Urgent surgery?</div><div style="font-size:11px;color:var(--text3)">→ Proceed; manage risk</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box"><div style="font-size:11px;color:var(--text3)">Step 2</div><div style="font-weight:600">Active cardiac condition?</div><div style="font-size:11px;color:var(--red)">→ Delay &amp; treat</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box"><div style="font-size:11px;color:var(--text3)">Step 3</div><div style="font-weight:600">Low-risk surgery?</div><div style="font-size:11px;color:var(--green)">→ Proceed</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box"><div style="font-size:11px;color:var(--text3)">Step 4</div><div style="font-weight:600">≥4 METs?</div><div style="font-size:11px;color:var(--green)">→ Proceed</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box"><div style="font-size:11px;color:var(--text3)">Step 5</div><div style="font-weight:600">RCRI + biomarkers</div><div style="font-size:11px;color:var(--amber)">→ Risk-guided</div></div>
+    </div>
+    <div class="grid-2">
+      <div>
+        <div class="card">
+          <div class="card-title"><div class="card-title-icon" style="background:var(--red-soft);color:var(--red)">!</div>Active conditions — DELAY surgery</div>
+          <ul class="blist">
+            <li><strong>Unstable coronary syndrome</strong> — unstable/severe angina, MI &lt;60 days</li>
+            <li><strong>Decompensated HF</strong> — NYHA IV, worsening/new HF</li>
+            <li><strong>Significant arrhythmia</strong> — high-grade AV block, Mobitz II/III, symptomatic VT, uncontrolled SVT, new rapid AF, symptomatic bradycardia</li>
+            <li><strong>Severe valvular disease</strong> — symptomatic severe AS; severe MS with NYHA III–IV</li>
+          </ul>
+        </div>
+        <div class="card" style="margin-top:14px">
+          <div class="card-title">Surgical risk classification</div>
+          <div class="table-wrap"><table><thead><tr><th>Risk</th><th>MACE</th><th>Examples</th></tr></thead><tbody>
+            <tr><td><span class="pill pill-green">Low</span></td><td>&lt;1%</td><td>Endoscopy, cataract, breast, surface, dental</td></tr>
+            <tr><td><span class="pill pill-amber">Intermediate</span></td><td>1–5%</td><td>Orthopaedic, urology, ENT, general abdo, head/neck</td></tr>
+            <tr><td><span class="pill pill-red">High</span></td><td>&gt;5%</td><td>Aortic/major vascular, oesophageal, pancreatic, liver, major bowel</td></tr>
+          </tbody></table></div>
+        </div>
+        <div class="card" style="margin-top:14px">
+          <div class="card-title">Coronary stents — timing</div>
+          <div class="alert alert-red" style="margin-bottom:10px"><strong>Never stop DAPT abruptly</strong> — risk of catastrophic in-stent thrombosis.</div>
+          <div class="table-wrap"><table><thead><tr><th>Stent</th><th>Minimum</th><th>Preferred</th></tr></thead><tbody>
+            <tr><td>Balloon (no stent)</td><td>14 days</td><td>14 days</td></tr>
+            <tr><td>Bare metal stent</td><td>30 days</td><td>3 months</td></tr>
+            <tr><td>Drug-eluting stent</td><td>3 months</td><td>6–12 months</td></tr>
+          </tbody></table></div>
+          <div class="sublabel" style="margin-top:8px">If surgery can't wait, discuss with cardiology — usually continue aspirin; prefer surgical haemostasis over stopping P2Y12 inhibitor.</div>
+        </div>
+      </div>
+      <div>
+        <div class="card">
+          <div class="card-title">Heart failure</div>
+          <ul class="blist">
+            <li>Optimise GDMT pre-op (ACEi/ARB/ARNI, beta-blocker, MRA, SGLT2i — note SGLT2i hold rules)</li>
+            <li>Echo if new/deteriorating symptoms; EF guides anaesthetic strategy</li>
+            <li>Continue ACEi/ARB peri-op for HFrEF (ACC/AHA 2024)</li>
+            <li>Continue beta-blockers — never withdraw suddenly</li>
+            <li>No active fluid overload before elective surgery</li>
+            <li>High risk: peri-op BNP, plan HDU/ICU</li>
+          </ul>
+        </div>
+        <div class="card" style="margin-top:14px">
+          <div class="card-title">Valvular disease</div>
+          <div class="acc-item"><div class="acc-header" onclick="toggleAcc(this)">Aortic stenosis <span class="acc-arrow">▾</span></div><div class="acc-body"><ul class="blist"><li>Severe symptomatic AS — delay; refer for TAVI/AVR</li><li>Severe asymptomatic + normal LV: may proceed if echo &lt;12 months (IIa)</li><li>Goals: sinus rhythm, adequate preload, avoid tachycardia &amp; vasodilation</li><li>Caution with neuraxial unless haemodynamics tightly managed</li></ul></div></div>
+          <div class="acc-item"><div class="acc-header" onclick="toggleAcc(this)">Mitral regurgitation <span class="acc-arrow">▾</span></div><div class="acc-body"><ul class="blist"><li>Chronic severe MR tolerated if asymptomatic + preserved LV</li><li>Symptomatic/LV dysfunction: optimise; consider repair pre-op</li><li>Goals: slightly elevated HR, afterload reduction, avoid high SVR</li></ul></div></div>
+          <div class="acc-item"><div class="acc-header" onclick="toggleAcc(this)">Mechanical prosthetic valves <span class="acc-arrow">▾</span></div><div class="acc-body"><ul class="blist"><li>Continue warfarin for low-bleed procedures</li><li>Bridge with LMWH/UFH for high-bleed — mechanical MVR highest risk</li><li>Never use DOACs with mechanical valves</li><li>Haematology/cardiology co-management</li></ul></div></div>
+        </div>
+        <div class="card" style="margin-top:14px">
+          <div class="card-title">Cardiac implantable devices (CIED)</div>
+          <ul class="blist">
+            <li>Notify anaesthetics &amp; theatre — interrogation may be required</li>
+            <li>Pacemaker-dependent + monopolar diathermy → device clinic advice</li>
+            <li>ICD: defibrillation may need temporary disabling intra-op</li>
+            <li>Follow NALHN/SA cardiology CIED perioperative pathway</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HYPERTENSION -->
+  <div id="page-hypertension" class="page">
+    <div class="page-title">Hypertension — perioperative management</div>
+    <div class="page-sub">ESAIC 2024–25 · ACC/AHA 2024 · ANZCA PG07 2024</div>
+    <div class="tag-strip"><span class="source-badge">ACC/AHA 2024</span><span class="source-badge">ESAIC 2024–25</span></div>
+    <div class="alert alert-blue"><strong>Key principle (ESAIC 2024):</strong> no evidence that cancelling elective surgery for stage 1–2 hypertension (BP &lt;180/110) improves outcomes. Reserve cancellation for BP ≥180/110 or where end-organ damage is present/suspected.</div>
+    <div class="grid-2">
+      <div>
+        <div class="card">
+          <div class="card-title">BP thresholds</div>
+          <div class="table-wrap"><table><thead><tr><th>BP</th><th>Class</th><th>Action</th></tr></thead><tbody>
+            <tr><td>&lt;140/90</td><td><span class="pill pill-green">Normal</span></td><td>Proceed</td></tr>
+            <tr><td>140–159/90–99</td><td><span class="pill pill-green">Stage 1</span></td><td>Proceed; optimise long-term</td></tr>
+            <tr><td>160–179/100–109</td><td><span class="pill pill-amber">Stage 2</span></td><td>Proceed for most; document, optimise</td></tr>
+            <tr><td>180–199/110–119</td><td><span class="pill pill-amber">Stage 3</span></td><td>Consider deferral esp. high-risk surgery; treat &amp; reassess</td></tr>
+            <tr><td>≥200/≥120</td><td><span class="pill pill-red">Severe</span></td><td>Delay elective; urgent review; exclude hypertensive emergency</td></tr>
+          </tbody></table></div>
+        </div>
+        <div class="card" style="margin-top:14px">
+          <div class="card-title">End-organ assessment (if ≥180/110)</div>
+          <ul class="blist"><li>ECG — LVH, ischaemia, arrhythmia</li><li>Renal function, urinalysis (proteinuria)</li><li>Fundoscopy history — retinopathy</li><li>Echo if LVH or HF symptoms</li><li>Electrolytes, HbA1c</li></ul>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Antihypertensives — peri-op</div>
+        <div class="table-wrap"><table><thead><tr><th>Class</th><th>Examples</th><th>Action</th></tr></thead><tbody>
+          <tr><td>Beta-blockers</td><td>Metoprolol, atenolol, carvedilol</td><td><span class="pill pill-green">CONTINUE</span> — don't stop acutely</td></tr>
+          <tr><td>ACEi / ARB</td><td>Perindopril, ramipril, irbesartan, candesartan</td><td><span class="pill pill-amber">HOLD 24h</span> for elevated-risk; continue for HFrEF</td></tr>
+          <tr><td>CCB</td><td>Amlodipine, felodipine</td><td><span class="pill pill-green">CONTINUE</span></td></tr>
+          <tr><td>Thiazide</td><td>HCT, indapamide</td><td><span class="pill pill-amber">HOLD day of</span> — check electrolytes</td></tr>
+          <tr><td>Loop diuretic</td><td>Frusemide</td><td><span class="pill pill-amber">CAUTION</span> — continue for HF; hold if euvolaemic</td></tr>
+          <tr><td>Alpha-blocker</td><td>Prazosin, doxazosin</td><td><span class="pill pill-amber">CAUTION</span> — hypotension; warn anaesthetist</td></tr>
+          <tr><td>Central agents</td><td>Clonidine, methyldopa</td><td><span class="pill pill-green">CONTINUE</span> — rebound HTN if stopped</td></tr>
+          <tr><td>MRA</td><td>Spironolactone, eplerenone</td><td><span class="pill pill-amber">REVIEW K⁺</span> — hold if hyperkalaemia/renal impairment</td></tr>
+        </tbody></table></div>
+        <div class="alert alert-teal" style="margin-top:12px;margin-bottom:0"><strong>White-coat HTN:</strong> measure both arms; ABPM if time permits — if confirmed, true surgical risk is lower than clinic readings. Document for anaesthetics.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DIABETES -->
+  <div id="page-diabetes" class="page">
+    <div class="page-title">Diabetes — perioperative management</div>
+    <div class="page-sub">ADS-ANZCA Perioperative Diabetes and Hyperglycaemia Guidelines (Adults) — November 2022 v2</div>
+    <div class="tag-strip"><span class="source-badge">ADS-ANZCA 2022</span><span class="source-badge">ADS SGLT2i Alert 2022</span><span class="source-badge">ANZCA GLP-1 2025</span></div>
+    <div class="alert alert-amber"><strong>Target peri-op BGL 6–10 mmol/L.</strong> Hypoglycaemia (&lt;4) is the main risk to avoid; short-term moderate hyperglycaemia is acceptable in stable patients.</div>
+    <div class="grid-2">
+      <div>
+        <div class="card">
+          <div class="card-title">Assessment checklist</div>
+          <ul class="blist"><li>HbA1c within 3 months — target &lt;9% (&lt;75 mmol/mol) for elective</li><li>Renal function (affects SGLT2i, DOAC, metformin)</li><li>Full medication list incl. combinations &amp; insulin type</li><li>CGM / insulin pump — document &amp; plan</li><li>Severe hypos in last 6 months / hypo awareness</li><li>Complications: autonomic neuropathy (postural BP), gastroparesis (aspiration), CVD</li></ul>
+        </div>
+        <div class="card" style="margin-top:14px">
+          <div class="card-title">HbA1c thresholds</div>
+          <div class="table-wrap"><table><thead><tr><th>HbA1c</th><th>mmol/mol</th><th>Action</th></tr></thead><tbody>
+            <tr><td>&lt;7%</td><td>&lt;53</td><td><span class="pill pill-green">Optimal</span></td></tr>
+            <tr><td>7–8.5%</td><td>53–69</td><td><span class="pill pill-green">Acceptable</span></td></tr>
+            <tr><td>8.5–9%</td><td>69–75</td><td><span class="pill pill-amber">Optimise elective</span></td></tr>
+            <tr><td>&gt;9%</td><td>&gt;75</td><td><span class="pill pill-red">Consider deferring</span> — GP/endocrine optimisation</td></tr>
+          </tbody></table></div>
+        </div>
+        <div class="card" style="margin-top:14px">
+          <div class="card-title">BGL monitoring</div>
+          <ul class="blist"><li>Check on arrival &amp; day of surgery</li><li>Hourly intra-op for major surgery / insulin infusions</li><li>SGLT2i: capillary ketones day of surgery</li><li>BGL &lt;6: 10% glucose 100 mL IV; recheck 30 min</li><li>BGL &gt;15: consider postponing; ketones, fluids</li></ul>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Diabetes medications</div>
+        <div class="table-wrap"><table><thead><tr><th>Drug</th><th>Action</th></tr></thead><tbody>
+          <tr><td>Metformin</td><td><span class="pill pill-amber">HOLD day of</span> — restart when eating; cease 48h pre-contrast</td></tr>
+          <tr><td>Sulfonylurea (gliclazide, glipizide)</td><td><span class="pill pill-red">HOLD day of</span> — hypo risk fasting</td></tr>
+          <tr><td>DPP-4i (sitagliptin, linagliptin)</td><td><span class="pill pill-amber">HOLD day of</span></td></tr>
+          <tr><td>SGLT2i (dapa/empa/ertugliflozin)</td><td><span class="pill pill-red">CEASE 3 DAYS</span> pre major; ketones day of</td></tr>
+          <tr><td>GLP-1 (semaglutide, dulaglutide)</td><td><span class="pill pill-blue">CONTINUE</span> + 24h clear fluid diet (2025)</td></tr>
+          <tr><td>Basal insulin (glargine, detemir)</td><td><span class="pill pill-green">CONTINUE 80%</span> night before &amp; day of</td></tr>
+          <tr><td>Short-acting (Novorapid, Actrapid)</td><td><span class="pill pill-red">HOLD bolus</span> AM of surgery; restart with meals</td></tr>
+          <tr><td>Mixed/biphasic (NovoMix, Mixtard)</td><td><span class="pill pill-amber">HALF DOSE</span> AM if eating; seek advice</td></tr>
+        </tbody></table></div>
+        <div class="alert alert-blue" style="margin-top:12px;margin-bottom:0"><strong>Insulin pump (CSII):</strong> usually continue at basal during surgery; anaesthetics + diabetes co-manage; document brand &amp; basal rate; have IV glucose &amp; glucagon available.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESPIRATORY -->
+  <div id="page-respiratory" class="page">
+    <div class="page-title">Respiratory disease</div>
+    <div class="page-sub">ESAIC 2024–25 · ANZCA PG07 2024 · ANZCA smoking guideline 2023</div>
+    <div class="grid-2">
+      <div>
+        <div class="card">
+          <div class="card-title">COPD</div>
+          <ul class="blist"><li>FEV1 &lt;50% predicted = moderate–high risk</li><li>Optimise bronchodilators; regular SABA + LABA/LAMA</li><li>Active wheeze/infective exacerbation — delay elective</li><li>Smoking cessation ideally ≥8 weeks; any cessation helps</li><li>Consider pulmonary rehab if FEV1 &lt;50% before major surgery</li><li>Home O₂? document flow; ABG if available</li></ul>
+        </div>
+        <div class="card" style="margin-top:14px">
+          <div class="card-title">Asthma</div>
+          <ul class="blist"><li>Well-controlled asthma is not a contraindication</li><li>Optimise inhaler technique; step up if poorly controlled</li><li>Active wheeze / oral steroids — delay elective; respiratory review</li><li>Continue preventers including morning of surgery</li><li>Steroid cover if ≥5 mg prednisolone &gt;3 months</li></ul>
+        </div>
+        <div class="card" style="margin-top:14px">
+          <div class="card-title">Steroid stress dosing</div>
+          <div class="table-wrap"><table><thead><tr><th>Surgery</th><th>Supplementation</th></tr></thead><tbody>
+            <tr><td>Minor (&lt;1h)</td><td>Usual dose; no supplement if low stress</td></tr>
+            <tr><td>Moderate</td><td>Hydrocortisone 25–50 mg IV at induction; 25 mg 8-hrly ×24h</td></tr>
+            <tr><td>Major</td><td>Hydrocortisone 50–100 mg IV at induction; 50 mg 8-hrly ×48–72h</td></tr>
+          </tbody></table></div>
+        </div>
+      </div>
+      <div>
+        <div class="card">
+          <div class="card-title">Investigations</div>
+          <div class="table-wrap"><table><thead><tr><th>Test</th><th>Indication</th></tr></thead><tbody>
+            <tr><td>CXR</td><td>Moderate-high risk surgery, known/suspected pathology</td></tr>
+            <tr><td>Spirometry</td><td>COPD/asthma, pre-thoracic, unexplained dyspnoea</td></tr>
+            <tr><td>ABG</td><td>Severe COPD (FEV1 &lt;50%), severe OSA, pulmonary HTN</td></tr>
+            <tr><td>DLCO</td><td>Pre-lung resection, ILD, pulmonary vascular disease</td></tr>
+            <tr><td>Echo</td><td>Suspected pulmonary HTN, unexplained RHF</td></tr>
+          </tbody></table></div>
+        </div>
+        <div class="card" style="margin-top:14px">
+          <div class="card-title">Smoking cessation</div>
+          <div class="alert alert-teal">ANZCA 2023: advocate cessation at every visit. SA Quitline 13 7848.</div>
+          <ul class="blist"><li>≥8 weeks: marked reduction in respiratory complications</li><li>4–8 weeks: improved wound healing; some respiratory benefit</li><li>&lt;4 weeks: transient mucus rise but cardiovascular benefit remains</li><li>NRT &amp; varenicline safe peri-op</li></ul>
+        </div>
+        <div class="card" style="margin-top:14px">
+          <div class="card-title">OSA</div>
+          <ul class="blist"><li>STOP-BANG ≥3 → document &amp; notify anaesthetics (<span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="stopbang">open calculator</span>)</li><li>Known OSA on CPAP: continue; bring own device</li><li>Suspected OSA: sleep study referral; flag risk</li></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RENAL -->
+  <div id="page-renal" class="page">
+    <div class="page-title">Renal &amp; hepatic disease</div>
+    <div class="page-sub">ESAIC 2024–25 · ANZCA PG07 2024 · ACC/AHA 2024</div>
+    <div class="grid-2">
+      <div>
+        <div class="card">
+          <div class="card-title">CKD staging &amp; impact</div>
+          <div class="table-wrap"><table><thead><tr><th>Stage</th><th>eGFR</th><th>Considerations</th></tr></thead><tbody>
+            <tr><td>1–2</td><td>≥60</td><td>Low. Avoid nephrotoxins.</td></tr>
+            <tr><td>3a–3b</td><td>30–59</td><td>Review renally-dosed drugs; DOAC dose-check; avoid/pre-hydrate contrast; SGLT2i often unsuitable</td></tr>
+            <tr><td>4</td><td>15–29</td><td>Nephrology consult; DOAC/LMWH adjust; electrolytes; anaemia common</td></tr>
+            <tr><td>5 / dialysis</td><td>&lt;15</td><td>Renal co-management; timing vs dialysis; protect AV fistula</td></tr>
+          </tbody></table></div>
+        </div>
+        <div class="card" style="margin-top:14px">
+          <div class="card-title">Drug adjustments in CKD</div>
+          <ul class="blist"><li><strong>Dabigatran:</strong> contraindicated CrCl &lt;30</li><li><strong>Apixaban/rivaroxaban:</strong> reduce/caution &lt;30</li><li><strong>Enoxaparin:</strong> 1 mg/kg/day if CrCl &lt;30; consider UFH</li><li><strong>Metformin:</strong> cease &lt;30; hold peri-op at 30–45</li><li><strong>SGLT2i:</strong> unsuitable &lt;30–45 (drug-specific)</li><li><strong>NSAIDs:</strong> avoid in any peri-op CKD</li><li><strong>Gabapentin/pregabalin:</strong> dose reduce substantially</li></ul>
+        </div>
+      </div>
+      <div>
+        <div class="card">
+          <div class="card-title">Hepatic disease</div>
+          <div class="alert alert-amber" style="margin-bottom:10px"><strong>Child-Pugh C (10–15) = very high mortality.</strong> Avoid elective surgery; hepatology input.</div>
+          <div class="table-wrap"><table><thead><tr><th>Class</th><th>Score</th><th>30-d mortality</th></tr></thead><tbody>
+            <tr><td><span class="pill pill-green">A</span></td><td>5–6</td><td>5–10%</td></tr>
+            <tr><td><span class="pill pill-amber">B</span></td><td>7–9</td><td>25–30%</td></tr>
+            <tr><td><span class="pill pill-red">C</span></td><td>10–15</td><td>50–80%</td></tr>
+          </tbody></table></div>
+          <ul class="blist" style="margin-top:8px"><li>Coagulopathy: don't reflexively correct INR — discuss haematology</li><li>Platelets: neuraxial ≥80 (low evidence); major surgery ≥50</li><li>Ascites: SBP risk; avoid unnecessary bowel prep</li><li>Encephalopathy: avoid benzodiazepines, morphine</li></ul>
+        </div>
+        <div class="card" style="margin-top:14px">
+          <div class="card-title">Pre-op anaemia optimisation</div>
+          <ul class="blist"><li>Target Hb ≥80 g/L most elective; ≥100 for cardiac/major vascular</li><li>Iron deficiency: IV iron if surgery &lt;4–6 weeks (oral takes ~3 months)</li><li>ESAIC 2024: IV iron reduces transfusion — offer proactively</li><li>B12/folate: replace &amp; recheck 4–6 weeks</li><li>EPO: consider in CKD anaemia if Hb &lt;100 &amp; surgery within weeks</li><li>Arrange via NALHN haematology / outpatient IV iron service</li></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OBESITY -->
+  <div id="page-obesity" class="page">
+    <div class="page-title">Obesity &amp; obstructive sleep apnoea</div>
+    <div class="page-sub">ESAIC 2024–25 · STOP-BANG · ANZCA PG07 2024</div>
+    <div class="grid-2">
+      <div>
+        <div class="card">
+          <div class="card-title">Obesity considerations</div>
+          <div class="table-wrap"><table><thead><tr><th>BMI</th><th>Category</th><th>Considerations</th></tr></thead><tbody>
+            <tr><td>30–34.9</td><td>Class I</td><td>OSA screen; reflux; IV access</td></tr>
+            <tr><td>35–39.9</td><td>Class II</td><td>Airway assessment; CPAP history; respiratory reserve</td></tr>
+            <tr><td>≥40</td><td>Class III</td><td>High risk: OSA, difficult airway, VTE, wound healing. Flag senior anaesthetics; consider HDU</td></tr>
+            <tr><td>≥50</td><td>Super-obese</td><td>Very high risk; consultant anaesthetics; HDU/ICU planning</td></tr>
+          </tbody></table></div>
+        </div>
+        <div class="card" style="margin-top:14px">
+          <div class="card-title">Airway assessment</div>
+          <ul class="blist"><li>Mallampati III/IV — increased difficult airway risk</li><li>Neck circumference &gt;40 cm — strong predictor</li><li>Mouth opening, thyromental distance, neck extension</li><li>Snoring/OSA history, previous difficult airway</li><li>Document "potential difficult airway — senior anaesthetist" if applicable</li></ul>
+        </div>
+      </div>
+      <div>
+        <div class="card">
+          <div class="card-title">OSA management</div>
+          <ul class="blist"><li>STOP-BANG ≥3 → flag (<span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="stopbang">open calculator</span>)</li><li>Known OSA on CPAP: continue; bring device on admission</li><li>Untreated known OSA: document severity (AHI); specialist review for major</li><li>Suspected: sleep study if time; flag anaesthetics if urgent</li><li>OHS: SpO₂ &lt;94% room air → ABG, pulmonary review</li></ul>
+        </div>
+        <div class="card" style="margin-top:14px">
+          <div class="card-title">Aspiration risk</div>
+          <div class="alert alert-amber">Obesity + GLP-1 agonist = compounded aspiration risk — see GLP-1/SGLT2i page. Gastroparesis, reflux &amp; poor glycaemic control add further risk.</div>
+          <ul class="blist"><li>GORD: PPI/ranitidine course pre-op; sodium citrate day of</li><li>Active GORD/hiatus hernia: document for anaesthetics</li><li>Consider RSI for severe obesity with reflux</li></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FRAILTY -->
+  <div id="page-frailty" class="page">
+    <div class="page-title">Frailty &amp; the older surgical patient</div>
+    <div class="page-sub">ACC/AHA 2024 (frailty as risk modifier) · ANZCA PG07 2024 · Clinical Frailty Scale (Rockwood)</div>
+    <div class="tag-strip"><span class="source-badge">ACC/AHA 2024</span><span class="source-badge">CFS (Rockwood)</span></div>
+    <div class="alert alert-blue"><strong>ACC/AHA 2024:</strong> frailty is now an explicit risk modifier in perioperative cardiovascular assessment. Frailty independently predicts mortality, delirium, institutional discharge &amp; complications — assess routinely in older patients regardless of RCRI.</div>
+    <div class="grid-2">
+      <div>
+        <div class="card">
+          <div class="card-title">Clinical Frailty Scale (CFS)</div>
+          <div class="table-wrap"><table><thead><tr><th>CFS</th><th>Descriptor</th></tr></thead><tbody>
+            <tr><td>1</td><td>Very fit</td></tr>
+            <tr><td>2</td><td>Well</td></tr>
+            <tr><td>3</td><td>Managing well</td></tr>
+            <tr><td>4</td><td>Vulnerable (symptoms limit activity)</td></tr>
+            <tr><td><span class="pill pill-amber">5</span></td><td>Mildly frail (needs help with IADLs)</td></tr>
+            <tr><td><span class="pill pill-amber">6</span></td><td>Moderately frail (help with all outside activities)</td></tr>
+            <tr><td><span class="pill pill-red">7</span></td><td>Severely frail (dependent for personal care)</td></tr>
+            <tr><td><span class="pill pill-red">8</span></td><td>Very severely frail</td></tr>
+            <tr><td><span class="pill pill-red">9</span></td><td>Terminally ill</td></tr>
+          </tbody></table></div>
+          <div class="sublabel" style="margin-top:8px">CFS ≥5 = frail → higher peri-op risk; consider shared decision-making, prehabilitation, geriatric/perioperative medicine input.</div>
+        </div>
+      </div>
+      <div>
+        <div class="card">
+          <div class="card-title">Assessment domains</div>
+          <ul class="blist"><li><strong>Cognition:</strong> screen for impairment &amp; delirium risk (4AT, Mini-Cog)</li><li><strong>Function:</strong> ADLs/IADLs, mobility, falls history</li><li><strong>Nutrition:</strong> unintentional weight loss, low albumin</li><li><strong>Polypharmacy:</strong> deprescribing opportunities; anticholinergic burden</li><li><strong>Sarcopenia:</strong> grip strength, gait speed</li><li><strong>Social:</strong> supports, discharge planning early</li></ul>
+        </div>
+        <div class="card" style="margin-top:14px">
+          <div class="card-title">Optimisation &amp; planning</div>
+          <ul class="blist"><li>Prehabilitation: exercise, nutrition, anaemia correction</li><li>Delirium prevention bundle; avoid high-risk drugs (benzos, anticholinergics)</li><li>Medication review &amp; deprescribing</li><li>Shared decision-making re: goals &amp; expected functional outcome</li><li>Early involvement of perioperative medicine / geriatrics for CFS ≥5</li><li>Consider HDU and explicit post-op delirium/mobility plan</li></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MEDS -->
+  <div id="page-meds" class="page">
+    <div class="page-title">Perioperative medications — hold / continue</div>
+    <div class="page-sub">ANZCA PG07 2024 · ACC/AHA 2024 · ADS-ANZCA 2022</div>
+    <div class="global-search no-print" style="max-width:none;margin-bottom:18px"><span style="color:var(--text3)">🔍</span><input type="text" id="med-search" placeholder="Filter drug name or class…" oninput="filterMeds()"></div>
+    <div id="med-list">
+      <div class="section-header" data-group>Cardiovascular</div>
+      <div class="drug-card" data-kw="beta blocker metoprolol atenolol carvedilol bisoprolol propranolol"><div><span class="pill pill-green" style="margin-top:3px">CONTINUE</span></div><div class="drug-info"><div class="drug-name">Beta-blockers</div><div class="drug-class">Metoprolol, atenolol, carvedilol, bisoprolol</div><div class="drug-action">Continue peri-op — do NOT stop acutely (rebound tachycardia/ischaemia). Morning of surgery with sip of water.</div></div></div>
+      <div class="drug-card" data-kw="ace inhibitor arb perindopril ramipril irbesartan lisinopril candesartan telmisartan valsartan"><div><span class="pill pill-amber" style="margin-top:3px">HOLD 24H</span></div><div class="drug-info"><div class="drug-name">ACE inhibitors / ARBs</div><div class="drug-class">Perindopril, ramipril, irbesartan, candesartan, telmisartan</div><div class="drug-action">Hold 24h before elevated-risk surgery (hypotension). Continue for HFrEF (ACC/AHA 2024). Resume when haemodynamically stable.</div></div></div>
+      <div class="drug-card" data-kw="calcium channel blocker amlodipine felodipine diltiazem verapamil"><div><span class="pill pill-green" style="margin-top:3px">CONTINUE</span></div><div class="drug-info"><div class="drug-name">Calcium channel blockers</div><div class="drug-class">Amlodipine, felodipine, diltiazem, verapamil</div><div class="drug-action">Continue. No significant peri-op concern.</div></div></div>
+      <div class="drug-card" data-kw="statin atorvastatin rosuvastatin pravastatin simvastatin lipid"><div><span class="pill pill-green" style="margin-top:3px">CONTINUE</span></div><div class="drug-info"><div class="drug-name">Statins</div><div class="drug-class">Atorvastatin, rosuvastatin, pravastatin</div><div class="drug-action">Continue — peri-op cardiac protection. Restart ASAP post-op if held.</div></div></div>
+      <div class="drug-card" data-kw="digoxin glycoside rate control"><div><span class="pill pill-green" style="margin-top:3px">CONTINUE</span></div><div class="drug-info"><div class="drug-name">Digoxin</div><div class="drug-class">Digoxin</div><div class="drug-action">Continue. Check level and K⁺/Mg²⁺ — hypokalaemia potentiates toxicity.</div></div></div>
+      <div class="drug-card" data-kw="clonidine methyldopa central antihypertensive"><div><span class="pill pill-green" style="margin-top:3px">CONTINUE</span></div><div class="drug-info"><div class="drug-name">Clonidine / methyldopa</div><div class="drug-class">Central antihypertensives</div><div class="drug-action">Must continue — abrupt cessation causes severe rebound hypertension. Use IV equivalent if NBM.</div></div></div>
+      <div class="drug-card" data-kw="aspirin clopidogrel ticagrelor prasugrel antiplatelet dapt"><div><span class="pill pill-blue" style="margin-top:3px">CASE-BY-CASE</span></div><div class="drug-info"><div class="drug-name">Antiplatelets (aspirin, clopidogrel)</div><div class="drug-class">Aspirin, clopidogrel, ticagrelor, prasugrel</div><div class="drug-action">Aspirin (cardiac/vascular): continue most cases. Aspirin (primary prevention only): hold 7d if high bleed risk. DAPT post-stent: do NOT stop — cardiology sign-off required.</div></div></div>
+
+      <div class="section-header" data-group>Diuretics</div>
+      <div class="drug-card" data-kw="frusemide furosemide loop diuretic heart failure"><div><span class="pill pill-amber" style="margin-top:3px">CAUTION</span></div><div class="drug-info"><div class="drug-name">Loop diuretics</div><div class="drug-class">Frusemide, bumetanide</div><div class="drug-action">Continue for HF/overload; consider holding AM of surgery if euvolaemic. Check K⁺.</div></div></div>
+      <div class="drug-card" data-kw="thiazide hydrochlorothiazide indapamide chlorthalidone"><div><span class="pill pill-amber" style="margin-top:3px">HOLD DAY OF</span></div><div class="drug-info"><div class="drug-name">Thiazide diuretics</div><div class="drug-class">Hydrochlorothiazide, indapamide</div><div class="drug-action">Hold day of surgery — volume/electrolyte risk. Check K⁺. Restart when oral intake established.</div></div></div>
+
+      <div class="section-header" data-group>Psychotropic / neurological</div>
+      <div class="drug-card" data-kw="ssri snri antidepressant sertraline fluoxetine escitalopram venlafaxine desvenlafaxine"><div><span class="pill pill-green" style="margin-top:3px">CONTINUE</span></div><div class="drug-info"><div class="drug-name">SSRIs / SNRIs</div><div class="drug-class">Sertraline, escitalopram, venlafaxine</div><div class="drug-action">Continue. Mild bleeding-risk increase (esp. with NSAIDs). Serotonin syndrome risk with tramadol/pethidine/fentanyl — note in plan.</div></div></div>
+      <div class="drug-card" data-kw="maoi phenelzine tranylcypromine irreversible monoamine oxidase"><div><span class="pill pill-red" style="margin-top:3px">SPECIALIST</span></div><div class="drug-info"><div class="drug-name">MAO inhibitors (irreversible)</div><div class="drug-class">Phenelzine, tranylcypromine</div><div class="drug-action">Do NOT abruptly cease. Avoid pethidine &amp; indirect sympathomimetics (hypertensive crisis / serotonin syndrome). Liaise with psychiatry well ahead.</div></div></div>
+      <div class="drug-card" data-kw="antipsychotic quetiapine olanzapine risperidone clozapine haloperidol"><div><span class="pill pill-green" style="margin-top:3px">CONTINUE</span></div><div class="drug-info"><div class="drug-name">Antipsychotics</div><div class="drug-class">Quetiapine, olanzapine, risperidone, clozapine</div><div class="drug-action">Continue. QTc — ECG if multiple QT-prolonging drugs. Clozapine: contact psychiatry for specific plan.</div></div></div>
+      <div class="drug-card" data-kw="lithium mood stabiliser bipolar"><div><span class="pill pill-amber" style="margin-top:3px">CAUTION</span></div><div class="drug-info"><div class="drug-name">Lithium</div><div class="drug-class">Lithium carbonate</div><div class="drug-action">Check level pre-op. Hold morning of surgery (narrow index; fluid shifts → toxicity). Avoid NSAIDs. Resume when stable.</div></div></div>
+      <div class="drug-card" data-kw="epilepsy antiepileptic anticonvulsant levetiracetam lamotrigine valproate phenytoin carbamazepine"><div><span class="pill pill-green" style="margin-top:3px">CONTINUE</span></div><div class="drug-info"><div class="drug-name">Antiepileptics</div><div class="drug-class">Levetiracetam, lamotrigine, valproate, phenytoin</div><div class="drug-action">Must continue — missed doses risk seizures. Use IV/NG equivalents if NBM.</div></div></div>
+      <div class="drug-card" data-kw="parkinson levodopa carbidopa pramipexole ropinirole movement"><div><span class="pill pill-green" style="margin-top:3px">NEVER STOP</span></div><div class="drug-info"><div class="drug-name">Parkinson's medications</div><div class="drug-class">Levodopa/carbidopa, pramipexole, ropinirole</div><div class="drug-action">Abrupt cessation can trigger NMS-like crisis. Give up to &amp; including AM of surgery; resume via NG. Avoid dopamine antagonists (metoclopramide, droperidol).</div></div></div>
+
+      <div class="section-header" data-group>Endocrine</div>
+      <div class="drug-card" data-kw="thyroid thyroxine levothyroxine hypothyroid"><div><span class="pill pill-green" style="margin-top:3px">CONTINUE</span></div><div class="drug-info"><div class="drug-name">Thyroxine</div><div class="drug-class">Levothyroxine</div><div class="drug-action">Continue. Long half-life. Ensure hyperthyroidism controlled before elective surgery.</div></div></div>
+      <div class="drug-card" data-kw="corticosteroid prednisolone dexamethasone hydrocortisone steroid"><div><span class="pill pill-green" style="margin-top:3px">CONTINUE + COVER</span></div><div class="drug-info"><div class="drug-name">Systemic corticosteroids</div><div class="drug-class">Prednisolone, dexamethasone</div><div class="drug-action">Continue; stress dose if ≥5 mg pred &gt;3 months (see Respiratory page). Addisonian crisis risk if uncovered.</div></div></div>
+
+      <div class="section-header" data-group>Rheumatology / immunosuppression</div>
+      <div class="drug-card" data-kw="dmard methotrexate azathioprine hydroxychloroquine leflunomide rheumatoid"><div><span class="pill pill-blue" style="margin-top:3px">CASE-BY-CASE</span></div><div class="drug-info"><div class="drug-name">Conventional DMARDs</div><div class="drug-class">Methotrexate, azathioprine, hydroxychloroquine</div><div class="drug-action">Hydroxychloroquine: continue. MTX/azathioprine: generally continue for minor/intermediate if controlled; consider holding for major — discuss rheumatology.</div></div></div>
+      <div class="drug-card" data-kw="biologic tnf adalimumab etanercept infliximab tocilizumab jak tofacitinib baricitinib"><div><span class="pill pill-red" style="margin-top:3px">HOLD</span></div><div class="drug-info"><div class="drug-name">Biologics / JAK inhibitors</div><div class="drug-class">Adalimumab, etanercept, infliximab; tofacitinib</div><div class="drug-action">Hold before elective surgery (infection/wound healing). Hold 1–5 dosing intervals by half-life. Resume when wound healed, no infection (~14d). Rheumatology co-management.</div></div></div>
+
+      <div class="section-header" data-group>Hormonal</div>
+      <div class="drug-card" data-kw="ocp oral contraceptive combined oestrogen estrogen pill"><div><span class="pill pill-amber" style="margin-top:3px">CONSIDER HOLD</span></div><div class="drug-info"><div class="drug-name">Combined OCP</div><div class="drug-class">Combined oestrogen/progestogen</div><div class="drug-action">Consider ceasing 4 weeks before major surgery with prolonged immobility (VTE). Day/low-risk surgery: usually continue. Ensure alternative contraception. POP: no need to stop.</div></div></div>
+      <div class="drug-card" data-kw="hrt hormone replacement oestrogen estrogen menopause"><div><span class="pill pill-amber" style="margin-top:3px">CONSIDER HOLD</span></div><div class="drug-info"><div class="drug-name">HRT (systemic oestrogen)</div><div class="drug-class">Oral/patch oestrogen</div><div class="drug-action">Same as COCP for major surgery + immobility. Topical/vaginal oestrogen: continue.</div></div></div>
+
+      <div class="section-header" data-group>Herbal / complementary</div>
+      <div class="drug-card" data-kw="herbal garlic ginkgo ginseng st johns wort fish oil kava valerian complementary"><div><span class="pill pill-red" style="margin-top:3px">HOLD 1–2 WK</span></div><div class="drug-info"><div class="drug-name">High-risk herbals</div><div class="drug-class">Garlic, ginkgo, ginseng, St John's Wort, high-dose fish oil, kava, valerian</div><div class="drug-action">Hold 7–14 days pre-op. Antiplatelet effects (garlic/ginkgo/fish oil); CYP450 induction (St John's Wort); sedation (kava/valerian). Ask specifically — often unreported.</div></div></div>
+    </div>
+  </div>
+
+  <!-- ANTICOAG -->
+  <div id="page-anticoag" class="page">
+    <div class="page-title">Anticoagulation — perioperative management</div>
+    <div class="page-sub">CHEST 2022 · PAUSE study · ACC/AHA 2024 · BRIDGE trial</div>
+    <div class="tag-strip"><span class="source-badge">CHEST 2022</span><span class="source-badge">PAUSE</span><span class="source-badge">ACC/AHA 2024</span></div>
+    <div class="alert alert-red"><strong>High thrombotic risk → haematology/cardiology co-management:</strong> mechanical heart valves, recent VTE (&lt;3 months), antiphospholipid syndrome, CHA₂DS₂-VASc ≥7. Stratify with the <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="chads">CHA₂DS₂-VASc</span> and <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="hasbled">HAS-BLED</span> calculators.</div>
+    <div class="grid-2">
+      <div>
+        <div class="card">
+          <div class="card-title">Warfarin</div>
+          <ul class="steps">
+            <li><div class="step-num">1</div><div class="step-text"><strong>Cease 5 days pre-op</strong> (adjust for weekends)</div></li>
+            <li><div class="step-num">2</div><div class="step-text"><strong>INR day before</strong> — if &gt;1.5 consider vitamin K 1–2.5 mg oral</div></li>
+            <li><div class="step-num">3</div><div class="step-text"><strong>Bridging decision</strong> — most AF patients do NOT need bridging (BRIDGE)</div></li>
+            <li><div class="step-num">4</div><div class="step-text"><strong>Resume post-op</strong> at usual dose once haemostasis achieved; therapeutic INR in 5–7d</div></li>
+          </ul>
+          <div class="section-header" style="margin-top:14px">Bridging (LMWH)</div>
+          <div class="table-wrap"><table><thead><tr><th>Risk</th><th>Scenario</th><th>Bridge?</th></tr></thead><tbody>
+            <tr><td><span class="pill pill-red">High</span></td><td>Mechanical mitral valve · any mechanical valve + AF · AF + CHA₂DS₂-VASc ≥7 · VTE &lt;3 months · hypercoagulable</td><td><span class="pill pill-red">YES</span></td></tr>
+            <tr><td><span class="pill pill-amber">Mod</span></td><td>Bileaflet mech AVR + AF · CHA₂DS₂-VASc 5–6 · VTE 3–12 months · recurrent VTE</td><td><span class="pill pill-amber">Case-by-case</span></td></tr>
+            <tr><td><span class="pill pill-green">Low</span></td><td>Non-valvular AF + CHA₂DS₂-VASc ≤4 · VTE &gt;12 months · bioprosthetic valve</td><td><span class="pill pill-green">NO</span></td></tr>
+          </tbody></table></div>
+        </div>
+      </div>
+      <div>
+        <div class="card">
+          <div class="card-title">DOACs — PAUSE protocol</div>
+          <div class="alert alert-green" style="margin-bottom:12px"><strong>No bridging for DOACs</strong> — rapid offset/onset means the unprotected window is short.</div>
+          <div class="table-wrap"><table><thead><tr><th>Drug</th><th>Low-bleed</th><th>High-bleed</th><th>CKD</th></tr></thead><tbody>
+            <tr><td>Apixaban</td><td>1 day</td><td>2 days</td><td>Avoid CrCl &lt;25</td></tr>
+            <tr><td>Rivaroxaban</td><td>1 day</td><td>2 days</td><td>Avoid CrCl &lt;30</td></tr>
+            <tr><td>Dabigatran</td><td>CrCl ≥50: 1d · 30–49: 2d</td><td>≥50: 2d · 30–49: 4d</td><td>CI &lt;30</td></tr>
+            <tr><td>Edoxaban</td><td>1 day</td><td>2 days</td><td>Caution &lt;50</td></tr>
+          </tbody></table></div>
+          <div class="sublabel" style="margin-top:8px">Low-bleed: laparoscopy, hernia, arthroscopy, joint replacement. High-bleed: major vascular, cardiac, neurosurgery, major bowel. <strong>Neuraxial: minimum 3 days off all DOACs.</strong></div>
+        </div>
+        <div class="card" style="margin-top:14px">
+          <div class="card-title">Resume post-op</div>
+          <div class="table-wrap"><table><thead><tr><th>Procedure</th><th>Restart DOAC</th></tr></thead><tbody>
+            <tr><td>Minor / low bleed</td><td>24h (or sooner if haemostasis)</td></tr>
+            <tr><td>Most surgery</td><td>48–72h</td></tr>
+            <tr><td>High bleed (CNS, cardiac, vascular)</td><td>72h–5 days; discuss surgeon</td></tr>
+            <tr><td>Neuraxial catheter in situ</td><td>≥24h after catheter removal</td></tr>
+          </tbody></table></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GLP1 -->
+  <div id="page-glp1" class="page">
+    <div class="page-title">GLP-1 receptor agonists &amp; SGLT2 inhibitors</div>
+    <div class="page-sub">ADS/ANZCA/GESA/NACOS 2025 · ADS-ANZCA Diabetes 2022 · ADS SGLT2i Alert 2022</div>
+    <div class="tag-strip"><span class="source-badge">ANZCA GLP-1 2025</span><span class="source-badge">ADS-ANZCA 2022</span><span class="source-badge">SGLT2i Alert 2022</span></div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title" style="color:var(--green)">GLP-1 agonists — 2025 guidance</div>
+        <div class="alert alert-teal"><strong>2025 update:</strong> GLP-1 RAs and dual GLP-1/GIP agonists should generally be <strong>CONTINUED</strong> pre-op. Do NOT routinely cease — manage aspiration risk instead.</div>
+        <div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;font-weight:600;margin:14px 0 6px">Common agents (Australia)</div>
+        <div class="table-wrap"><table><thead><tr><th>Drug</th><th>Brand</th><th>Use</th></tr></thead><tbody>
+          <tr><td>Semaglutide SC</td><td>Ozempic</td><td>T2DM</td></tr>
+          <tr><td>Semaglutide SC</td><td>Wegovy</td><td>Obesity</td></tr>
+          <tr><td>Semaglutide oral</td><td>Rybelsus</td><td>T2DM</td></tr>
+          <tr><td>Dulaglutide</td><td>Trulicity</td><td>T2DM</td></tr>
+          <tr><td>Liraglutide</td><td>Victoza</td><td>T2DM</td></tr>
+          <tr><td>Tirzepatide</td><td>Mounjaro</td><td>T2DM/obesity</td></tr>
+        </tbody></table></div>
+        <div class="section-header">Aspiration risk pathway</div>
+        <ul class="steps">
+          <li><div class="step-num">1</div><div class="step-text"><strong>Clinic:</strong> identify use, document drug/dose/frequency; counsel on 24h clear fluid diet</div></li>
+          <li><div class="step-num">2</div><div class="step-text"><strong>24h before:</strong> clear fluid diet only; continue GLP-1</div></li>
+          <li><div class="step-num">3</div><div class="step-text"><strong>Day of:</strong> if clear fluid diet done → standard ANZCA fasting (6h/2h); notify anaesthetics</div></li>
+          <li><div class="step-num">4</div><div class="step-text"><strong>If not done / uncertain:</strong> gastric ultrasound or minimally-sedated gastroscopy; IV erythromycin may be used</div></li>
+        </ul>
+        <div class="alert alert-amber" style="margin-top:12px;margin-bottom:0">Do NOT use SipTilSend / reduced-fasting protocols for GLP-1 patients — standard 6h/2h fasting is the minimum.</div>
+      </div>
+      <div class="card">
+        <div class="card-title" style="color:var(--red)">SGLT2 inhibitors — euglycaemic DKA risk</div>
+        <div class="alert alert-red"><strong>Euglycaemic DKA:</strong> SGLT2i can cause DKA with normal/near-normal glucose. Fasting + surgical stress raises risk — hold pre-op.</div>
+        <div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;font-weight:600;margin:14px 0 6px">Agents (Australia)</div>
+        <div class="table-wrap"><table><thead><tr><th>Drug</th><th>Brand</th><th>Combinations</th></tr></thead><tbody>
+          <tr><td>Dapagliflozin</td><td>Forxiga</td><td>Xigduo, Qtern</td></tr>
+          <tr><td>Empagliflozin</td><td>Jardiance</td><td>Jardiamet, Glyxambi</td></tr>
+          <tr><td>Ertugliflozin</td><td>Steglatro</td><td>Segluromet, Steglujan</td></tr>
+        </tbody></table></div>
+        <div class="section-header">Cessation (ADS-ANZCA 2022)</div>
+        <div class="table-wrap"><table><thead><tr><th>Surgery</th><th>Cease</th><th>Day of</th></tr></thead><tbody>
+          <tr><td>Major</td><td><span class="pill pill-red">3 days prior</span></td><td>Fingerprick ketones first</td></tr>
+          <tr><td>Day-stay (scope)</td><td><span class="pill pill-amber">Day of only</span></td><td>Minimise fasting</td></tr>
+        </tbody></table></div>
+        <div class="section-header">Ketone decision (day of surgery)</div>
+        <div style="background:var(--bg3);border-radius:var(--radius);padding:13px;font-size:12.5px">
+          <div style="color:var(--green);font-weight:600;margin-bottom:6px">Ceased 3d + well + ketones &lt;1.7 → Proceed</div>
+          <div style="color:var(--amber);font-weight:600;margin-bottom:6px">Ketosis (&gt;1.0) no acidosis → endocrine advice; may proceed with monitoring + insulin/glucose if &lt;3.0</div>
+          <div style="color:var(--red);font-weight:600">Ketosis + acidosis (BE &lt;−5, pH &lt;7.35) → POSTPONE; escalate endocrine + critical care</div>
+        </div>
+        <div class="alert alert-amber" style="margin-top:12px;margin-bottom:0"><strong>Blood glucose may be normal — do not be reassured by a normal BSL.</strong> Symptoms: abdominal pain, nausea, vomiting, malaise; ketones &gt;1.0; low base excess.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FASTING -->
+  <div id="page-fasting" class="page">
+    <div class="page-title">Perioperative fasting</div>
+    <div class="page-sub">ANZCA PG07 Guideline on Pre-Anaesthesia Consultation and Patient Preparation (2024)</div>
+    <div class="tag-strip"><span class="source-badge">ANZCA PG07 2024</span></div>
+    <div class="grid-3" style="margin-bottom:16px">
+      <div class="card" style="border-color:var(--red);text-align:center"><div class="hero-num" style="color:var(--red);font-size:34px">6h</div><div style="font-size:13px;font-weight:600;margin:4px 0 2px">Solid food / milk</div><div style="font-size:12px;color:var(--text3)">Incl. chewing gum, candy. Light meal preferred over heavy.</div></div>
+      <div class="card" style="border-color:var(--amber);text-align:center"><div class="hero-num" style="color:var(--amber);font-size:34px">2h</div><div style="font-size:13px;font-weight:600;margin:4px 0 2px">Clear fluids</div><div style="font-size:12px;color:var(--text3)">ANZCA minimum. Water, clear juice, black tea/coffee. NOT milk/smoothies.</div><div style="font-size:11px;color:var(--teal);font-weight:700;margin-top:6px">★ LMH: Sip Till Send applies</div></div>
+      <div class="card" style="border-color:var(--purple);text-align:center"><div class="hero-num" style="color:var(--purple);font-size:34px">4h</div><div style="font-size:13px;font-weight:600;margin:4px 0 2px">Breast milk (infant)</div><div style="font-size:12px;color:var(--text3)">Formula = solid (6h). Water/clear 2h in infants &gt;6 months.</div></div>
+    </div>
+    <div class="alert alert-teal" style="margin-bottom:16px"><strong>★ LMH local practice — Sip Till Send (STS):</strong> Standard patients may continue clear fluids (water, black tea/coffee, clear juice) until called to theatre — this supersedes the 2h ANZCA minimum for eligible patients. <strong>STS does NOT apply to:</strong> GLP-1 agonist users · morbid obesity (BMI ≥40) · symptomatic GORD / known gastroparesis · opioid dependence · pregnancy ≥20 weeks · any other high aspiration risk.</div>
+    <div class="grid-2">
+      <div>
+        <div class="card">
+          <div class="card-title">High aspiration risk — modified approach</div>
+          <div class="alert alert-amber" style="margin-bottom:10px">May need RSI or awake intubation; flag anaesthetics:</div>
+          <ul class="blist"><li>Morbid obesity (BMI ≥40)</li><li>Known/suspected gastroparesis</li><li>Symptomatic GORD / active reflux</li><li>GLP-1 agonist use</li><li>Diabetic autonomic neuropathy</li><li>Large/symptomatic hiatus hernia</li><li>Previous bariatric surgery</li><li>Opioid dependence</li><li>Raised ICP</li><li>Pregnancy &gt;20 weeks</li></ul>
+        </div>
+        <div class="card" style="margin-top:14px">
+          <div class="card-title">Medications morning of surgery</div>
+          <ul class="blist"><li>Essential meds with small sip (&lt;30 mL) water — allowed within 2h window</li><li>Document which meds taken AM of surgery in referral</li><li>BP meds: follow hold/continue rules</li><li>Inhalers: always take</li><li>Insulin: 80% basal, hold short-acting</li></ul>
+        </div>
+      </div>
+      <div>
+        <div class="card">
+          <div class="card-title">Premedications to consider</div>
+          <div class="table-wrap"><table><thead><tr><th>Drug</th><th>Indication</th><th>Dose</th></tr></thead><tbody>
+            <tr><td>Sodium citrate</td><td>High aspiration risk antacid</td><td>30 mL PO 1h pre-op</td></tr>
+            <tr><td>Ranitidine / omeprazole</td><td>GORD, obesity</td><td>Ranitidine 150 mg or omeprazole 40 mg night before + AM</td></tr>
+            <tr><td>Metoclopramide</td><td>Prokinetic/nausea</td><td>10 mg PO 1h pre-op (avoid in Parkinson's)</td></tr>
+            <tr><td>Oral midazolam</td><td>Anxiety (anaesthetics only)</td><td>7.5–15 mg 30–60 min pre-op</td></tr>
+          </tbody></table></div>
+        </div>
+        <div class="card" style="margin-top:14px">
+          <div class="card-title">Patient instruction template</div>
+          <div style="background:var(--bg3);border-radius:var(--radius);padding:13px;font-size:12.5px;color:var(--text2);line-height:1.7">
+            "Eat a light meal up to <strong style="color:var(--text)">6 hours before</strong> your operation time, then nothing to eat.<br><br>
+            You may drink <strong style="color:var(--text)">clear fluids</strong> (water, black tea/coffee, clear juice — NOT milk or smoothies) <strong style="color:var(--teal)">until you are called to theatre (Sip Till Send)</strong>.<br><br>
+            Take regular medicines with a sip of water as directed. Do NOT take [held medicines] on the morning of surgery.<br><br>
+            If you use a GLP-1 medicine (Ozempic, Trulicity, Wegovy, Mounjaro), have <strong style="color:var(--text)">clear fluids only</strong> for 24 hours before — do NOT use Sip Till Send."
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BLOODS NG45 -->
+  <div id="page-bloods" class="page">
+    <div class="page-title">Pre-operative bloods &amp; tests — who needs what</div>
+    <div class="page-sub">NICE NG45 (2016, reviewed 2024) — Routine preoperative tests for elective surgery, stratified by ASA grade × surgery grade</div>
+    <div class="tag-strip"><span class="source-badge">NICE NG45</span><span class="source-badge">ANZCA PG07 2024</span></div>
+
+    <div class="alert alert-blue"><strong>How to use:</strong> NG45 is UK guidance widely applied in Australian practice and aligns with ANZCA PG07's "test only when it changes management" principle. It covers elective surgery in patients &gt;16. <strong>It excludes</strong> pregnant patients, cardiothoracic surgery and neurosurgery — use clinical judgement and local NALHN policy for those.</div>
+
+    <div class="section-header">Interactive selector</div>
+    <div class="card">
+      <div class="grid-2" style="gap:18px">
+        <div>
+          <div style="font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-weight:600;margin-bottom:6px">Surgery grade</div>
+          <div class="calc-seg" id="bl-surg">
+            <div class="seg-btn on" data-v="minor" onclick="pickBl('surg',this)">Minor</div>
+            <div class="seg-btn" data-v="intermediate" onclick="pickBl('surg',this)">Intermediate</div>
+            <div class="seg-btn" data-v="major" onclick="pickBl('surg',this)">Major / complex</div>
+          </div>
+          <div class="sublabel" id="bl-surg-eg" style="margin-top:8px">e.g. excising skin lesion, draining breast abscess</div>
+          <div style="font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-weight:600;margin:16px 0 6px">ASA grade</div>
+          <div class="calc-seg" id="bl-asa">
+            <div class="seg-btn on" data-v="1" onclick="pickBl('asa',this)">ASA 1</div>
+            <div class="seg-btn" data-v="2" onclick="pickBl('asa',this)">ASA 2</div>
+            <div class="seg-btn" data-v="34" onclick="pickBl('asa',this)">ASA 3–4</div>
+          </div>
+          <div class="sublabel" style="margin-top:8px"><span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="asa">Open ASA classifier →</span></div>
+        </div>
+        <div>
+          <div style="font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-weight:600;margin-bottom:6px">Recommended tests</div>
+          <div id="bl-result"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-header">Tests for all surgery grades</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">Offer / consider regardless of grade</div>
+        <ul class="blist">
+          <li><strong>HbA1c</strong> — offer to people <em>with diabetes</em> not tested in last 3 months. Do NOT routinely offer to people without diagnosed diabetes.</li>
+          <li><strong>Pregnancy test</strong> — sensitively ask all women of childbearing potential on day of surgery; test with consent if any doubt. Use a documented local protocol.</li>
+          <li><strong>Echocardiography (resting)</strong> — not routine. Consider if heart murmur + cardiac symptom, or signs/symptoms of heart failure — do an ECG first and discuss with anaesthetist.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">Do NOT routinely offer</div>
+        <ul class="blist">
+          <li><strong>Urine dipstick</strong> — only midstream M/C/S if a UTI would change the decision to operate</li>
+          <li><strong>Sickle cell test</strong> — instead ask about personal/family history; liaise with sickle cell service if known disease</li>
+          <li><strong>Chest X-ray</strong> — not routine before surgery</li>
+          <li><strong>HbA1c in non-diabetics</strong></li>
+        </ul>
+        <div class="alert alert-amber" style="margin-top:10px;margin-bottom:0"><strong>Anticoagulants:</strong> routine haemostasis tests do not assess DOAC effect — DOAC levels can't be measured by routine coagulation testing. Make an individualised plan per local guidance (see <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="anticoag">Anticoagulation page</span>).</div>
+      </div>
+    </div>
+
+    <div class="section-header">Full NG45 grids</div>
+
+    <div class="card">
+      <div class="card-title"><div class="card-title-icon" style="background:var(--green-soft);color:var(--green)">m</div>Minor surgery <span style="font-weight:400;color:var(--text3);font-size:12px">— e.g. excising skin lesion, draining breast abscess</span></div>
+      <div class="table-wrap"><table><thead><tr><th>Test</th><th>ASA 1</th><th>ASA 2</th><th>ASA 3 / 4</th></tr></thead><tbody>
+        <tr><td>Full blood count</td><td><span class="pill pill-gray">Not routinely</span></td><td><span class="pill pill-gray">Not routinely</span></td><td><span class="pill pill-gray">Not routinely</span></td></tr>
+        <tr><td>Haemostasis</td><td><span class="pill pill-gray">Not routinely</span></td><td><span class="pill pill-gray">Not routinely</span></td><td><span class="pill pill-gray">Not routinely</span></td></tr>
+        <tr><td>Kidney function</td><td><span class="pill pill-gray">Not routinely</span></td><td><span class="pill pill-gray">Not routinely</span></td><td><span class="pill pill-amber">Consider</span> if at risk of AKI</td></tr>
+        <tr><td>ECG</td><td><span class="pill pill-gray">Not routinely</span></td><td><span class="pill pill-gray">Not routinely</span></td><td><span class="pill pill-amber">Consider</span> if no ECG in 12 months</td></tr>
+        <tr><td>Lung function / ABG</td><td><span class="pill pill-gray">Not routinely</span></td><td><span class="pill pill-gray">Not routinely</span></td><td><span class="pill pill-gray">Not routinely</span></td></tr>
+      </tbody></table></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><div class="card-title-icon" style="background:var(--amber-soft);color:var(--amber)">i</div>Intermediate surgery <span style="font-weight:400;color:var(--text3);font-size:12px">— e.g. inguinal hernia repair, varicose veins, tonsillectomy, knee arthroscopy</span></div>
+      <div class="table-wrap"><table><thead><tr><th>Test</th><th>ASA 1</th><th>ASA 2</th><th>ASA 3 / 4</th></tr></thead><tbody>
+        <tr><td>Full blood count</td><td><span class="pill pill-gray">Not routinely</span></td><td><span class="pill pill-gray">Not routinely</span></td><td><span class="pill pill-amber">Consider</span> if CVD/renal disease + uninvestigated symptoms</td></tr>
+        <tr><td>Haemostasis</td><td><span class="pill pill-gray">Not routinely</span></td><td><span class="pill pill-gray">Not routinely</span></td><td><span class="pill pill-amber">Consider</span> in chronic liver disease</td></tr>
+        <tr><td>Kidney function</td><td><span class="pill pill-gray">Not routinely</span></td><td><span class="pill pill-amber">Consider</span> if at risk of AKI</td><td><span class="pill pill-green">Offer</span></td></tr>
+        <tr><td>ECG</td><td><span class="pill pill-gray">Not routinely</span></td><td><span class="pill pill-amber">Consider</span> if CVD, renal or diabetes</td><td><span class="pill pill-green">Offer</span></td></tr>
+        <tr><td>Lung function / ABG</td><td><span class="pill pill-gray">Not routinely</span></td><td><span class="pill pill-gray">Not routinely</span></td><td><span class="pill pill-amber">Senior anaesthetist advice</span> if ASA 3/4 from respiratory disease</td></tr>
+      </tbody></table></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><div class="card-title-icon" style="background:var(--red-soft);color:var(--red)">M</div>Major / complex surgery <span style="font-weight:400;color:var(--text3);font-size:12px">— e.g. TAH, TURP, lumbar discectomy, thyroidectomy, joint replacement, lung surgery</span></div>
+      <div class="table-wrap"><table><thead><tr><th>Test</th><th>ASA 1</th><th>ASA 2</th><th>ASA 3 / 4</th></tr></thead><tbody>
+        <tr><td>Full blood count</td><td><span class="pill pill-green">Offer</span></td><td><span class="pill pill-green">Offer</span></td><td><span class="pill pill-green">Offer</span></td></tr>
+        <tr><td>Haemostasis</td><td><span class="pill pill-gray">Not routinely</span></td><td><span class="pill pill-gray">Not routinely</span></td><td><span class="pill pill-amber">Consider</span> in chronic liver disease</td></tr>
+        <tr><td>Kidney function</td><td><span class="pill pill-amber">Consider</span> if at risk of AKI</td><td><span class="pill pill-green">Offer</span></td><td><span class="pill pill-green">Offer</span></td></tr>
+        <tr><td>ECG</td><td><span class="pill pill-amber">Consider</span> if &gt;65 &amp; no ECG in 12 months</td><td><span class="pill pill-green">Offer</span></td><td><span class="pill pill-green">Offer</span></td></tr>
+        <tr><td>Lung function / ABG</td><td><span class="pill pill-gray">Not routinely</span></td><td><span class="pill pill-gray">Not routinely</span></td><td><span class="pill pill-amber">Senior anaesthetist advice</span> if ASA 3/4 from respiratory disease</td></tr>
+      </tbody></table></div>
+      <div class="sublabel" style="margin-top:8px">Key: <span class="pill pill-green">Offer</span> recommend the test · <span class="pill pill-amber">Consider</span> value depends on patient characteristics · <span class="pill pill-gray">Not routinely</span> do not routinely offer. "At risk of AKI" per NICE NG148 — includes CKD, HF, diabetes, age ≥65, nephrotoxic drugs, hypovolaemia, contrast exposure.</div>
+    </div>
+
+    <div class="alert alert-teal">For diabetes-specific bloods (HbA1c thresholds, day-of ketones for SGLT2i), see the <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="diabetes">Diabetes</span> and <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="glp1">GLP-1/SGLT2i</span> pages. For indication-based ordering of the wider test set (group &amp; hold, biomarkers, echo, DLCO), see <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="investigations">Investigations</span>.</div>
+  </div>
+
+  <!-- INVESTIGATIONS -->
+  <div id="page-investigations" class="page">
+    <div class="page-title">Pre-operative investigations</div>
+    <div class="page-sub">ANZCA PG07 2024 · ESAIC 2024–25 — test only when results will change management</div>
+    <div class="tag-strip"><span class="source-badge">ANZCA PG07 2024</span><span class="source-badge">ESAIC 2024–25</span></div>
+    <div class="alert alert-blue"><strong>Principle:</strong> investigations should be ordered only when likely to influence management. Routine, indication-free testing is not recommended and can cause harm via incidental findings.</div>
+    <div class="grid-2">
+      <div>
+        <div class="card"><div class="card-title">FBE</div><ul class="blist"><li>Expected significant blood loss / major surgery</li><li>Known/suspected anaemia</li><li>Haematological disorders</li><li>Immunosuppression</li><li>Hepatic disease, CKD, chronic inflammatory disease</li></ul></div>
+        <div class="card" style="margin-top:14px"><div class="card-title">U&amp;E / creatinine / eGFR</div><ul class="blist"><li>Age &gt;65</li><li>Hypertension, diabetes, CKD</li><li>Diuretic, ACEi/ARB, NSAID, SGLT2i use</li><li>Bowel prep / dehydration risk</li><li>Major surgery; relevant to DOAC/LMWH/contrast</li></ul></div>
+        <div class="card" style="margin-top:14px"><div class="card-title">Coagulation (INR/APTT)</div><ul class="blist"><li>Known/suspected coagulopathy</li><li>Warfarin (INR day before)</li><li>Liver disease, haematological malignancy</li><li>Major bleeding-risk surgery</li><li><strong>Not</strong> routine for DOAC patients</li></ul></div>
+        <div class="card" style="margin-top:14px"><div class="card-title">Glucose / HbA1c</div><ul class="blist"><li>Known diabetes — HbA1c &lt;3 months</li><li>Suspected undiagnosed (obesity, HTN, FHx)</li><li>Random BGL &gt;11 → HbA1c</li><li>SGLT2i: ketones day of surgery</li></ul></div>
+      </div>
+      <div>
+        <div class="card"><div class="card-title">ECG</div><ul class="blist"><li>Known CVD (IHD, HF, arrhythmia)</li><li>Cardiac symptoms</li><li>Age &gt;45 + ≥1 cardiac risk factor</li><li>Antipsychotic/TCA (QTc)</li><li>RCRI ≥2</li><li><strong>Not</strong> routine in healthy &lt;45 with no risk factors</li></ul></div>
+        <div class="card" style="margin-top:14px"><div class="card-title">Chest X-ray</div><ul class="blist"><li>New/deteriorating cardiopulmonary symptoms</li><li>Known/suspected intrathoracic pathology</li><li>Major cardiothoracic surgery</li><li><strong>Not</strong> routine (ESAIC 2024)</li></ul></div>
+        <div class="card" style="margin-top:14px"><div class="card-title">Echocardiogram</div><ul class="blist"><li>Suspected valvular disease</li><li>Unexplained dyspnoea/orthopnoea/oedema</li><li>New or deteriorating HF</li><li>Elevated BNP in elevated-risk patient</li><li>RCRI ≥3 + poor function + high-risk surgery</li></ul></div>
+        <div class="card" style="margin-top:14px"><div class="card-title">Biomarkers (BNP, troponin)</div><div class="alert alert-blue" style="margin-bottom:10px"><strong>ACC/AHA 2024 (new):</strong> consider BNP/NT-proBNP in elevated-risk patients for intermediate–high risk surgery; if high → cardiology ± post-op troponin surveillance.</div><ul class="blist"><li>BNP &gt;92 pg/mL; NT-proBNP &gt;300 pg/mL = elevated</li><li>Post-op troponin surveillance: RCRI ≥3 or high-risk surgery</li></ul></div>
+        <div class="card" style="margin-top:14px"><div class="card-title">Group &amp; hold / crossmatch</div><ul class="blist"><li>Expected significant loss (cardiac, vascular, liver, obstetric)</li><li>G&amp;H for lower expected loss</li><li>Crossmatch if transfusion anticipated</li><li>Irregular antibodies → early SA Pathology LMH notification</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHILD-PUGH -->
+  <div id="page-childpugh" class="page">
+    <div class="page-title">Child-Pugh score</div>
+    <div class="page-sub">Cirrhosis severity grading — guides surgical risk in hepatic disease.</div>
+    <div class="grid-2">
+      <div class="calc-box">
+        <div style="font-size:13px;font-weight:600;margin-bottom:10px">Parameters</div>
+        <div style="font-size:11px;color:var(--text3);font-weight:600;margin:8px 0 4px">Bilirubin (µmol/L)</div>
+        <div class="calc-seg" id="cp-bili">
+          <div class="seg-btn on" data-v="1" onclick="pickCP('bili',this)">&lt;34 <span style="font-size:10px">(1pt)</span></div>
+          <div class="seg-btn" data-v="2" onclick="pickCP('bili',this)">34–50 <span style="font-size:10px">(2pt)</span></div>
+          <div class="seg-btn" data-v="3" onclick="pickCP('bili',this)">&gt;50 <span style="font-size:10px">(3pt)</span></div>
+        </div>
+        <div style="font-size:11px;color:var(--text3);font-weight:600;margin:12px 0 4px">Albumin (g/L)</div>
+        <div class="calc-seg" id="cp-alb">
+          <div class="seg-btn on" data-v="1" onclick="pickCP('alb',this)">&gt;35 <span style="font-size:10px">(1pt)</span></div>
+          <div class="seg-btn" data-v="2" onclick="pickCP('alb',this)">28–35 <span style="font-size:10px">(2pt)</span></div>
+          <div class="seg-btn" data-v="3" onclick="pickCP('alb',this)">&lt;28 <span style="font-size:10px">(3pt)</span></div>
+        </div>
+        <div style="font-size:11px;color:var(--text3);font-weight:600;margin:12px 0 4px">INR</div>
+        <div class="calc-seg" id="cp-inr">
+          <div class="seg-btn on" data-v="1" onclick="pickCP('inr',this)">&lt;1.7 <span style="font-size:10px">(1pt)</span></div>
+          <div class="seg-btn" data-v="2" onclick="pickCP('inr',this)">1.7–2.3 <span style="font-size:10px">(2pt)</span></div>
+          <div class="seg-btn" data-v="3" onclick="pickCP('inr',this)">&gt;2.3 <span style="font-size:10px">(3pt)</span></div>
+        </div>
+        <div style="font-size:11px;color:var(--text3);font-weight:600;margin:12px 0 4px">Ascites</div>
+        <div class="calc-seg" id="cp-ascites">
+          <div class="seg-btn on" data-v="1" onclick="pickCP('ascites',this)">None <span style="font-size:10px">(1pt)</span></div>
+          <div class="seg-btn" data-v="2" onclick="pickCP('ascites',this)">Mild <span style="font-size:10px">(2pt)</span></div>
+          <div class="seg-btn" data-v="3" onclick="pickCP('ascites',this)">Mod–severe <span style="font-size:10px">(3pt)</span></div>
+        </div>
+        <div style="font-size:11px;color:var(--text3);font-weight:600;margin:12px 0 4px">Hepatic encephalopathy</div>
+        <div class="calc-seg" id="cp-enceph">
+          <div class="seg-btn on" data-v="1" onclick="pickCP('enceph',this)">None <span style="font-size:10px">(1pt)</span></div>
+          <div class="seg-btn" data-v="2" onclick="pickCP('enceph',this)">Grade 1–2 <span style="font-size:10px">(2pt)</span></div>
+          <div class="seg-btn" data-v="3" onclick="pickCP('enceph',this)">Grade 3–4 <span style="font-size:10px">(3pt)</span></div>
+        </div>
+        <hr style="margin:16px 0 10px">
+        <div style="display:flex;align-items:baseline;gap:12px"><div class="calc-score" id="cp-score">5</div><div style="color:var(--text3)">/ 15 points</div></div>
+        <div class="calc-result" id="cp-result"></div>
+      </div>
+      <div>
+        <div class="card">
+          <div class="card-title">Surgical mortality</div>
+          <div class="table-wrap"><table><thead><tr><th>Class</th><th>Score</th><th>1-yr survival</th><th>30-d op mortality</th></tr></thead><tbody>
+            <tr><td><span class="pill pill-green">A — Compensated</span></td><td>5–6</td><td>~95%</td><td>5–10%</td></tr>
+            <tr><td><span class="pill pill-amber">B — Significant</span></td><td>7–9</td><td>~75%</td><td>25–30%</td></tr>
+            <tr><td><span class="pill pill-red">C — Decompensated</span></td><td>10–15</td><td>~45%</td><td>50–80%</td></tr>
+          </tbody></table></div>
+          <div class="alert alert-red" style="margin-top:12px;margin-bottom:0"><strong>Child-Pugh C:</strong> avoid elective surgery. Mandatory hepatology review. Discuss goals of care with patient and surgical team.</div>
+        </div>
+        <div class="card" style="margin-top:14px">
+          <div class="card-title">Perioperative implications</div>
+          <ul class="blist">
+            <li><strong>Coagulopathy:</strong> elevated INR ≠ safe to correct routinely — discuss haematology before FFP/Vit K</li>
+            <li><strong>Platelets:</strong> neuraxial ≥80×10⁹/L; major surgery ≥50</li>
+            <li><strong>Ascites:</strong> SBP risk; careful fluid balance; avoid hyponatraemia</li>
+            <li><strong>Encephalopathy:</strong> avoid benzodiazepines, high-dose opioids, morphine</li>
+            <li><strong>Renal:</strong> HRS risk — avoid nephrotoxins, contrast; careful diuresis</li>
+            <li><strong>Drugs:</strong> hepatically-metabolised agents — dose reduce (midazolam, fentanyl, local anaesthetics)</li>
+            <li><strong>Nutrition:</strong> high protein-calorie needs; dietitian input pre-op</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MEDICATION TIMING -->
+  <div id="page-medtiming" class="page">
+    <div class="page-title">Medication timing calculator</div>
+    <div class="page-sub">Enter surgery date — auto-calculates stop and restart dates for selected medications</div>
+    <div class="alert alert-amber"><strong>Always verify</strong> against current local policy and individual patient factors. Clinical judgement takes precedence. Not for DAPT/stent patients — those require cardiology sign-off.</div>
+    <div class="card" style="margin-bottom:14px">
+      <div class="card-title">Surgery details</div>
+      <div style="display:flex;gap:18px;flex-wrap:wrap;align-items:flex-end">
+        <div>
+          <div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-weight:600;margin-bottom:6px">Surgery date</div>
+          <input type="date" id="surg-date" onchange="calcMedTiming()" style="padding:8px 12px;border:1px solid var(--border2);border-radius:var(--radius);background:var(--bg2);color:var(--text);font-family:inherit;font-size:13px">
+        </div>
+        <div>
+          <div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-weight:600;margin-bottom:6px">Bleed risk</div>
+          <div class="calc-seg" id="bleed-risk-seg" style="width:230px">
+            <div class="seg-btn on" data-v="low" onclick="pickBleedRisk(this)">Low–intermediate</div>
+            <div class="seg-btn" data-v="high" onclick="pickBleedRisk(this)">High</div>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-weight:600;margin-bottom:6px">CrCl (dabigatran)</div>
+          <div class="calc-seg" id="crcl-seg" style="width:200px">
+            <div class="seg-btn on" data-v="50plus" onclick="pickCrCl(this)">≥50 mL/min</div>
+            <div class="seg-btn" data-v="30to49" onclick="pickCrCl(this)">30–49</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">Select medications in use</div>
+        <div id="med-timing-checks">
+          <div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-weight:600;margin:0 0 6px">Anticoagulants</div>
+          <label class="calc-row" style="cursor:pointer"><input type="checkbox" data-key="warfarin" onchange="calcMedTiming()"><span style="font-size:13px;margin-left:8px">Warfarin</span></label>
+          <label class="calc-row" style="cursor:pointer"><input type="checkbox" data-key="apixaban" onchange="calcMedTiming()"><span style="font-size:13px;margin-left:8px">Apixaban / Rivaroxaban</span></label>
+          <label class="calc-row" style="cursor:pointer"><input type="checkbox" data-key="dabigatran" onchange="calcMedTiming()"><span style="font-size:13px;margin-left:8px">Dabigatran</span></label>
+          <label class="calc-row" style="cursor:pointer"><input type="checkbox" data-key="edoxaban" onchange="calcMedTiming()"><span style="font-size:13px;margin-left:8px">Edoxaban</span></label>
+          <div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-weight:600;margin:10px 0 6px">Antiplatelets</div>
+          <label class="calc-row" style="cursor:pointer"><input type="checkbox" data-key="aspirin_hold" onchange="calcMedTiming()"><span style="font-size:13px;margin-left:8px">Aspirin (holding — primary prevention / high bleed only)</span></label>
+          <label class="calc-row" style="cursor:pointer"><input type="checkbox" data-key="clopidogrel" onchange="calcMedTiming()"><span style="font-size:13px;margin-left:8px">Clopidogrel</span></label>
+          <label class="calc-row" style="cursor:pointer"><input type="checkbox" data-key="ticagrelor" onchange="calcMedTiming()"><span style="font-size:13px;margin-left:8px">Ticagrelor</span></label>
+          <label class="calc-row" style="cursor:pointer"><input type="checkbox" data-key="prasugrel" onchange="calcMedTiming()"><span style="font-size:13px;margin-left:8px">Prasugrel</span></label>
+          <div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-weight:600;margin:10px 0 6px">Diabetes</div>
+          <label class="calc-row" style="cursor:pointer"><input type="checkbox" data-key="sglt2i_major" onchange="calcMedTiming()"><span style="font-size:13px;margin-left:8px">SGLT2i — major surgery</span></label>
+          <label class="calc-row" style="cursor:pointer"><input type="checkbox" data-key="glp1_liquid" onchange="calcMedTiming()"><span style="font-size:13px;margin-left:8px">GLP-1 agonist — clear fluid diet 24h pre-op</span></label>
+          <div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-weight:600;margin:10px 0 6px">Other</div>
+          <label class="calc-row" style="cursor:pointer"><input type="checkbox" data-key="ocp" onchange="calcMedTiming()"><span style="font-size:13px;margin-left:8px">Combined OCP / systemic HRT (major surgery)</span></label>
+          <label class="calc-row" style="cursor:pointer"><input type="checkbox" data-key="herbals" onchange="calcMedTiming()"><span style="font-size:13px;margin-left:8px">High-risk herbal supplements</span></label>
+          <label class="calc-row" style="cursor:pointer"><input type="checkbox" data-key="metformin_contrast" onchange="calcMedTiming()"><span style="font-size:13px;margin-left:8px">Metformin — contrast study</span></label>
+        </div>
+      </div>
+      <div>
+        <div class="card">
+          <div class="card-title">Stop dates</div>
+          <div id="timing-output" style="color:var(--text3);font-size:13px">Select a surgery date and tick medications to generate timeline.</div>
+        </div>
+        <div class="card" style="margin-top:14px">
+          <div class="card-title">Post-op restart</div>
+          <div id="restart-output" style="color:var(--text3);font-size:13px">—</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VTE PROPHYLAXIS -->
+  <div id="page-vte" class="page">
+    <div class="page-title">VTE prophylaxis</div>
+    <div class="page-sub">ESAIC 2024 · NHMRC — risk-stratified mechanical and pharmacological prophylaxis planning</div>
+    <div class="tag-strip"><span class="source-badge">ESAIC 2024</span><span class="source-badge">NHMRC</span><span class="source-badge">Caprini</span></div>
+    <div class="alert alert-blue"><strong>Principle:</strong> all surgical patients should be risk-stratified for VTE. Balance thrombotic risk against bleeding risk. Document the prophylaxis plan in the referral.</div>
+    <div class="grid-2">
+      <div class="calc-box">
+        <div style="font-size:13px;font-weight:600;margin-bottom:10px">Caprini score — tick applicable factors</div>
+        <div style="font-size:11px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">Patient factors</div>
+        <label class="calc-row" style="cursor:pointer"><input type="checkbox" data-cw="1" onchange="calcCaprini()"><span style="font-size:13px;margin-left:8px">Age 41–60 <span style="color:var(--text3);font-size:11px">(+1)</span></span></label>
+        <label class="calc-row" style="cursor:pointer"><input type="checkbox" data-cw="2" onchange="calcCaprini()"><span style="font-size:13px;margin-left:8px">Age 61–74 <span style="color:var(--text3);font-size:11px">(+2)</span></span></label>
+        <label class="calc-row" style="cursor:pointer"><input type="checkbox" data-cw="3" onchange="calcCaprini()"><span style="font-size:13px;margin-left:8px">Age ≥75 <span style="color:var(--text3);font-size:11px">(+3)</span></span></label>
+        <label class="calc-row" style="cursor:pointer"><input type="checkbox" data-cw="1" onchange="calcCaprini()"><span style="font-size:13px;margin-left:8px">BMI &gt;25 <span style="color:var(--text3);font-size:11px">(+1)</span></span></label>
+        <label class="calc-row" style="cursor:pointer"><input type="checkbox" data-cw="1" onchange="calcCaprini()"><span style="font-size:13px;margin-left:8px">Varicose veins / lower limb oedema <span style="color:var(--text3);font-size:11px">(+1)</span></span></label>
+        <label class="calc-row" style="cursor:pointer"><input type="checkbox" data-cw="1" onchange="calcCaprini()"><span style="font-size:13px;margin-left:8px">Immobility / bed rest &gt;72h <span style="color:var(--text3);font-size:11px">(+1)</span></span></label>
+        <label class="calc-row" style="cursor:pointer"><input type="checkbox" data-cw="1" onchange="calcCaprini()"><span style="font-size:13px;margin-left:8px">Active malignancy <span style="color:var(--text3);font-size:11px">(+1)</span></span></label>
+        <label class="calc-row" style="cursor:pointer"><input type="checkbox" data-cw="2" onchange="calcCaprini()"><span style="font-size:13px;margin-left:8px">Prior DVT or PE <span style="color:var(--text3);font-size:11px">(+2)</span></span></label>
+        <label class="calc-row" style="cursor:pointer"><input type="checkbox" data-cw="3" onchange="calcCaprini()"><span style="font-size:13px;margin-left:8px">VTE within last month <span style="color:var(--text3);font-size:11px">(+3)</span></span></label>
+        <label class="calc-row" style="cursor:pointer"><input type="checkbox" data-cw="3" onchange="calcCaprini()"><span style="font-size:13px;margin-left:8px">Known thrombophilia <span style="color:var(--text3);font-size:11px">(+3)</span></span></label>
+        <label class="calc-row" style="cursor:pointer"><input type="checkbox" data-cw="1" onchange="calcCaprini()"><span style="font-size:13px;margin-left:8px">OCP / HRT use <span style="color:var(--text3);font-size:11px">(+1)</span></span></label>
+        <label class="calc-row" style="cursor:pointer"><input type="checkbox" data-cw="1" onchange="calcCaprini()"><span style="font-size:13px;margin-left:8px">Sepsis / acute infection past month <span style="color:var(--text3);font-size:11px">(+1)</span></span></label>
+        <div style="font-size:11px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin:10px 0 6px">Surgery type</div>
+        <label class="calc-row" style="cursor:pointer"><input type="checkbox" data-cw="1" onchange="calcCaprini()"><span style="font-size:13px;margin-left:8px">Minor surgery (&lt;45 min) <span style="color:var(--text3);font-size:11px">(+1)</span></span></label>
+        <label class="calc-row" style="cursor:pointer"><input type="checkbox" data-cw="2" onchange="calcCaprini()"><span style="font-size:13px;margin-left:8px">Major surgery (&gt;45 min) <span style="color:var(--text3);font-size:11px">(+2)</span></span></label>
+        <label class="calc-row" style="cursor:pointer"><input type="checkbox" data-cw="5" onchange="calcCaprini()"><span style="font-size:13px;margin-left:8px">Hip/knee arthroplasty, pelvic/hip fracture, stroke <span style="color:var(--text3);font-size:11px">(+5)</span></span></label>
+        <hr style="margin:12px 0 8px">
+        <div style="display:flex;align-items:baseline;gap:12px"><div class="calc-score" id="caprini-score">0</div><div style="color:var(--text3)">Caprini points</div></div>
+        <div class="calc-result" id="caprini-result"><div style="font-size:13px;color:var(--text2)">Tick applicable factors above.</div></div>
+      </div>
+      <div>
+        <div class="card">
+          <div class="card-title">Risk category → recommendation</div>
+          <div class="table-wrap"><table><thead><tr><th>Score</th><th>Risk</th><th>Recommendation</th></tr></thead><tbody>
+            <tr><td>0–1</td><td><span class="pill pill-green">Very low</span></td><td>Early mobilisation; no pharmacological prophylaxis for most</td></tr>
+            <tr><td>2</td><td><span class="pill pill-green">Low</span></td><td>TED stockings ± IPC; consider enoxaparin if additional concerns</td></tr>
+            <tr><td>3–4</td><td><span class="pill pill-amber">Moderate</span></td><td>Enoxaparin 40 mg SC daily + IPC — start 12h pre-op or 12–24h post-op</td></tr>
+            <tr><td>≥5</td><td><span class="pill pill-red">High</span></td><td>Enoxaparin 40 mg SC daily + IPC ± extended 28-day course for hip/knee/cancer surgery</td></tr>
+          </tbody></table></div>
+          <div class="alert alert-amber" style="margin-top:12px;margin-bottom:0"><strong>Extended prophylaxis (28 days post-op):</strong> strongly recommended for hip/knee arthroplasty and pelvic/abdominal cancer surgery (ESAIC 2024).</div>
+        </div>
+        <div class="card" style="margin-top:14px">
+          <div class="card-title">LMWH dosing reference</div>
+          <div class="table-wrap"><table><thead><tr><th>Indication</th><th>Enoxaparin dose</th></tr></thead><tbody>
+            <tr><td>Standard prophylaxis</td><td>40 mg SC once daily</td></tr>
+            <tr><td>Weight &gt;120 kg</td><td>40 mg SC twice daily (or 0.5 mg/kg once daily)</td></tr>
+            <tr><td>CrCl 15–29 mL/min</td><td>20 mg SC once daily</td></tr>
+            <tr><td>CrCl &lt;15 / dialysis</td><td>Avoid — UFH 5000 units SC BD/TDS</td></tr>
+            <tr><td>Therapeutic bridging</td><td>1 mg/kg SC BD or 1.5 mg/kg once daily</td></tr>
+          </tbody></table></div>
+          <div class="sublabel" style="margin-top:8px">Neuraxial timing: prophylactic LMWH — hold 12h before; therapeutic LMWH — hold 24h before. Resume 4–6h post needle/catheter removal.</div>
+        </div>
+        <div class="card" style="margin-top:14px">
+          <div class="card-title">Mechanical prophylaxis</div>
+          <ul class="blist">
+            <li><strong>TED stockings:</strong> thigh-high Class I; avoid if PAD (ABPI &lt;0.8), significant oedema or skin breakdown</li>
+            <li><strong>Intermittent pneumatic compression (IPC):</strong> high-risk patients; start intra/peri-operatively; particularly useful when pharmacological prophylaxis delayed</li>
+            <li><strong>Foot pump:</strong> alternative if stockings/IPC not tolerated</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REFERRAL BUILDER -->
+  <div id="page-referral" class="page">
+    <div class="page-title">Referral summary builder</div>
+    <div class="page-sub">Tick findings as you assess — generates formatted text to copy into a referral or letter</div>
+    <div class="grid-2">
+      <div>
+        <div class="card">
+          <div class="card-title">Patient &amp; procedure</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <div><div style="font-size:11px;color:var(--text3);margin-bottom:4px">Patient name</div><input id="ref-name" type="text" placeholder="Name" oninput="buildRef()" style="width:100%;padding:7px 10px;border:1px solid var(--border2);border-radius:var(--radius);background:var(--bg2);color:var(--text);font-family:inherit;font-size:13px"></div>
+            <div><div style="font-size:11px;color:var(--text3);margin-bottom:4px">DOB</div><input id="ref-dob" type="date" onchange="buildRef()" style="width:100%;padding:7px 10px;border:1px solid var(--border2);border-radius:var(--radius);background:var(--bg2);color:var(--text);font-family:inherit;font-size:13px"></div>
+            <div><div style="font-size:11px;color:var(--text3);margin-bottom:4px">UR / MRN</div><input id="ref-ur" type="text" placeholder="UR number" oninput="buildRef()" style="width:100%;padding:7px 10px;border:1px solid var(--border2);border-radius:var(--radius);background:var(--bg2);color:var(--text);font-family:inherit;font-size:13px"></div>
+            <div><div style="font-size:11px;color:var(--text3);margin-bottom:4px">Proposed surgery</div><input id="ref-surgery" type="text" placeholder="e.g. R TKR" oninput="buildRef()" style="width:100%;padding:7px 10px;border:1px solid var(--border2);border-radius:var(--radius);background:var(--bg2);color:var(--text);font-family:inherit;font-size:13px"></div>
+            <div><div style="font-size:11px;color:var(--text3);margin-bottom:4px">Surgery date</div><input id="ref-date" type="date" onchange="buildRef()" style="width:100%;padding:7px 10px;border:1px solid var(--border2);border-radius:var(--radius);background:var(--bg2);color:var(--text);font-family:inherit;font-size:13px"></div>
+            <div><div style="font-size:11px;color:var(--text3);margin-bottom:4px">Surgeon</div><input id="ref-surgeon" type="text" placeholder="Surgeon" oninput="buildRef()" style="width:100%;padding:7px 10px;border:1px solid var(--border2);border-radius:var(--radius);background:var(--bg2);color:var(--text);font-family:inherit;font-size:13px"></div>
+          </div>
+        </div>
+        <div class="card" style="margin-top:14px">
+          <div class="card-title">Risk stratification</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <div><div style="font-size:11px;color:var(--text3);margin-bottom:4px">ASA</div><select id="ref-asa" onchange="buildRef()" style="width:100%;padding:7px;border:1px solid var(--border2);border-radius:var(--radius);background:var(--bg2);color:var(--text);font-family:inherit;font-size:13px"><option value="">—</option><option>I</option><option>II</option><option>III</option><option>IV</option><option>V</option><option>III-E</option><option>IV-E</option></select></div>
+            <div><div style="font-size:11px;color:var(--text3);margin-bottom:4px">RCRI score</div><select id="ref-rcri" onchange="buildRef()" style="width:100%;padding:7px;border:1px solid var(--border2);border-radius:var(--radius);background:var(--bg2);color:var(--text);font-family:inherit;font-size:13px"><option value="">—</option><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
+            <div><div style="font-size:11px;color:var(--text3);margin-bottom:4px">Functional capacity</div><input id="ref-mets" type="text" placeholder="e.g. 5.2 METs" oninput="buildRef()" style="width:100%;padding:7px 10px;border:1px solid var(--border2);border-radius:var(--radius);background:var(--bg2);color:var(--text);font-family:inherit;font-size:13px"></div>
+            <div><div style="font-size:11px;color:var(--text3);margin-bottom:4px">Clinical Frailty Scale</div><select id="ref-cfs" onchange="buildRef()" style="width:100%;padding:7px;border:1px solid var(--border2);border-radius:var(--radius);background:var(--bg2);color:var(--text);font-family:inherit;font-size:13px"><option value="">—</option><option>1 – Very fit</option><option>2 – Well</option><option>3 – Managing well</option><option>4 – Vulnerable</option><option>5 – Mildly frail</option><option>6 – Moderately frail</option><option>7 – Severely frail</option></select></div>
+          </div>
+        </div>
+        <div class="card" style="margin-top:14px">
+          <div class="card-title">Active conditions</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px" id="ref-conditions">
+            <label style="display:flex;gap:7px;font-size:12.5px;align-items:center;cursor:pointer;padding:3px 0"><input type="checkbox" onchange="buildRef()" data-cond="Ischaemic heart disease"> IHD</label>
+            <label style="display:flex;gap:7px;font-size:12.5px;align-items:center;cursor:pointer;padding:3px 0"><input type="checkbox" onchange="buildRef()" data-cond="Heart failure"> Heart failure</label>
+            <label style="display:flex;gap:7px;font-size:12.5px;align-items:center;cursor:pointer;padding:3px 0"><input type="checkbox" onchange="buildRef()" data-cond="Atrial fibrillation"> AF</label>
+            <label style="display:flex;gap:7px;font-size:12.5px;align-items:center;cursor:pointer;padding:3px 0"><input type="checkbox" onchange="buildRef()" data-cond="Pacemaker / ICD"> Pacemaker/ICD</label>
+            <label style="display:flex;gap:7px;font-size:12.5px;align-items:center;cursor:pointer;padding:3px 0"><input type="checkbox" onchange="buildRef()" data-cond="Hypertension"> Hypertension</label>
+            <label style="display:flex;gap:7px;font-size:12.5px;align-items:center;cursor:pointer;padding:3px 0"><input type="checkbox" onchange="buildRef()" data-cond="Type 2 diabetes mellitus"> T2DM</label>
+            <label style="display:flex;gap:7px;font-size:12.5px;align-items:center;cursor:pointer;padding:3px 0"><input type="checkbox" onchange="buildRef()" data-cond="Type 1 diabetes mellitus"> T1DM</label>
+            <label style="display:flex;gap:7px;font-size:12.5px;align-items:center;cursor:pointer;padding:3px 0"><input type="checkbox" onchange="buildRef()" data-cond="COPD"> COPD</label>
+            <label style="display:flex;gap:7px;font-size:12.5px;align-items:center;cursor:pointer;padding:3px 0"><input type="checkbox" onchange="buildRef()" data-cond="Asthma"> Asthma</label>
+            <label style="display:flex;gap:7px;font-size:12.5px;align-items:center;cursor:pointer;padding:3px 0"><input type="checkbox" onchange="buildRef()" data-cond="OSA on CPAP"> OSA on CPAP</label>
+            <label style="display:flex;gap:7px;font-size:12.5px;align-items:center;cursor:pointer;padding:3px 0"><input type="checkbox" onchange="buildRef()" data-cond="Chronic kidney disease"> CKD</label>
+            <label style="display:flex;gap:7px;font-size:12.5px;align-items:center;cursor:pointer;padding:3px 0"><input type="checkbox" onchange="buildRef()" data-cond="Hepatic disease"> Liver disease</label>
+            <label style="display:flex;gap:7px;font-size:12.5px;align-items:center;cursor:pointer;padding:3px 0"><input type="checkbox" onchange="buildRef()" data-cond="Obesity (BMI ≥35)"> Obesity BMI ≥35</label>
+            <label style="display:flex;gap:7px;font-size:12.5px;align-items:center;cursor:pointer;padding:3px 0"><input type="checkbox" onchange="buildRef()" data-cond="Frailty"> Frailty</label>
+            <label style="display:flex;gap:7px;font-size:12.5px;align-items:center;cursor:pointer;padding:3px 0"><input type="checkbox" onchange="buildRef()" data-cond="Anticoagulation"> On anticoagulation</label>
+            <label style="display:flex;gap:7px;font-size:12.5px;align-items:center;cursor:pointer;padding:3px 0"><input type="checkbox" onchange="buildRef()" data-cond="GLP-1 agonist use"> GLP-1 agonist</label>
+          </div>
+        </div>
+        <div class="card" style="margin-top:14px">
+          <div class="card-title">Actions / flags</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px" id="ref-flags">
+            <label style="display:flex;gap:7px;font-size:12.5px;align-items:center;cursor:pointer;padding:3px 0"><input type="checkbox" onchange="buildRef()" data-flag="⚠ Cardiology referral required"> Cardiology referral</label>
+            <label style="display:flex;gap:7px;font-size:12.5px;align-items:center;cursor:pointer;padding:3px 0"><input type="checkbox" onchange="buildRef()" data-flag="⚠ Respiratory / sleep medicine referral required"> Respiratory referral</label>
+            <label style="display:flex;gap:7px;font-size:12.5px;align-items:center;cursor:pointer;padding:3px 0"><input type="checkbox" onchange="buildRef()" data-flag="⚠ Endocrine / diabetes review required"> Endocrine review</label>
+            <label style="display:flex;gap:7px;font-size:12.5px;align-items:center;cursor:pointer;padding:3px 0"><input type="checkbox" onchange="buildRef()" data-flag="⚠ Haematology co-management required"> Haematology</label>
+            <label style="display:flex;gap:7px;font-size:12.5px;align-items:center;cursor:pointer;padding:3px 0"><input type="checkbox" onchange="buildRef()" data-flag="⚠ CIED clinic review required pre-op"> CIED clinic</label>
+            <label style="display:flex;gap:7px;font-size:12.5px;align-items:center;cursor:pointer;padding:3px 0"><input type="checkbox" onchange="buildRef()" data-flag="⚠ Geriatric / perioperative medicine review recommended"> Geriatric review</label>
+            <label style="display:flex;gap:7px;font-size:12.5px;align-items:center;cursor:pointer;padding:3px 0"><input type="checkbox" onchange="buildRef()" data-flag="Suitable for day-stay / early discharge"> Day-stay suitable</label>
+            <label style="display:flex;gap:7px;font-size:12.5px;align-items:center;cursor:pointer;padding:3px 0"><input type="checkbox" onchange="buildRef()" data-flag="HDU / ICU level care recommended post-operatively"> HDU/ICU recommended</label>
+            <label style="display:flex;gap:7px;font-size:12.5px;align-items:center;cursor:pointer;padding:3px 0"><input type="checkbox" onchange="buildRef()" data-flag="Difficult airway anticipated — senior anaesthetist required"> Difficult airway</label>
+            <label style="display:flex;gap:7px;font-size:12.5px;align-items:center;cursor:pointer;padding:3px 0"><input type="checkbox" onchange="buildRef()" data-flag="GLP-1: 24h clear fluid diet counselled — patient aware"> GLP-1 clear fluid diet done</label>
+          </div>
+          <div style="margin-top:12px"><div style="font-size:11px;color:var(--text3);margin-bottom:4px">Additional notes</div><textarea id="ref-notes" rows="3" placeholder="Free text…" oninput="buildRef()" style="width:100%;padding:8px 10px;border:1px solid var(--border2);border-radius:var(--radius);background:var(--bg2);color:var(--text);font-family:inherit;font-size:13px;resize:vertical"></textarea></div>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="position:sticky;top:70px">
+          <div class="card-title" style="display:flex;justify-content:space-between;align-items:center">
+            Pre-anaesthetic summary
+            <button onclick="copyRef()" style="font-size:11px;padding:5px 14px;border:1px solid var(--border2);border-radius:5px;background:var(--bg3);color:var(--text);cursor:pointer;font-family:inherit;font-weight:600">📋 Copy text</button>
+          </div>
+          <pre id="ref-output" style="font-size:12px;white-space:pre-wrap;font-family:var(--mono);color:var(--text2);line-height:1.75;background:var(--bg3);padding:14px;border-radius:var(--radius);min-height:220px;border:1px solid var(--border)">Fill in the form to generate summary…</pre>
+          <div id="ref-copy-msg" style="display:none;font-size:12px;color:var(--green);margin-top:6px;font-weight:600">✓ Copied to clipboard</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  </div>
+</main>
+</div>
+
+<script>
+const pages = document.querySelectorAll('.page');
+const navItems = document.querySelectorAll('.nav-item');
+
+function go(id) {
+  pages.forEach(p => p.classList.remove('active'));
+  navItems.forEach(n => n.classList.remove('active'));
+  document.getElementById('search-results').classList.remove('active');
+  const pg = document.getElementById('page-' + id);
+  if (pg) pg.classList.add('active');
+  const nav = document.querySelector('.nav-item[data-page="'+id+'"]');
+  if (nav) nav.classList.add('active');
+  document.querySelector('.main').scrollTop = 0;
+}
+navItems.forEach(n => n.addEventListener('click', () => go(n.dataset.page)));
+document.querySelectorAll('[data-jump]').forEach(el => el.addEventListener('click', () => go(el.dataset.jump)));
+
+/* THEME */
+function toggleTheme() {
+  const html = document.documentElement;
+  const dark = html.getAttribute('data-theme') === 'dark';
+  html.setAttribute('data-theme', dark ? 'light' : 'dark');
+  document.getElementById('themeBtn').textContent = dark ? '🌙' : '☀';
+}
+
+/* RCRI */
+function calcRCRI() {
+  const n = ['rcri1','rcri2','rcri3','rcri4','rcri5','rcri6'].filter(i=>document.getElementById(i).checked).length;
+  document.getElementById('rcri-score').textContent = n;
+  const L = [
+    {l:'Very low risk',p:'<1%',c:'var(--green)',t:'Proceed. No further cardiac testing. Standard care.'},
+    {l:'Low risk',p:'~1%',c:'var(--green)',t:'Proceed. Testing rarely changes management. Continue beta-blockers if on them.'},
+    {l:'Moderate risk',p:'2–4%',c:'var(--amber)',t:'Risk-benefit discussion. Assess functional capacity (DASI). Consider BNP. Cardiology if poor function + elevated-risk surgery.'},
+    {l:'High risk',p:'>5%',c:'var(--red)',t:'Cardiology review. Measure BNP/NT-proBNP. DASI assessment. Stress testing only if it changes management. Post-op troponin surveillance.'}
+  ];
+  const x = n>=3?L[3]:L[n];
+  document.getElementById('rcri-result').innerHTML = `<div style="font-weight:600;color:${x.c};margin-bottom:5px">${x.l} — MACE ${x.p}</div><div style="font-size:12.5px;color:var(--text2)">${x.t}</div>`;
+}
+
+/* DASI */
+function calcDASI() {
+  let s = 0;
+  document.querySelectorAll('#page-dasi input[type=checkbox]').forEach(c => { if (c.checked) s += parseFloat(c.dataset.w); });
+  const vo2 = 0.43*s + 9.6;
+  const mets = vo2/3.5;
+  document.getElementById('dasi-score').textContent = s.toFixed(1);
+  document.getElementById('dasi-vo2').textContent = vo2.toFixed(1);
+  document.getElementById('dasi-mets').textContent = mets.toFixed(1);
+  const r = document.getElementById('dasi-result');
+  let c,t;
+  if (mets >= 7) { c='var(--green)'; t='Good functional capacity. DASI ≥34 (≈7 METs) associated with lower 30-day mortality/MI and 1-year mortality (METS trial). Generally no further cardiac testing.'; }
+  else if (mets >= 4) { c='var(--amber)'; t='Adequate (≥4 METs) for most non-cardiac surgery. Consider biomarkers if elevated-risk surgery.'; }
+  else { c='var(--red)'; t='Poor functional capacity (<4 METs). For elevated-risk surgery consider BNP/NT-proBNP ± cardiology review.'; }
+  r.innerHTML = `<div style="font-weight:600;color:${c};margin-bottom:5px">≈ ${mets.toFixed(1)} METs</div><div style="font-size:12.5px;color:var(--text2)">${t}</div>`;
+}
+
+/* CHADS */
+function calcCHADS() {
+  let s = 0;
+  document.querySelectorAll('#page-chads input[type=checkbox]').forEach(c => { if (c.checked) s += parseInt(c.dataset.w); });
+  document.getElementById('chads-score').textContent = s;
+  let c,t;
+  if (s===0){c='var(--green)';t='Low stroke risk. Anticoagulation generally not required for stroke prevention.';}
+  else if (s===1){c='var(--amber)';t='Low-moderate. Consider anticoagulation (esp. if the point is not female sex alone).';}
+  else {c='var(--red)';t='Anticoagulation recommended. Peri-op: score ≥7 (or recent stroke) = high thrombotic risk → consider warfarin bridging.';}
+  document.getElementById('chads-result').innerHTML = `<div style="font-weight:600;color:${c};margin-bottom:5px">Score ${s}</div><div style="font-size:12.5px;color:var(--text2)">${t}</div>`;
+}
+
+/* HAS-BLED */
+function calcHB() {
+  let s = 0;
+  document.querySelectorAll('#page-hasbled input[type=checkbox]').forEach(c => { if (c.checked) s += parseInt(c.dataset.w); });
+  document.getElementById('hb-score').textContent = s;
+  let c,t;
+  if (s<=1){c='var(--green)';t='Low bleeding risk.';}
+  else if (s===2){c='var(--amber)';t='Moderate bleeding risk. Address modifiable factors.';}
+  else {c='var(--red)';t='High bleeding risk (~3.7–8.7 major bleeds/100 pt-yr). Not a reason to withhold anticoagulation — correct modifiable factors (BP, NSAIDs/antiplatelets, alcohol, INR stability) and review more closely.';}
+  document.getElementById('hb-result').innerHTML = `<div style="font-weight:600;color:${c};margin-bottom:5px">Score ${s}</div><div style="font-size:12.5px;color:var(--text2)">${t}</div>`;
+}
+
+/* STOP-BANG */
+function calcSB() {
+  let s = 0;
+  document.querySelectorAll('#page-stopbang input[type=checkbox]').forEach(c => { if (c.checked) s += parseInt(c.dataset.w); });
+  document.getElementById('sb-score').textContent = s;
+  let c,t;
+  if (s<=2){c='var(--green)';t='Low OSA probability. Standard perioperative planning.';}
+  else if (s<=4){c='var(--amber)';t='Intermediate OSA risk. Document, notify anaesthetics. CPAP if known OSA; consider sleep study for major elective.';}
+  else {c='var(--red)';t='High OSA risk. Airway assessment mandatory. Notify anaesthetics; sleep study if time; post-op CPAP/monitoring plan.';}
+  document.getElementById('sb-result').innerHTML = `<div style="font-weight:600;color:${c};margin-bottom:5px">Score ${s}/8</div><div style="font-size:12.5px;color:var(--text2)">${t}</div>`;
+}
+
+/* ASA */
+let asaPick = null;
+function pickASA(el){ document.querySelectorAll('#asa-opts .seg-btn').forEach(b=>b.classList.remove('on')); el.classList.add('on'); asaPick = el.dataset.asa; renderASA(); }
+function renderASA(){
+  if(!asaPick){return;}
+  const e = document.getElementById('asa-e').checked ? '-E' : '';
+  const desc = {I:'Normal healthy patient',II:'Mild systemic disease',III:'Severe systemic disease',IV:'Severe disease, constant threat to life',V:'Moribund'};
+  document.getElementById('asa-result').innerHTML = `<div style="font-weight:600;color:var(--accent);font-size:18px;margin-bottom:4px">ASA ${asaPick}${e}</div><div style="font-size:12.5px;color:var(--text2)">${desc[asaPick]}${e?' — emergency surgery':''}</div>`;
+}
+
+/* MED FILTER */
+function filterMeds() {
+  const q = document.getElementById('med-search').value.toLowerCase().trim();
+  document.querySelectorAll('#med-list .drug-card').forEach(card => {
+    const hit = !q || (card.dataset.kw||'').includes(q) || card.textContent.toLowerCase().includes(q);
+    card.style.display = hit ? 'flex' : 'none';
+  });
+  document.querySelectorAll('#med-list [data-group]').forEach(h => {
+    let s = h.nextElementSibling, vis = false;
+    while (s && !s.hasAttribute('data-group')) { if (s.style.display !== 'none') vis = true; s = s.nextElementSibling; }
+    h.style.display = vis ? '' : 'none';
+  });
+}
+
+/* ACCORDION */
+function toggleAcc(h){ h.classList.toggle('open'); h.nextElementSibling.classList.toggle('open'); }
+
+/* NG45 BLOODS SELECTOR */
+const blState = { surg: 'minor', asa: '1' };
+const blExamples = {
+  minor: 'e.g. excising skin lesion, draining breast abscess',
+  intermediate: 'e.g. inguinal hernia repair, varicose veins, tonsillectomy, knee arthroscopy',
+  major: 'e.g. TAH, TURP, lumbar discectomy, thyroidectomy, joint replacement, lung surgery'
+};
+const blGrid = {
+  minor: {
+    '1':  { FBC:'no', Haem:'no', Kidney:'no', ECG:'no', Lung:'no' },
+    '2':  { FBC:'no', Haem:'no', Kidney:'no', ECG:'no', Lung:'no' },
+    '34': { FBC:'no', Haem:'no', Kidney:'consider|if at risk of AKI', ECG:'consider|if no ECG in past 12 months', Lung:'no' }
+  },
+  intermediate: {
+    '1':  { FBC:'no', Haem:'no', Kidney:'no', ECG:'no', Lung:'no' },
+    '2':  { FBC:'no', Haem:'no', Kidney:'consider|if at risk of AKI', ECG:'consider|if cardiovascular, renal or diabetes', Lung:'no' },
+    '34': { FBC:'consider|if CVD/renal disease + uninvestigated symptoms', Haem:'consider|in chronic liver disease', Kidney:'yes', ECG:'yes', Lung:'advice|senior anaesthetist if ASA 3/4 from respiratory disease' }
+  },
+  major: {
+    '1':  { FBC:'yes', Haem:'no', Kidney:'consider|if at risk of AKI', ECG:'consider|if >65 & no ECG in 12 months', Lung:'no' },
+    '2':  { FBC:'yes', Haem:'no', Kidney:'yes', ECG:'yes', Lung:'no' },
+    '34': { FBC:'yes', Haem:'consider|in chronic liver disease', Kidney:'yes', ECG:'yes', Lung:'advice|senior anaesthetist if ASA 3/4 from respiratory disease' }
+  }
+};
+const blLabels = { FBC:'Full blood count', Haem:'Haemostasis', Kidney:'Kidney function', ECG:'ECG', Lung:'Lung function / ABG' };
+function pickBl(type, el) {
+  const grp = type === 'surg' ? 'bl-surg' : 'bl-asa';
+  document.querySelectorAll('#' + grp + ' .seg-btn').forEach(b => b.classList.remove('on'));
+  el.classList.add('on');
+  blState[type] = el.dataset.v;
+  if (type === 'surg') document.getElementById('bl-surg-eg').textContent = blExamples[blState.surg];
+  renderBl();
+}
+function renderBl() {
+  const cell = blGrid[blState.surg][blState.asa];
+  const rows = Object.keys(blLabels).map(k => {
+    const [verdict, note] = cell[k].split('|');
+    let pill, txt = note ? ' <span style="color:var(--text3);font-size:11px">' + note + '</span>' : '';
+    if (verdict === 'yes') pill = '<span class="pill pill-green">Offer</span>';
+    else if (verdict === 'consider') pill = '<span class="pill pill-amber">Consider</span>';
+    else if (verdict === 'advice') pill = '<span class="pill pill-amber">Senior advice</span>';
+    else pill = '<span class="pill pill-gray">Not routinely</span>';
+    return '<div style="display:flex;align-items:flex-start;gap:10px;padding:7px 0;border-bottom:1px solid var(--border)"><div style="flex:1;font-size:13px">' + blLabels[k] + '</div><div style="text-align:right">' + pill + txt + '</div></div>';
+  }).join('');
+  const offers = Object.keys(blLabels).filter(k => cell[k].startsWith('yes')).map(k => blLabels[k]);
+  const summary = offers.length
+    ? '<div class="alert alert-green" style="margin:0 0 10px">Routinely offer: <strong>' + offers.join(', ') + '</strong></div>'
+    : '<div class="alert alert-blue" style="margin:0 0 10px">No bloods/tests routinely required for this combination — order only if individually indicated.</div>';
+  document.getElementById('bl-result').innerHTML = summary + rows +
+    '<div class="sublabel" style="margin-top:8px">Plus: HbA1c if known diabetic &amp; none in 3 months; pregnancy test per protocol.</div>';
+}
+renderBl();
+
+/* GLOBAL SEARCH — index all card titles, list items, table rows */
+let searchIndex = null;
+function buildIndex() {
+  searchIndex = [];
+  const titles = {home:'Dashboard',rcri:'RCRI',dasi:'DASI / METs',chads:'CHA₂DS₂-VASc',hasbled:'HAS-BLED',stopbang:'STOP-BANG',asa:'ASA status',childpugh:'Child-Pugh',cardiac:'Cardiac',hypertension:'Hypertension',diabetes:'Diabetes',respiratory:'Respiratory',renal:'Renal / Hepatic',obesity:'Obesity / OSA',frailty:'Frailty',meds:'Medications',anticoag:'Anticoagulation',glp1:'GLP-1 / SGLT2i',fasting:'Fasting',bloods:'Pre-op bloods (NG45)',investigations:'Investigations',medtiming:'Medication timing',vte:'VTE prophylaxis',referral:'Referral builder'};
+  pages.forEach(p => {
+    const id = p.id.replace('page-','');
+    const label = titles[id] || id;
+    p.querySelectorAll('.blist li, .drug-card, tbody tr, .alert, .steps li, .card-title').forEach(el => {
+      const txt = el.textContent.replace(/\s+/g,' ').trim();
+      if (txt.length > 8) searchIndex.push({page:id, label, txt});
+    });
+  });
+}
+function globalSearch() {
+  if (!searchIndex) buildIndex();
+  const q = document.getElementById('gsearch').value.toLowerCase().trim();
+  const sr = document.getElementById('search-results');
+  if (q.length < 2) {
+    sr.classList.remove('active');
+    const nav = document.querySelector('.nav-item.active');
+    go(nav ? nav.dataset.page : 'home');
+    return;
+  }
+  pages.forEach(p => p.classList.remove('active'));
+  sr.classList.add('active');
+  const terms = q.split(/\s+/);
+  const matches = searchIndex.filter(item => terms.every(t => item.txt.toLowerCase().includes(t)));
+  const seen = new Set();
+  const uniq = matches.filter(m => { const k=m.page+m.txt; if(seen.has(k))return false; seen.add(k); return true; }).slice(0,40);
+  document.getElementById('sr-count').textContent = uniq.length + ' result' + (uniq.length===1?'':'s') + ' across ' + new Set(uniq.map(u=>u.page)).size + ' section' + (new Set(uniq.map(u=>u.page)).size===1?'':'s');
+  const re = new RegExp('('+terms.map(t=>t.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('|')+')','gi');
+  document.getElementById('sr-list').innerHTML = uniq.map(m => {
+    const safe = m.txt.length>220 ? m.txt.slice(0,220)+'…' : m.txt;
+    const hl = safe.replace(re,'<mark>$1</mark>');
+    return `<div class="sr-item" onclick="go('${m.page}')"><div class="sr-page">${m.label}</div><div class="sr-text">${hl}</div></div>`;
+  }).join('') || '<div style="color:var(--text3)">No matches.</div>';
+}
+/* CHILD-PUGH */
+const cpState = { bili:1, alb:1, inr:1, ascites:1, enceph:1 };
+function pickCP(field, el) {
+  document.querySelectorAll('#cp-' + field + ' .seg-btn').forEach(b => b.classList.remove('on'));
+  el.classList.add('on');
+  cpState[field] = parseInt(el.dataset.v);
+  renderCP();
+}
+function renderCP() {
+  const s = Object.values(cpState).reduce((a,b) => a+b, 0);
+  document.getElementById('cp-score').textContent = s;
+  let cls, c, mort, t;
+  if (s <= 6)  { cls='A'; c='var(--green)'; mort='5–10%';  t='Child-Pugh A — compensated cirrhosis. Operative risk elevated but acceptable for most elective surgery with appropriate hepatology input and careful planning.'; }
+  else if (s <= 9) { cls='B'; c='var(--amber)'; mort='25–30%'; t='Child-Pugh B — significant dysfunction. High surgical risk. Mandatory hepatology input; optimise albumin, ascites and encephalopathy before elective surgery.'; }
+  else         { cls='C'; c='var(--red)';   mort='50–80%'; t='Child-Pugh C — decompensated cirrhosis. Avoid elective surgery. Hepatology review required. Discuss goals of care with patient and surgical team.'; }
+  document.getElementById('cp-result').innerHTML = `<div style="font-weight:700;color:${c};font-size:16px;margin-bottom:5px">Class ${cls} — 30-day mortality ~${mort}</div><div style="font-size:12.5px;color:var(--text2)">${t}</div>`;
+}
+renderCP();
+
+/* MEDICATION TIMING */
+let bleedRisk = 'low', crclGroup = '50plus';
+function pickBleedRisk(el) {
+  document.querySelectorAll('#bleed-risk-seg .seg-btn').forEach(b => b.classList.remove('on'));
+  el.classList.add('on'); bleedRisk = el.dataset.v; calcMedTiming();
+}
+function pickCrCl(el) {
+  document.querySelectorAll('#crcl-seg .seg-btn').forEach(b => b.classList.remove('on'));
+  el.classList.add('on'); crclGroup = el.dataset.v; calcMedTiming();
+}
+function calcMedTiming() {
+  const dateVal = document.getElementById('surg-date').value;
+  if (!dateVal) { document.getElementById('timing-output').innerHTML = '<span style="color:var(--text3)">Select a surgery date to generate timeline.</span>'; return; }
+  const surgDate = new Date(dateVal + 'T08:00:00');
+  const fmt = d => d.toLocaleDateString('en-AU', { weekday:'short', day:'numeric', month:'short', year:'numeric' });
+  const addDays = (d, n) => { const r = new Date(d); r.setDate(r.getDate()+n); return r; };
+  const hi = bleedRisk === 'high';
+  const low30 = crclGroup === '30to49';
+  const configs = {
+    warfarin:         { label:'Warfarin',                           stop:-5,   note:'Cease 5 days pre-op. INR day before; if >1.5 give Vit K 1–2.5 mg oral.',        col:'var(--red)'    },
+    apixaban:         { label:'Apixaban / Rivaroxaban',             stop:hi?-2:-1, note:hi?'2 days (high-bleed surgery)':'1 day (low–intermediate bleed surgery)',   col:'var(--red)'    },
+    dabigatran:       { label:'Dabigatran',                         stop:low30?(hi?-4:-2):(hi?-2:-1), note:low30?(hi?'4 days (CrCl 30–49, high-bleed)':'2 days (CrCl 30–49)'):(hi?'2 days (CrCl ≥50, high-bleed)':'1 day (CrCl ≥50)'), col:'var(--red)' },
+    edoxaban:         { label:'Edoxaban',                           stop:hi?-2:-1, note:hi?'2 days (high-bleed)':'1 day',                                             col:'var(--red)'    },
+    aspirin_hold:     { label:'Aspirin (holding)',                  stop:-7,   note:'7 days. Confirm this is appropriate — cardiac/vascular indications: usually continue.', col:'var(--amber)' },
+    clopidogrel:      { label:'Clopidogrel',                        stop:-5,   note:'5 days. DAPT/stent patients: do NOT stop without cardiology sign-off.',          col:'var(--amber)'  },
+    ticagrelor:       { label:'Ticagrelor',                         stop:-5,   note:'5 days. DAPT/stent patients: do NOT stop without cardiology sign-off.',          col:'var(--amber)'  },
+    prasugrel:        { label:'Prasugrel',                          stop:-7,   note:'7 days. DAPT/stent patients: do NOT stop without cardiology sign-off.',          col:'var(--amber)'  },
+    sglt2i_major:     { label:'SGLT2i (major surgery)',             stop:-3,   note:'Cease 3 days pre-op. Check fingerprick ketones on day of surgery.',              col:'var(--amber)'  },
+    glp1_liquid:      { label:'GLP-1 — start clear fluid diet from', stop:-1,   note:'Clear fluid diet for 24h before surgery. GLP-1 medication itself is continued. STS protocol does NOT apply.',      col:'var(--teal)'   },
+    ocp:              { label:'Combined OCP / systemic HRT',        stop:-28,  note:'4 weeks before major surgery with prolonged immobility. Ensure contraception discussed.', col:'var(--purple)' },
+    herbals:          { label:'High-risk herbal supplements',       stop:-10,  note:'7–14 days (10d used here): garlic, ginkgo, fish oil, St John\'s Wort, kava.',   col:'var(--amber)'  },
+    metformin_contrast:{ label:'Metformin (pre-contrast)',          stop:-2,   note:'Hold 48h before contrast. Restart 48h after if creatinine stable.',              col:'var(--amber)'  },
+  };
+  const selected = [...document.querySelectorAll('#med-timing-checks input[type=checkbox]')].filter(c => c.checked).map(c => c.dataset.key);
+  if (!selected.length) { document.getElementById('timing-output').innerHTML = '<span style="color:var(--text3)">Tick medications above to generate stop dates.</span>'; document.getElementById('restart-output').innerHTML = '—'; return; }
+  const rows = selected.map(k => {
+    const cfg = configs[k];
+    const d = addDays(surgDate, cfg.stop);
+    return `<div style="display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-bottom:1px solid var(--border)"><div style="flex:1;font-size:13px;font-weight:600">${cfg.label}</div><div style="text-align:right"><div style="font-size:13px;font-weight:700;color:${cfg.col}">${fmt(d)}</div><div style="font-size:11px;color:var(--text3);margin-top:2px">${cfg.note}</div></div></div>`;
+  }).join('');
+  document.getElementById('timing-output').innerHTML = `<div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-weight:600;margin-bottom:8px">Surgery: ${fmt(surgDate)}</div>` + rows;
+  const restarts = [];
+  if (selected.includes('warfarin'))    restarts.push({ label:'Warfarin restart', date:fmt(addDays(surgDate,1)),  note:'Evening POD0 or POD1 once haemostasis achieved' });
+  if (selected.some(k => ['apixaban','edoxaban'].includes(k))) restarts.push({ label:'DOAC restart (apixaban/rivaroxaban/edoxaban)', date:fmt(addDays(surgDate,2)), note:'48h post-op for most surgery; high-bleed: 72h' });
+  if (selected.includes('dabigatran')) restarts.push({ label:'Dabigatran restart', date:fmt(addDays(surgDate,2)), note:'48–72h; high-bleed surgery: 72h' });
+  if (selected.includes('sglt2i_major')) restarts.push({ label:'SGLT2i restart', date:fmt(addDays(surgDate,2)), note:'When eating and drinking normally; no ongoing illness' });
+  if (selected.includes('metformin_contrast')) restarts.push({ label:'Metformin restart', date:fmt(addDays(surgDate,2)), note:'48h after contrast; only if creatinine stable' });
+  document.getElementById('restart-output').innerHTML = restarts.length
+    ? restarts.map(r => `<div style="display:flex;align-items:flex-start;gap:10px;padding:7px 0;border-bottom:1px solid var(--border)"><div style="flex:1;font-size:13px;font-weight:600">${r.label}</div><div style="text-align:right"><div style="font-size:13px;color:var(--green);font-weight:700">${r.date}</div><div style="font-size:11px;color:var(--text3)">${r.note}</div></div></div>`).join('')
+    : '<span style="color:var(--text3);font-size:13px">No restart dates applicable for selected medications.</span>';
+}
+
+/* CAPRINI (VTE) */
+function calcCaprini() {
+  let s = 0;
+  document.querySelectorAll('#page-vte input[type=checkbox]').forEach(c => { if (c.checked) s += parseInt(c.dataset.cw||0); });
+  document.getElementById('caprini-score').textContent = s;
+  let c, t;
+  if (s <= 1) { c='var(--green)'; t='Very low risk. Early mobilisation; no routine pharmacological prophylaxis for most patients.'; }
+  else if (s === 2) { c='var(--green)'; t='Low risk. TED stockings ± IPC. Consider enoxaparin 40 mg SC daily if additional clinical concerns or prolonged immobility.'; }
+  else if (s <= 4) { c='var(--amber)'; t='Moderate risk. Enoxaparin 40 mg SC daily + IPC. Start 12h pre-op or 12–24h post-op. Continue until mobile.'; }
+  else { c='var(--red)'; t='High risk. Enoxaparin 40 mg SC daily (weight-adjusted if >120 kg) + IPC. Consider extended 28-day prophylaxis for hip/knee arthroplasty or pelvic/abdominal cancer surgery.'; }
+  document.getElementById('caprini-result').innerHTML = `<div style="font-weight:600;color:${c};margin-bottom:5px">Score ${s}</div><div style="font-size:12.5px;color:var(--text2)">${t}</div>`;
+}
+
+/* REFERRAL BUILDER */
+function buildRef() {
+  const v = id => document.getElementById(id).value || '';
+  const fmtDate = val => val ? new Date(val+'T12:00:00').toLocaleDateString('en-AU',{day:'numeric',month:'long',year:'numeric'}) : '';
+  const today = new Date().toLocaleDateString('en-AU',{day:'numeric',month:'long',year:'numeric'});
+  const name=v('ref-name'), dob=v('ref-dob'), ur=v('ref-ur'), surgery=v('ref-surgery'), date=v('ref-date'), surgeon=v('ref-surgeon');
+  const asa=v('ref-asa'), rcri=v('ref-rcri'), mets=v('ref-mets'), cfs=v('ref-cfs'), notes=v('ref-notes');
+  const conditions = [...document.querySelectorAll('#ref-conditions input:checked')].map(c=>c.dataset.cond);
+  const flags = [...document.querySelectorAll('#ref-flags input:checked')].map(c=>c.dataset.flag);
+  let out = 'PRE-ANAESTHETIC ASSESSMENT SUMMARY\n';
+  out += 'Lyell McEwin Hospital — NALHN\n';
+  out += `Date of assessment: ${today}\n`;
+  if (name||dob||ur) { out += `\nPATIENT\n`; if(name)out+=`Name: ${name}\n`; if(dob)out+=`DOB: ${fmtDate(dob)}\n`; if(ur)out+=`UR: ${ur}\n`; }
+  if (surgery||date||surgeon) { out+=`\nPROCEDURE\n`; if(surgery)out+=`Surgery: ${surgery}\n`; if(date)out+=`Date: ${fmtDate(date)}\n`; if(surgeon)out+=`Surgeon: ${surgeon}\n`; }
+  if (asa||rcri||mets||cfs) { out+=`\nRISK STRATIFICATION\n`; if(asa)out+=`ASA: ${asa}\n`; if(rcri)out+=`RCRI: ${rcri}/6\n`; if(mets)out+=`Functional capacity: ${mets}\n`; if(cfs)out+=`CFS: ${cfs}\n`; }
+  if (conditions.length) { out+=`\nRELEVANT CONDITIONS\n`; conditions.forEach(c=>out+=`• ${c}\n`); }
+  if (flags.length) { out+=`\nACTIONS / FLAGS\n`; flags.forEach(f=>out+=`${f}\n`); }
+  if (notes.trim()) { out+=`\nNOTES\n${notes.trim()}\n`; }
+  out += `\n---\nRef: LMH Pre-Anaesthetic Clinic`;
+  document.getElementById('ref-output').textContent = out;
+}
+buildRef();
+function copyRef() {
+  navigator.clipboard.writeText(document.getElementById('ref-output').textContent).then(() => {
+    const msg = document.getElementById('ref-copy-msg');
+    msg.style.display='block'; setTimeout(()=>msg.style.display='none', 2500);
+  });
+}
+
+document.getElementById('gsearch').addEventListener('keydown', e => {
+  if (e.key === 'Escape') { e.target.value=''; document.getElementById('search-results').classList.remove('active'); go('home'); }
+});
+</script>
+</body>
+</html>
