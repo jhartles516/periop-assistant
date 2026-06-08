@@ -265,6 +265,30 @@
     .content, .topbar { padding-left: 16px; padding-right: 16px; }
   }
 
+  /* MOBILE — hamburger menu */
+  .mob-menu-btn { display: none; background: none; border: none; cursor: pointer; padding: 4px; color: var(--text); flex-shrink: 0; }
+  .mob-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 98; }
+  @media (max-width: 640px) {
+    .sidebar { position: fixed; left: 0; top: 0; height: 100%; width: 240px !important; z-index: 99;
+      transform: translateX(-100%); transition: transform 0.22s ease;
+      /* restore hidden labels */
+    }
+    .sidebar.mob-open { transform: translateX(0); box-shadow: 4px 0 24px rgba(0,0,0,0.4); }
+    .sidebar.mob-open .logo-title,
+    .sidebar.mob-open .logo-sub,
+    .sidebar.mob-open .logo-badge,
+    .sidebar.mob-open .nav-label,
+    .sidebar.mob-open .nav-item span,
+    .sidebar.mob-open .rail-foot { display: flex !important; }
+    .sidebar.mob-open .nav-item { justify-content: flex-start !important; padding: 10px 16px !important; }
+    .sidebar.mob-open .logo-sub { display: block !important; }
+    .sidebar.mob-open .nav-label { display: block !important; }
+    .sidebar.mob-open .rail-foot { display: block !important; }
+    .mob-overlay.mob-open { display: block; }
+    .mob-menu-btn { display: flex; align-items: center; }
+    .content, .topbar { padding-left: 14px; padding-right: 14px; }
+  }
+
   /* PRINT */
   @media print {
     .sidebar, .topbar, .no-print { display: none !important; }
@@ -339,8 +363,14 @@
   </div>
 </aside>
 
+<div class="mob-overlay" id="mobOverlay" onclick="closeMobMenu()"></div>
 <main class="main">
   <div class="topbar no-print">
+    <button class="mob-menu-btn" onclick="toggleMobMenu()" title="Menu" aria-label="Open navigation">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <line x1="3" y1="6" x2="19" y2="6"/><line x1="3" y1="11" x2="19" y2="11"/><line x1="3" y1="16" x2="19" y2="16"/>
+      </svg>
+    </button>
     <div class="global-search">
       <span style="color:var(--text3)">🔍</span>
       <input type="text" id="gsearch" placeholder="Search all content — drugs, conditions, thresholds…" oninput="globalSearch()">
@@ -1560,8 +1590,18 @@ function go(id) {
   if (nav) nav.classList.add('active');
   document.querySelector('.main').scrollTop = 0;
 }
-navItems.forEach(n => n.addEventListener('click', () => go(n.dataset.page)));
+navItems.forEach(n => n.addEventListener('click', () => { go(n.dataset.page); closeMobMenu(); }));
 document.querySelectorAll('[data-jump]').forEach(el => el.addEventListener('click', () => go(el.dataset.jump)));
+
+/* MOBILE MENU */
+function toggleMobMenu() {
+  document.querySelector('.sidebar').classList.toggle('mob-open');
+  document.getElementById('mobOverlay').classList.toggle('mob-open');
+}
+function closeMobMenu() {
+  document.querySelector('.sidebar').classList.remove('mob-open');
+  document.getElementById('mobOverlay').classList.remove('mob-open');
+}
 
 /* THEME */
 function toggleTheme() {
