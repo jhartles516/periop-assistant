@@ -292,7 +292,8 @@
   #patient-sheet { display: none; }
   @media print {
     body.print-sheet .app { display: none !important; }
-    body.print-sheet #patient-sheet { display: block !important; color: #000; background: #fff; padding: 6mm; font-family: var(--sans); }
+    body.print-sheet #patient-sheet { display: block !important; color: #000; background: #fff; padding: 6mm; font-family: var(--sans); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    #patient-sheet, #patient-sheet * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
   }
 
   /* PRINT */
@@ -354,7 +355,7 @@
     <div class="nav-group">
       <div class="nav-label">Tools</div>
       <div class="nav-item" data-page="fasting"><span class="nav-dot" style="background:#2cc4bc"></span><span>Fasting</span></div>
-      <div class="nav-item" data-page="bloods"><span class="nav-dot" style="background:#ec6a5e"></span><span>Pre-op bloods (NG45)</span></div>
+      <div class="nav-item" data-page="bloods"><span class="nav-dot" style="background:#ec6a5e"></span><span>Pre-op bloods</span></div>
       <div class="nav-item" data-page="investigations"><span class="nav-dot" style="background:#a78bfa"></span><span>Investigations</span></div>
     </div>
     <div class="nav-group">
@@ -1351,18 +1352,21 @@
     </div>
   </div>
 
-  <!-- BLOODS NG45 -->
+  <!-- BLOODS -->
   <div id="page-bloods" class="page">
     <div class="page-title">Pre-operative bloods &amp; tests — who needs what</div>
-    <div class="page-sub">NICE NG45 (2016, reviewed 2024) — Routine preoperative tests for elective surgery, stratified by ASA grade × surgery grade</div>
-    <div class="tag-strip"><span class="source-badge">NICE NG45</span><span class="source-badge">ANZCA PG07 2024</span></div>
+    <div class="page-sub">Routine pre-operative tests for elective surgery, stratified by ASA grade × surgery grade</div>
+    <div class="tag-strip"><span class="source-badge">ANZCA PG07 2024</span></div>
 
-    <div class="alert alert-blue"><strong>How to use:</strong> NG45 is UK guidance widely applied in Australian practice and aligns with ANZCA PG07's "test only when it changes management" principle. It covers elective surgery in patients &gt;16. <strong>It excludes</strong> pregnant patients, cardiothoracic surgery and neurosurgery — use clinical judgement and local NALHN policy for those.</div>
+    <div class="alert alert-blue"><strong>How to use:</strong> aligns with ANZCA PG07's "test only when it changes management" principle. Covers elective surgery in patients &gt;16. <strong>Excludes</strong> pregnant patients, cardiothoracic surgery and neurosurgery — use clinical judgement and local NALHN policy for those.</div>
 
     <div class="section-header">Interactive selector</div>
     <div class="card">
       <div class="grid-2" style="gap:18px">
         <div>
+          <div style="font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-weight:600;margin-bottom:6px">Not sure of the grade? Type the procedure</div>
+          <input type="text" id="bl-proc" autocomplete="off" placeholder="e.g. hernia repair, hysterectomy, hip replacement…" oninput="searchProc(this.value)" style="width:100%;box-sizing:border-box;padding:8px 10px;font-size:13px;font-family:inherit;border:1px solid var(--border2);border-radius:6px;background:var(--bg3);color:var(--text)">
+          <div id="bl-proc-result" style="font-size:12px;margin:7px 0 16px;color:var(--text3);min-height:18px"></div>
           <div style="font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-weight:600;margin-bottom:6px">Surgery grade</div>
           <div class="calc-seg" id="bl-surg">
             <div class="seg-btn on" data-v="minor" onclick="pickBl('surg',this)">Minor</div>
@@ -1407,7 +1411,7 @@
       </div>
     </div>
 
-    <div class="section-header">Full NG45 grids</div>
+    <div class="section-header">Test grids by surgery grade</div>
 
     <div class="card">
       <div class="card-title"><div class="card-title-icon" style="background:var(--green-soft);color:var(--green)">m</div>Minor surgery <span style="font-weight:400;color:var(--text3);font-size:12px">— e.g. excising skin lesion, draining breast abscess</span></div>
@@ -2041,7 +2045,14 @@
     <div style="border:2px dashed #000;border-radius:6px;width:200px;height:80px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;text-align:center;flex-shrink:0">AFFIX PATIENT<br>LABEL HERE</div>
   </div>
   <div id="ps-surgdate" style="font-size:14px;margin-bottom:10px"></div>
-  <div style="font-weight:700;margin-bottom:4px">Your medicine instructions</div>
+  <div style="font-weight:700;margin-bottom:4px">Your day-by-day plan</div>
+  <div id="ps-calendar" style="margin-bottom:6px"></div>
+  <div style="display:flex;gap:14px;flex-wrap:wrap;font-size:10px;margin-bottom:14px">
+    <span><span style="display:inline-block;width:11px;height:11px;background:#bbf7d0;border:1px solid #166534;vertical-align:middle;margin-right:4px"></span>Take your medicine</span>
+    <span><span style="display:inline-block;width:11px;height:11px;background:#fee2e2;border:1px solid #991b1b;vertical-align:middle;margin-right:4px"></span>Do NOT take</span>
+    <span><span style="display:inline-block;width:11px;height:11px;background:#fef3c7;border:1px solid #92400e;vertical-align:middle;margin-right:4px"></span>Special instruction</span>
+  </div>
+  <div style="font-weight:700;margin-bottom:4px">Full medicine instructions</div>
   <ol id="ps-instructions" style="margin:0 0 14px 18px;padding:0;font-size:13px;line-height:1.7"></ol>
   <div id="ps-fasting" style="font-size:13px;line-height:1.7;border-top:1px solid #000;padding-top:10px;margin-bottom:14px"></div>
   <div style="border-top:1px solid #000;padding-top:10px;font-size:12px">
@@ -2201,6 +2212,87 @@ const blGrid = {
   }
 };
 const blLabels = { FBC:'Full blood count', Haem:'Haemostasis', Kidney:'Kidney function', ECG:'ECG', Lung:'Lung function / ABG' };
+/* Procedure → surgery-grade lookup (NICE surgical-severity grading) */
+const procGrades = [
+  {g:'minor', n:'Excision of skin lesion', kw:'mole naevus bcc scc lump cyst sebaceous lipoma wart'},
+  {g:'minor', n:'Drainage of abscess', kw:'incision i&d perianal pilonidal'},
+  {g:'minor', n:'Carpal tunnel release', kw:'hand median nerve'},
+  {g:'minor', n:'Trigger finger / ganglion / minor hand surgery', kw:'tendon'},
+  {g:'minor', n:'Removal of metalwork', kw:'plate screw orif'},
+  {g:'minor', n:'Examination under anaesthesia (EUA)', kw:''},
+  {g:'minor', n:'Cataract surgery', kw:'eye phaco lens ophthalmic'},
+  {g:'minor', n:'Cystoscopy', kw:'bladder flexible rigid'},
+  {g:'minor', n:'Grommets / myringotomy', kw:'ear ent tubes'},
+  {g:'minor', n:'Dental extraction', kw:'teeth tooth'},
+  {g:'minor', n:'Vasectomy', kw:''},
+  {g:'minor', n:'Circumcision', kw:''},
+  {g:'minor', n:'Ingrowing toenail / nail surgery', kw:'wedge'},
+  {g:'intermediate', n:'Inguinal / femoral hernia repair', kw:'groin hernia'},
+  {g:'intermediate', n:'Umbilical / incisional hernia repair', kw:'hernia'},
+  {g:'intermediate', n:'Varicose vein surgery', kw:'veins evlt'},
+  {g:'intermediate', n:'Tonsillectomy / adenoidectomy', kw:'throat ent tonsils'},
+  {g:'intermediate', n:'Knee arthroscopy', kw:'meniscus scope'},
+  {g:'intermediate', n:'Shoulder arthroscopy / subacromial decompression', kw:'rotator cuff'},
+  {g:'intermediate', n:'ACL reconstruction', kw:'knee ligament'},
+  {g:'intermediate', n:'Laparoscopic cholecystectomy', kw:'gallbladder lap chole gallstones'},
+  {g:'intermediate', n:'Appendicectomy', kw:'appendix appendectomy'},
+  {g:'intermediate', n:'Haemorrhoidectomy', kw:'piles anal'},
+  {g:'intermediate', n:'Breast lump / wide local excision', kw:'lumpectomy wle'},
+  {g:'intermediate', n:'Septoplasty / FESS / nasal surgery', kw:'sinus nose ent'},
+  {g:'intermediate', n:'Hysteroscopy / D&C', kw:'dilatation curettage uterus'},
+  {g:'intermediate', n:'Laparoscopic sterilisation', kw:'tubal ligation'},
+  {g:'intermediate', n:'Orchidopexy / hydrocele repair', kw:'testis scrotum'},
+  {g:'intermediate', n:'TURBT (bladder tumour resection)', kw:'bladder transurethral'},
+  {g:'intermediate', n:'Ureteroscopy / stone surgery', kw:'kidney stone urs lithotripsy'},
+  {g:'major', n:'Total abdominal hysterectomy (TAH)', kw:'uterus hysterectomy bso'},
+  {g:'major', n:'Laparoscopic / radical hysterectomy', kw:'uterus hysterectomy'},
+  {g:'major', n:'TURP / prostate resection', kw:'prostate transurethral'},
+  {g:'major', n:'Radical prostatectomy', kw:'prostate'},
+  {g:'major', n:'Total hip replacement (THR)', kw:'hip arthroplasty joint'},
+  {g:'major', n:'Total knee replacement (TKR)', kw:'knee arthroplasty joint'},
+  {g:'major', n:'Lumbar discectomy / laminectomy', kw:'spine back disc'},
+  {g:'major', n:'Spinal fusion', kw:'spine back'},
+  {g:'major', n:'Thyroidectomy / parathyroidectomy', kw:'thyroid neck'},
+  {g:'major', n:'Mastectomy ± axillary clearance', kw:'breast'},
+  {g:'major', n:'Colectomy / bowel resection', kw:'colon hemicolectomy anterior resection hartmann colorectal bowel'},
+  {g:'major', n:'Gastrectomy', kw:'stomach'},
+  {g:'major', n:'Oesophagectomy', kw:'oesophagus esophagus'},
+  {g:'major', n:'Whipple / pancreatic resection', kw:'pancreas pancreaticoduodenectomy'},
+  {g:'major', n:'Hepatectomy / liver resection', kw:'liver'},
+  {g:'major', n:'Nephrectomy', kw:'kidney renal'},
+  {g:'major', n:'Cystectomy', kw:'bladder'},
+  {g:'major', n:'Laparotomy', kw:'open abdomen'},
+  {g:'major', n:'Lung resection / lobectomy', kw:'thoracic chest lung'},
+  {g:'major', n:'AAA / major vascular surgery', kw:'aneurysm aorta bypass vascular'},
+  {g:'major', n:'Free flap / radical neck dissection', kw:'plastics head neck reconstruction'}
+];
+const gradeName = { minor:'Minor', intermediate:'Intermediate', major:'Major / complex' };
+let _procHits = [];
+function setBlSurg(grade) {
+  blState.surg = grade;
+  document.querySelectorAll('#bl-surg .seg-btn').forEach(b => b.classList.toggle('on', b.dataset.v === grade));
+  document.getElementById('bl-surg-eg').textContent = blExamples[grade];
+  renderBl();
+}
+function searchProc(q) {
+  const box = document.getElementById('bl-proc-result');
+  q = (q || '').trim().toLowerCase();
+  if (q.length < 2) { box.innerHTML = ''; return; }
+  _procHits = procGrades.filter(p => (p.n + ' ' + p.kw).toLowerCase().includes(q)).slice(0, 6);
+  if (!_procHits.length) { box.innerHTML = '<span style="color:var(--text3)">No match — pick the grade manually below.</span>'; return; }
+  setBlSurg(_procHits[0].g);
+  let html = '<div style="margin-bottom:4px"><strong style="color:var(--text)">' + _procHits[0].n + '</strong> → <strong style="color:var(--accent)">' + gradeName[_procHits[0].g] + '</strong> <span style="color:var(--text3)">— grade applied below</span></div>';
+  if (_procHits.length > 1) {
+    html += '<div style="color:var(--text3)">Did you mean: ' + _procHits.slice(1).map((p, i) => '<span onclick="applyProc(' + (i + 1) + ')" style="cursor:pointer;text-decoration:underline;color:var(--accent);margin-right:9px">' + p.n + '</span>').join('') + '</div>';
+  }
+  box.innerHTML = html;
+}
+function applyProc(i) {
+  const p = _procHits[i]; if (!p) return;
+  document.getElementById('bl-proc').value = p.n;
+  setBlSurg(p.g);
+  document.getElementById('bl-proc-result').innerHTML = '<div><strong style="color:var(--text)">' + p.n + '</strong> → <strong style="color:var(--accent)">' + gradeName[p.g] + '</strong> <span style="color:var(--text3)">— grade applied below</span></div>';
+}
 function pickBl(type, el) {
   const grp = type === 'surg' ? 'bl-surg' : 'bl-asa';
   document.querySelectorAll('#' + grp + ' .seg-btn').forEach(b => b.classList.remove('on'));
@@ -2373,10 +2465,47 @@ function calcMedTiming() {
   document.getElementById('restart-output').innerHTML = restarts.length
     ? restarts.map(r => '<div style="display:flex;align-items:flex-start;gap:10px;padding:7px 0;border-bottom:1px solid var(--border)"><div style="flex:1;font-size:13px;font-weight:600">' + r.label + '</div><div style="text-align:right"><div style="font-size:13px;color:var(--green);font-weight:700">' + r.date + '</div><div style="font-size:11px;color:var(--text3)">' + r.note + '</div></div></div>').join('')
     : '<span style="color:var(--text3);font-size:13px">No restart dates applicable for selected medications.</span>';
+  /* day-by-day colour calendar for the patient sheet */
+  const wdShort = d => d.toLocaleDateString('en-AU', { weekday:'short' });
+  const dmShort = d => d.toLocaleDateString('en-AU', { day:'numeric', month:'short' });
+  const calStart = Math.max(Math.min(...selected.map(k => configs[k].lastDose)), -9);
+  const dayOffsets = [];
+  for (let o = calStart; o <= 0; o++) dayOffsets.push(o);
+  const cellState = (k, off) => {
+    const cfg = configs[k];
+    if (k === 'cpap') return off === 0 ? { t:'Bring it in', c:'#1d4ed8', bg:'#dbeafe' } : { t:'', c:'#999', bg:'#fff' };
+    if (k === 'glp1_liquid') return off < cfg.lastDose ? { t:'Take', c:'#166534', bg:'#dcfce7' } : { t:'Take + clear fluids', c:'#92400e', bg:'#fef3c7' };
+    if (k === 'metformin_contrast') return off === 0 ? { t:'Hold if kidneys low', c:'#92400e', bg:'#fef3c7' } : { t:'Take', c:'#166534', bg:'#dcfce7' };
+    if (off < cfg.lastDose) return { t:'Take', c:'#166534', bg:'#dcfce7' };
+    if (off === cfg.lastDose) return { t:'LAST DOSE', c:'#166534', bg:'#bbf7d0', b:1 };
+    return { t:'Do NOT take', c:'#991b1b', bg:'#fee2e2' };
+  };
+  let cal = '<table style="width:100%;border-collapse:collapse;font-size:11px;table-layout:fixed"><thead><tr>'
+    + '<th style="text-align:left;padding:5px;border:1px solid #999;background:#000;color:#fff;width:84px">Day</th>';
+  selected.forEach(k => { cal += '<th style="padding:5px;border:1px solid #999;background:#000;color:#fff;font-size:10px">' + configs[k].label + '</th>'; });
+  cal += '</tr></thead><tbody>';
+  dayOffsets.forEach(off => {
+    const d = addDays(surgDate, off);
+    const isSurg = off === 0;
+    const dayLab = isSurg
+      ? '<strong>🏥 OPERATION</strong><br>' + wdShort(d) + ' ' + dmShort(d)
+      : '<strong>' + wdShort(d) + ' ' + dmShort(d) + '</strong>' + (off === -1 ? '<br><span style="font-size:9px;color:#555">day before</span>' : '');
+    cal += '<tr><td style="padding:5px;border:1px solid #999;' + (isSurg ? 'background:#dbeafe;' : '') + '">' + dayLab + '</td>';
+    selected.forEach(k => {
+      const s = cellState(k, off);
+      cal += '<td style="padding:5px;border:1px solid #999;text-align:center;color:' + s.c + ';background:' + s.bg + ';font-weight:' + (s.b ? '800' : '600') + '">' + s.t + '</td>';
+    });
+    cal += '</tr>';
+  });
+  cal += '</tbody></table>';
+  const earlyMeds = selected.filter(k => configs[k].lastDose < calStart);
+  if (earlyMeds.length) cal += '<div style="font-size:10px;color:#444;margin-top:5px">Some medicines (' + earlyMeds.map(k => configs[k].label).join(', ') + ') are stopped earlier than this chart begins — see your last-dose dates in the full instructions below.</div>';
+
   /* data for the printable patient sheet + chart summary import */
   window.medPlanText = 'MEDICATION PLAN (surgery ' + fmt(surgDate) + ')\n' + planLines.map(l => '• ' + l).join('\n');
   window.psData = {
     surgLong: fmtLong(surgDate),
+    calHTML: cal,
     items: selected.map(k => {
       const cfg = configs[k];
       return cfg.patient.replace('{d}', '<strong>' + fmtLong(addDays(surgDate, cfg.lastDose)) + '</strong>');
@@ -2389,6 +2518,7 @@ function calcMedTiming() {
 function printPatientSheet() {
   if (!window.psData) { alert('Select a surgery date and tick at least one medication first.'); return; }
   document.getElementById('ps-surgdate').innerHTML = 'Date of operation: <strong>' + window.psData.surgLong + '</strong>';
+  document.getElementById('ps-calendar').innerHTML = window.psData.calHTML || '';
   document.getElementById('ps-instructions').innerHTML = window.psData.items.map(t => '<li>' + t + '</li>').join('');
   document.getElementById('ps-fasting').innerHTML =
     '<div style="font-weight:700;margin-bottom:4px">Eating and drinking before your operation</div>' +
