@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LMH Pre-Anaesthetic Clinic Reference — v3 draft</title>
+<title>LMH Pre-Anaesthetic Clinic Reference — v3.2 draft</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
@@ -34,9 +34,9 @@
     --pink: #b83280;
     --radius: 8px;
     --radius-lg: 12px;
-    --sans: 'IBM Plex Sans', -apple-system, sans-serif;
-    --serif: 'IBM Plex Serif', Georgia, serif;
-    --mono: 'IBM Plex Mono', monospace;
+    --sans: 'IBM Plex Sans', -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --serif: 'IBM Plex Serif', Georgia, 'Times New Roman', serif;
+    --mono: 'IBM Plex Mono', 'SF Mono', Consolas, Menlo, monospace;
   }
   html[data-theme="dark"] {
     --bg: #11151c;
@@ -307,6 +307,43 @@
     .page-title { font-size: 18px; }
     .hero-tile { display: none; }
   }
+
+  /* ---- ISSUE REPORTING ---- */
+  #report-fab { position: fixed; right: 18px; bottom: 18px; z-index: 90;
+    display: flex; align-items: center; gap: 7px; padding: 10px 14px;
+    background: var(--bg2); color: var(--text2); border: 1px solid var(--border2);
+    border-radius: 999px; box-shadow: 0 3px 14px rgba(0,0,0,0.16);
+    font-family: var(--sans); font-size: 12.5px; font-weight: 600; cursor: pointer; }
+  #report-fab:hover { color: var(--red); border-color: var(--red); }
+  #report-fab:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  #report-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 120; }
+  #report-overlay.open { display: block; }
+  #report-modal { position: fixed; z-index: 121; left: 50%; top: 50%; transform: translate(-50%,-50%);
+    width: min(560px, calc(100vw - 32px)); max-height: calc(100vh - 48px); overflow-y: auto;
+    background: var(--bg2); border: 1px solid var(--border2); border-radius: var(--radius-lg);
+    box-shadow: 0 12px 48px rgba(0,0,0,0.35); padding: 20px 22px 18px; display: none; }
+  #report-modal.open { display: block; }
+  #report-modal h3 { margin: 0 0 4px; font-family: var(--sans); font-size: 16.5px; color: var(--text); }
+  #report-modal .rm-sub { font-size: 12px; color: var(--text3); margin-bottom: 14px; line-height: 1.6; }
+  #report-modal .rm-ctx { background: var(--bg3); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 9px 11px; font-size: 12px; color: var(--text2);
+    font-family: var(--mono); line-height: 1.7; margin-bottom: 12px; }
+  #report-modal label { display: block; font-size: 12.5px; font-weight: 600; color: var(--text); margin-bottom: 5px; }
+  #report-modal textarea { width: 100%; box-sizing: border-box; min-height: 130px; resize: vertical;
+    background: var(--bg); color: var(--text); border: 1px solid var(--border2);
+    border-radius: var(--radius); padding: 9px 10px; font-family: var(--sans); font-size: 13.5px; line-height: 1.6; }
+  #report-modal textarea:focus { outline: none; border-color: var(--accent); }
+  #report-warn { background: var(--red-soft); border: 1px solid var(--red);
+    border-radius: var(--radius); padding: 8px 11px; font-size: 12px; color: var(--text);
+    line-height: 1.6; margin: 11px 0 14px; }
+  #report-modal .rm-actions { display: flex; justify-content: flex-end; gap: 9px; }
+  #report-modal button { font-family: var(--sans); font-size: 13px; font-weight: 600;
+    padding: 8px 15px; border-radius: var(--radius); cursor: pointer; border: 1px solid var(--border2); }
+  #rm-cancel { background: transparent; color: var(--text2); }
+  #rm-send { background: var(--accent); color: #fff; border-color: var(--accent); }
+  #rm-send:disabled { opacity: 0.45; cursor: not-allowed; }
+  #rm-count { font-size: 11px; color: var(--text3); margin-top: 4px; text-align: right; }
+  @media print { #report-fab, #report-overlay, #report-modal { display: none !important; } }
 </style>
 </head>
 <body>
@@ -332,6 +369,7 @@
       <div class="nav-item" data-page="asa"><span class="nav-dot" style="background:#a78bfa"></span><span>ASA Physical Status</span></div>
       <div class="nav-item" data-page="childpugh"><span class="nav-dot" style="background:#a78bfa"></span><span>Child-Pugh</span></div>
       <div class="nav-item" data-page="penfast"><span class="nav-dot" style="background:#a78bfa"></span><span>PEN-FAST (penicillin)</span></div>
+      <div class="nav-item" data-page="omedd"><span class="nav-dot" style="background:#6b46c1"></span><span>oMEDD — opioid dose</span></div>
       <a class="nav-item" href="https://riskcalculator.facs.org/RiskCalculator/" target="_blank" rel="noopener" style="text-decoration:none"><span class="nav-dot" style="background:#a78bfa"></span><span>NSQIP — surgical risk ↗</span></a>
     </div>
     <div class="nav-group">
@@ -347,6 +385,7 @@
     </div>
     <div class="nav-group">
       <div class="nav-label">Medications</div>
+      <div class="nav-item" data-page="tradefinder"><span class="nav-dot" style="background:#f0b429"></span><span>Trade name finder</span></div>
       <div class="nav-item" data-page="meds"><span class="nav-dot" style="background:#5a9bf5"></span><span>Hold / Continue</span></div>
       <div class="nav-item" data-page="anticoag"><span class="nav-dot" style="background:#ec6a5e"></span><span>Anticoagulation</span></div>
       <div class="nav-item" data-page="glp1"><span class="nav-dot" style="background:#41c98a"></span><span>GLP-1 / SGLT2i</span></div>
@@ -375,7 +414,7 @@
   <div class="rail-foot">
     <div class="rail-foot-txt">
       ANZCA PG07 2024 · ADS-ANZCA 2022 · ACC/AHA 2024 · ANZCA/ADS GLP-1 2025 · CHEST 2022 · ESAIC 2025 · ASRA 5th ed 2025 · CPOC/BSH anaemia 2024–25
-      <br><br><span style="color:#ec6a5e">⚠ Reference only — verify against local NALHN policy.</span><br><br><span style="color:#8db8f7">v3.0 DRAFT · 11 Jun 2026<br>Runs entirely in your browser — nothing entered is stored or transmitted.</span>
+      <br><br><span style="color:#ec6a5e">⚠ Reference only — verify against local NALHN policy.</span><br><br><span style="color:#8db8f7">v3.1 DRAFT · 21 Jul 2026 · NALHN PPG incorporated<br>Runs entirely in your browser — nothing entered is stored or transmitted.</span>
     </div>
   </div>
 </aside>
@@ -517,6 +556,8 @@
           <tr><td>CPOC / BSH preoperative anaemia</td><td>2024–25</td><td>Anaemia / PBM</td></tr>
           <tr><td>PEN-FAST (Trubiano)</td><td>2020</td><td>Penicillin de-labelling</td></tr>
           <tr><td>NICE NG45 routine pre-op tests</td><td>2016 (rev. 2024)</td><td>Pre-op bloods</td></tr>
+          <tr><td>ANZCA PS41(G) Acute pain position statement</td><td>2023</td><td>Opioids / OST, chronic pain</td></tr>
+          <tr><td>FPM PS01(PM) App 2 — opioid dose equivalence</td><td>2025</td><td>oMEDD calculator</td></tr>
         </tbody></table></div>
       </div>
       <div class="card">
@@ -630,11 +671,11 @@
         <div style="font-size:13px;font-weight:600;margin-bottom:6px">Risk factors</div>
         <div class="calc-row"><input type="checkbox" data-w="1" onchange="calcCHADS()"><label>Congestive heart failure / LV dysfunction <span class="pts">+1</span></label></div>
         <div class="calc-row"><input type="checkbox" data-w="1" onchange="calcCHADS()"><label>Hypertension <span class="pts">+1</span></label></div>
-        <div class="calc-row"><input type="checkbox" data-w="2" onchange="calcCHADS()"><label>Age ≥75 <span class="pts">+2</span></label></div>
+        <div class="calc-row"><input type="checkbox" data-w="2" data-xg="chads-age" onchange="calcCHADS(this)"><label>Age ≥75 <span class="pts">+2</span></label></div>
         <div class="calc-row"><input type="checkbox" data-w="1" onchange="calcCHADS()"><label>Diabetes mellitus <span class="pts">+1</span></label></div>
         <div class="calc-row"><input type="checkbox" data-w="2" onchange="calcCHADS()"><label>Prior stroke / TIA / thromboembolism <span class="pts">+2</span></label></div>
         <div class="calc-row"><input type="checkbox" data-w="1" onchange="calcCHADS()"><label>Vascular disease (MI, PAD, aortic plaque) <span class="pts">+1</span></label></div>
-        <div class="calc-row"><input type="checkbox" data-w="1" onchange="calcCHADS()"><label>Age 65–74 <span class="pts">+1</span></label></div>
+        <div class="calc-row"><input type="checkbox" data-w="1" data-xg="chads-age" onchange="calcCHADS(this)"><label>Age 65–74 <span class="pts">+1</span></label></div>
         <div class="calc-row"><input type="checkbox" data-w="1" onchange="calcCHADS()"><label>Sex category female <span class="pts">+1</span></label></div>
         <hr>
         <div style="display:flex;align-items:baseline;gap:12px"><div class="calc-score" id="chads-score">0</div><div style="color:var(--text3)">/ 9 points</div></div>
@@ -968,7 +1009,9 @@
   <!-- OBESITY -->
   <div id="page-obesity" class="page">
     <div class="page-title">Obesity &amp; obstructive sleep apnoea</div>
-    <div class="page-sub">ESAIC 2024–25 · STOP-BANG · ANZCA PG07 2024</div>
+    <div class="page-sub">ESAIC 2024–25 · STOP-BANG · ANZCA PG07 2024 · NALHN SSI05003 Bariatric Patient Handling (12/2025)</div>
+    <div class="tag-strip"><span class="source-badge">ESAIC 2024–25</span><span class="source-badge">ANZCA PG07 2024</span><span class="source-badge">NALHN SSI05003</span></div>
+    <div class="alert alert-teal"><strong>★ NALHN bariatric pathway (SSI05003, LMH &amp; Modbury):</strong> "bariatric" = <strong>≥2 of: weight ≥120 kg · BMI &gt;40 · seated hip width &gt;50 cm</strong>. At pre-admission, measure height, weight, BMI and width (sagittal &amp; coronal). <strong>BMI &gt;45 → anaesthetic clinic review required.</strong> Flag via the Pre-Admission Advice to Booking Office Form → HOMER Alert; booking office notes equipment needs on the ORMIS list (Special Equipment column). Theatres need ≥24 h notice (referring institutions asked for 48 h) to prepare positioning aids, bariatric table attachments and transfer equipment (Hovermatt/AirPal + Pat slide). Dependent patients need a bariatric bed + air-transfer mat; minimum 4 staff for lifter use/bed moves (up to 8 for manual assistance). LMH ICU bariatric bays 17–19; LMH bariatric ward rooms 1D/2D 13 &amp; 20, 1E/2E 5 &amp; 21 (ceiling hoist 350 kg).</div>
     <div class="grid-2">
       <div>
         <div class="card">
@@ -1044,7 +1087,7 @@
     <div class="tag-strip no-print"><span class="source-badge">CALHN-GDE06093</span><span class="source-badge">v1.0 · 2023</span></div>
     <div class="alert alert-blue" style="margin-bottom:8px">General guidance only — procedure-specific guidelines or individual patient factors may dictate altered management on the advice of the relevant specialty. Monographs are valid only for the medicines listed; if a new agent appears in an existing class, seek advice. If uncertain, confirm with the relevant specialty. <em>Source: CALHN-GDE06093 Pre-Operative Medication Management.</em></div>
     <div class="alert alert-amber" style="margin-bottom:8px"><strong>Herbal / natural / complementary medicines:</strong> safety in the peri-operative setting is not established — withhold 2 weeks before elective surgery. Ask specifically, as these are often unreported.</div>
-    <div class="alert alert-amber no-print" style="margin-bottom:16px">Anticoagulants &amp; antiplatelets (CALHN-OWI05619) and diabetes agents (CALHN-OWI05136) are managed under separate local protocols — cards below link to the dedicated pages.</div>
+    <div class="alert alert-amber no-print" style="margin-bottom:16px">Anticoagulants &amp; antiplatelets (NALHN OWI02488) and diabetes agents (NALHN OWI01210 / OWI04030) are managed under dedicated local protocols — cards below link to the dedicated pages.</div>
     <div id="med-list">
 
       <div class="section-header" data-group>Antihistamines</div>
@@ -1060,7 +1103,7 @@
       <div class="drug-card" data-kw="paracetamol acetaminophen analgesic"><div><span class="pill pill-green" style="margin-top:3px">CONTINUE</span></div><div class="drug-info"><div class="drug-name">Paracetamol</div><div class="drug-class">Paracetamol</div><div class="drug-action">Continue.</div></div></div>
 
       <div class="section-header" data-group>Medications affecting blood &amp; electrolytes</div>
-      <div class="drug-card" data-kw="anticoagulant warfarin enoxaparin heparin apixaban rivaroxaban dabigatran doac owi05619"><div><span class="pill pill-purple" style="margin-top:3px">SEE PROTOCOL</span></div><div class="drug-info"><div class="drug-name">Anticoagulants</div><div class="drug-class">Heparin, enoxaparin, dabigatran, apixaban, rivaroxaban, warfarin</div><div class="drug-action">Refer to CALHN-OWI05619 for pre-operative management. Stop/restart timing, bridging and neuraxial intervals on the <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="anticoag">Anticoagulation page →</span></div></div></div>
+      <div class="drug-card" data-kw="anticoagulant warfarin enoxaparin heparin apixaban rivaroxaban dabigatran doac owi05619"><div><span class="pill pill-purple" style="margin-top:3px">SEE PROTOCOL</span></div><div class="drug-info"><div class="drug-name">Anticoagulants</div><div class="drug-class">Heparin, enoxaparin, dabigatran, apixaban, rivaroxaban, warfarin</div><div class="drug-action">Refer to NALHN OWI02488 for pre-operative management. Stop/restart timing, bridging and neuraxial intervals on the <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="anticoag">Anticoagulation page →</span></div></div></div>
       <div class="drug-card" data-kw="antiplatelet aspirin clopidogrel ticagrelor dipyridamole dapt stent"><div><span class="pill pill-blue" style="margin-top:3px">CHECK SPECIALTY</span></div><div class="drug-info"><div class="drug-name">Antiplatelets</div><div class="drug-class">Aspirin (antiplatelet), clopidogrel, dipyridamole, ticagrelor</div><div class="drug-action">Check with relevant specialty. DAPT after stent must not be stopped without cardiology sign-off. Stop/restart timing on the <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="anticoag">Anticoagulation page →</span></div></div></div>
       <div class="drug-card" data-kw="erythropoietin epo darbepoetin epoetin esa"><div><span class="pill pill-green" style="margin-top:3px">CONTINUE</span></div><div class="drug-info"><div class="drug-name">Erythropoietin agonists</div><div class="drug-class">Darbepoetin alfa, epoetin alfa, epoetin beta, methoxy polyethylene glycol-epoetin beta</div><div class="drug-action">Continue.</div></div></div>
       <div class="drug-card" data-kw="phosphate binder sevelamer lanthanum calcium carbonate aluminium hydroxide sucroferric"><div><span class="pill pill-amber" style="margin-top:3px">HOLD</span></div><div class="drug-info"><div class="drug-name">Phosphate binders</div><div class="drug-class">Aluminium hydroxide, calcium carbonate (phosphate binder), lanthanum, sevelamer, sucroferric oxyhydroxide</div><div class="drug-action">Hold — do not take whilst fasting.</div></div></div>
@@ -1097,14 +1140,14 @@
       <div class="drug-card" data-kw="finasteride alopecia hair"><div><span class="pill pill-green" style="margin-top:3px">CONTINUE</span></div><div class="drug-info"><div class="drug-name">Drugs for alopecia</div><div class="drug-class">Finasteride</div><div class="drug-action">Continue.</div></div></div>
 
       <div class="section-header" data-group>Endocrine medications</div>
-      <div class="drug-card" data-kw="sulfonylurea gliclazide glimepiride glibenclamide glipizide diabetes owi05136"><div><span class="pill pill-purple" style="margin-top:3px">SEE PROTOCOL</span></div><div class="drug-info"><div class="drug-name">Sulfonylureas</div><div class="drug-class">Glibenclamide, gliclazide, glimepiride, glipizide</div><div class="drug-action">Refer to CALHN-OWI05136 for pre-operative management. Euglycaemic DKA &amp; aspiration pathways on the <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="glp1">Diabetes — GLP-1 / SGLT2i page →</span></div></div></div>
-      <div class="drug-card" data-kw="dpp4 gliptin sitagliptin linagliptin vildagliptin saxagliptin alogliptin diabetes owi05136"><div><span class="pill pill-purple" style="margin-top:3px">SEE PROTOCOL</span></div><div class="drug-info"><div class="drug-name">DPP-4 inhibitors</div><div class="drug-class">Alogliptin, linagliptin, saxagliptin, sitagliptin, vildagliptin</div><div class="drug-action">Refer to CALHN-OWI05136 for pre-operative management. Euglycaemic DKA &amp; aspiration pathways on the <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="glp1">Diabetes — GLP-1 / SGLT2i page →</span></div></div></div>
-      <div class="drug-card" data-kw="glp1 semaglutide dulaglutide liraglutide exenatide ozempic diabetes owi05136"><div><span class="pill pill-purple" style="margin-top:3px">SEE PROTOCOL</span></div><div class="drug-info"><div class="drug-name">GLP-1 analogues</div><div class="drug-class">Dulaglutide, exenatide, liraglutide, semaglutide</div><div class="drug-action">Refer to CALHN-OWI05136 for pre-operative management. Euglycaemic DKA &amp; aspiration pathways on the <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="glp1">Diabetes — GLP-1 / SGLT2i page →</span></div></div></div>
-      <div class="drug-card" data-kw="sglt2 gliflozin dapagliflozin empagliflozin ertugliflozin diabetes owi05136"><div><span class="pill pill-purple" style="margin-top:3px">SEE PROTOCOL</span></div><div class="drug-info"><div class="drug-name">SGLT2 inhibitors</div><div class="drug-class">Dapagliflozin, empagliflozin, ertugliflozin</div><div class="drug-action">Refer to CALHN-OWI05136 for pre-operative management. Euglycaemic DKA &amp; aspiration pathways on the <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="glp1">Diabetes — GLP-1 / SGLT2i page →</span></div></div></div>
-      <div class="drug-card" data-kw="acarbose diabetes owi05136"><div><span class="pill pill-purple" style="margin-top:3px">SEE PROTOCOL</span></div><div class="drug-info"><div class="drug-name">Acarbose</div><div class="drug-class">Acarbose</div><div class="drug-action">Refer to CALHN-OWI05136 for pre-operative management. Euglycaemic DKA &amp; aspiration pathways on the <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="glp1">Diabetes — GLP-1 / SGLT2i page →</span></div></div></div>
-      <div class="drug-card" data-kw="insulin novorapid humalog lantus optisulin levemir actrapid protaphane mixtard diabetes owi05136"><div><span class="pill pill-purple" style="margin-top:3px">SEE PROTOCOL</span></div><div class="drug-info"><div class="drug-name">Insulins</div><div class="drug-class">Ultra-short, short, intermediate (mixed &amp; non-mixed) and long-acting insulins</div><div class="drug-action">Refer to CALHN-OWI05136 for pre-operative management. Euglycaemic DKA &amp; aspiration pathways on the <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="glp1">Diabetes — GLP-1 / SGLT2i page →</span></div></div></div>
-      <div class="drug-card" data-kw="metformin diabetes owi05136"><div><span class="pill pill-purple" style="margin-top:3px">SEE PROTOCOL</span></div><div class="drug-info"><div class="drug-name">Metformin</div><div class="drug-class">Metformin</div><div class="drug-action">Refer to CALHN-OWI05136 for pre-operative management. Euglycaemic DKA &amp; aspiration pathways on the <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="glp1">Diabetes — GLP-1 / SGLT2i page →</span></div></div></div>
-      <div class="drug-card" data-kw="pioglitazone glitazone diabetes owi05136"><div><span class="pill pill-purple" style="margin-top:3px">SEE PROTOCOL</span></div><div class="drug-info"><div class="drug-name">Pioglitazone</div><div class="drug-class">Pioglitazone</div><div class="drug-action">Refer to CALHN-OWI05136 for pre-operative management. Euglycaemic DKA &amp; aspiration pathways on the <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="glp1">Diabetes — GLP-1 / SGLT2i page →</span></div></div></div>
+      <div class="drug-card" data-kw="sulfonylurea gliclazide glimepiride glibenclamide glipizide diabetes owi05136"><div><span class="pill pill-purple" style="margin-top:3px">SEE PROTOCOL</span></div><div class="drug-info"><div class="drug-name">Sulfonylureas</div><div class="drug-class">Glibenclamide, gliclazide, glimepiride, glipizide</div><div class="drug-action">Refer to NALHN OWI01210 Pre-Operative Diabetes Guideline for pre-operative management. Euglycaemic DKA &amp; aspiration pathways on the <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="glp1">Diabetes — GLP-1 / SGLT2i page →</span></div></div></div>
+      <div class="drug-card" data-kw="dpp4 gliptin sitagliptin linagliptin vildagliptin saxagliptin alogliptin diabetes owi05136"><div><span class="pill pill-purple" style="margin-top:3px">SEE PROTOCOL</span></div><div class="drug-info"><div class="drug-name">DPP-4 inhibitors</div><div class="drug-class">Alogliptin, linagliptin, saxagliptin, sitagliptin, vildagliptin</div><div class="drug-action">Refer to NALHN OWI01210 Pre-Operative Diabetes Guideline for pre-operative management. Euglycaemic DKA &amp; aspiration pathways on the <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="glp1">Diabetes — GLP-1 / SGLT2i page →</span></div></div></div>
+      <div class="drug-card" data-kw="glp1 semaglutide dulaglutide liraglutide exenatide ozempic diabetes owi05136"><div><span class="pill pill-purple" style="margin-top:3px">SEE PROTOCOL</span></div><div class="drug-info"><div class="drug-name">GLP-1 analogues</div><div class="drug-class">Dulaglutide, exenatide, liraglutide, semaglutide</div><div class="drug-action">Refer to NALHN OWI01210 Pre-Operative Diabetes Guideline for pre-operative management. Euglycaemic DKA &amp; aspiration pathways on the <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="glp1">Diabetes — GLP-1 / SGLT2i page →</span></div></div></div>
+      <div class="drug-card" data-kw="sglt2 gliflozin dapagliflozin empagliflozin ertugliflozin diabetes owi05136"><div><span class="pill pill-purple" style="margin-top:3px">SEE PROTOCOL</span></div><div class="drug-info"><div class="drug-name">SGLT2 inhibitors</div><div class="drug-class">Dapagliflozin, empagliflozin, ertugliflozin</div><div class="drug-action">Refer to NALHN OWI04030 for pre-operative management. Euglycaemic DKA &amp; aspiration pathways on the <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="glp1">Diabetes — GLP-1 / SGLT2i page →</span></div></div></div>
+      <div class="drug-card" data-kw="acarbose diabetes owi05136"><div><span class="pill pill-purple" style="margin-top:3px">SEE PROTOCOL</span></div><div class="drug-info"><div class="drug-name">Acarbose</div><div class="drug-class">Acarbose</div><div class="drug-action">Refer to NALHN OWI01210 Pre-Operative Diabetes Guideline for pre-operative management. Euglycaemic DKA &amp; aspiration pathways on the <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="glp1">Diabetes — GLP-1 / SGLT2i page →</span></div></div></div>
+      <div class="drug-card" data-kw="insulin novorapid humalog lantus optisulin levemir actrapid protaphane mixtard diabetes owi05136"><div><span class="pill pill-purple" style="margin-top:3px">SEE PROTOCOL</span></div><div class="drug-info"><div class="drug-name">Insulins</div><div class="drug-class">Ultra-short, short, intermediate (mixed &amp; non-mixed) and long-acting insulins</div><div class="drug-action">Refer to NALHN OWI01210 Pre-Operative Diabetes Guideline for pre-operative management. Euglycaemic DKA &amp; aspiration pathways on the <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="glp1">Diabetes — GLP-1 / SGLT2i page →</span></div></div></div>
+      <div class="drug-card" data-kw="metformin diabetes owi05136"><div><span class="pill pill-purple" style="margin-top:3px">SEE PROTOCOL</span></div><div class="drug-info"><div class="drug-name">Metformin</div><div class="drug-class">Metformin</div><div class="drug-action">Refer to NALHN OWI01210 Pre-Operative Diabetes Guideline for pre-operative management. Euglycaemic DKA &amp; aspiration pathways on the <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="glp1">Diabetes — GLP-1 / SGLT2i page →</span></div></div></div>
+      <div class="drug-card" data-kw="pioglitazone glitazone diabetes owi05136"><div><span class="pill pill-purple" style="margin-top:3px">SEE PROTOCOL</span></div><div class="drug-info"><div class="drug-name">Pioglitazone</div><div class="drug-class">Pioglitazone</div><div class="drug-action">Refer to NALHN OWI01210 Pre-Operative Diabetes Guideline for pre-operative management. Euglycaemic DKA &amp; aspiration pathways on the <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="glp1">Diabetes — GLP-1 / SGLT2i page →</span></div></div></div>
       <div class="drug-card" data-kw="thyroid levothyroxine thyroxine liothyronine hypothyroid"><div><span class="pill pill-green" style="margin-top:3px">CONTINUE</span></div><div class="drug-info"><div class="drug-name">Thyroid hormones</div><div class="drug-class">Levothyroxine, liothyronine</div><div class="drug-action">Continue. Long half-life; ensure hyperthyroidism controlled before elective surgery.</div></div></div>
       <div class="drug-card" data-kw="carbimazole propylthiouracil antithyroid hyperthyroid"><div><span class="pill pill-green" style="margin-top:3px">CONTINUE</span></div><div class="drug-info"><div class="drug-name">Anti-thyroid drugs</div><div class="drug-class">Carbimazole, propylthiouracil</div><div class="drug-action">Continue.</div></div></div>
       <div class="drug-card" data-kw="bisphosphonate alendronate risedronate zoledronic pamidronate ibandronic osteoporosis"><div><span class="pill pill-amber" style="margin-top:3px">HOLD</span></div><div class="drug-info"><div class="drug-name">Bisphosphonates</div><div class="drug-class">Alendronate, ibandronic acid, pamidronate, risedronate, zoledronic acid</div><div class="drug-action">Hold — do not take the morning of surgery. Alert dentist/oral surgeon if undergoing dental or oral surgery.</div></div></div>
@@ -1205,11 +1248,21 @@
         </div>
   </div>
 
+  <!-- TRADE NAME FINDER -->
+  <div id="page-tradefinder" class="page">
+    <div class="page-title">Trade / brand name finder</div>
+    <div class="page-sub">Type a brand name from a patient's medication list → generic name, drug class and peri-operative hold/continue advice. Works offline — no internet or My Health Record needed.</div>
+    <div class="global-search no-print" style="max-width:none;margin-bottom:10px"><span style="color:var(--text3)">🔍</span><input type="text" id="trade-search" placeholder="e.g. Plavix, Xarelto, Ozempic, Lipitor, Seroquel, Coversyl…" oninput="tradeLookup()" autocomplete="off"></div>
+    <div class="alert alert-blue no-print" style="margin-bottom:14px">Covers common Australian brand names. You can also type a <strong>generic</strong> name to see which brands it is sold as. Hold/continue advice is drawn from the <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="meds">Hold / Continue page →</span> (CALHN-GDE06093). If a brand isn't found, confirm with pharmacy. <em>This is a memory aid, not a substitute for clinical judgement or the product information.</em></div>
+    <div id="trade-results"><div style="color:var(--text3);font-size:13px;padding:8px 2px">Start typing a brand name above…</div></div>
+  </div>
+
   <!-- ANTICOAG -->
   <div id="page-anticoag" class="page">
     <div class="page-title">Anticoagulation — perioperative management</div>
-    <div class="page-sub">CHEST 2022 · PAUSE study · ACC/AHA 2024 · BRIDGE trial · ASRA 5th ed 2025 (neuraxial)</div>
-    <div class="tag-strip"><span class="source-badge">CHEST 2022</span><span class="source-badge">PAUSE</span><span class="source-badge">ACC/AHA 2024</span><span class="source-badge">ASRA 2025</span></div>
+    <div class="page-sub">CHEST 2022 · PAUSE study · ACC/AHA 2024 · BRIDGE trial · ASRA 5th ed 2025 (neuraxial) · NALHN OWI02488 (04/2024) · NALHN OWI04248 NOF (06/2024)</div>
+    <div class="tag-strip"><span class="source-badge">CHEST 2022</span><span class="source-badge">PAUSE</span><span class="source-badge">ACC/AHA 2024</span><span class="source-badge">ASRA 2025</span><span class="source-badge">NALHN OWI02488</span><span class="source-badge">NALHN OWI04248</span></div>
+    <div class="alert alert-teal"><strong>★ NALHN policy (OWI02488):</strong> all elective/semi-urgent patients on anticoagulants should ideally be evaluated <strong>≥7 days before surgery</strong> — plan interruption/bridging, give written instructions and an INR monitoring schedule at the PAC visit.</div>
     <div class="alert alert-red"><strong>High thrombotic risk → haematology/cardiology co-management:</strong> mechanical heart valves, recent VTE (&lt;3 months), antiphospholipid syndrome, CHA₂DS₂-VASc ≥7. Stratify thrombotic risk with the <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="chads">CHA₂DS₂-VASc</span> calculator. Where bleeding risk is high, correct modifiable factors (BP control, concurrent NSAIDs/antiplatelets, alcohol, INR stability) rather than withholding anticoagulation.</div>
     <div class="grid-2">
       <div>
@@ -1252,13 +1305,66 @@
         </div>
       </div>
     </div>
+    <div class="section-header">★ NALHN local policy — OWI02488 Perioperative Management of Antithrombotic Therapy (04/2024)</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">Warfarin &amp; bridging (NALHN protocol)</div>
+        <ul class="blist">
+          <li><strong>Stop warfarin day −5.</strong> INR check 1–2 days pre-op; if &gt;1.5 consider vitamin K 1–2 mg IV. INR &lt;1.5 safe for surgery &amp; neuraxial; 1.5–1.8 may be acceptable for minor surgery (stop 3 days, discuss with surgeon)</li>
+          <li>Simple dental extraction: continue warfarin + tranexamic acid mouthwash 5 mL 5–10 min pre-op, then TDS for 2–3 days</li>
+          <li><strong>Bridging only if high (or selected moderate) thrombotic risk:</strong> mechanical mitral valve, &gt;2 mechanical valves, older-generation/tilting-disc valve, recent (&lt;3 mo) stroke/TIA or VTE, severe thrombophilia, selected active cancer</li>
+          <li><strong>LMWH bridge:</strong> enoxaparin 1 mg/kg BD from day −3 (CrCl &gt;30); last dose the <strong>morning of day −1</strong> (omit evening dose). CrCl &lt;30: enoxaparin 1 mg/kg daily (discuss monitoring with haematology) or inpatient heparin infusion</li>
+          <li><strong>UFH infusion</strong> (mechanical mitral valve / AF+VTE &lt;2 mo needing urgent surgery, or CrCl &lt;30): target aPTT 65–110 s; stop ≥4 h pre-op &amp; check aPTT (OWI01243)</li>
+          <li><strong>Post-op:</strong> restart warfarin same evening once haemostasis &amp; taking oral fluids (delay 48 h if high bleeding risk); resume LMWH/heparin ≥24 h post-op; continue bridge until INR ≥2.0 for 48 h</li>
+          <li>Urgent/immediate reversal: OWI01104 Warfarin Reversal Guideline (vitamin K 5–10 mg IV ± Prothrombinex 25–50 IU/kg)</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">DOACs — NALHN intervals (elective surgery)</div>
+        <div class="table-wrap"><table><thead><tr><th>Drug</th><th>Renal function</th><th>Low bleed — last dose</th><th>High bleed — last dose</th></tr></thead><tbody>
+          <tr><td rowspan="2">Dabigatran</td><td>CrCl &gt;50</td><td>24 h</td><td>48–72 h</td></tr>
+          <tr><td>CrCl 30–50</td><td>48–72 h</td><td>96 h</td></tr>
+          <tr><td rowspan="2">Rivaroxaban</td><td>Normal/mild</td><td>24 h</td><td>48–72 h</td></tr>
+          <tr><td>Moderate impairment</td><td>48 h</td><td>72 h</td></tr>
+          <tr><td rowspan="2">Apixaban</td><td>Normal/mild</td><td>24 h</td><td>48–72 h</td></tr>
+          <tr><td>Moderate impairment</td><td>48 h</td><td>72 h</td></tr>
+        </tbody></table></div>
+        <ul class="blist" style="margin-top:10px">
+          <li><strong>Resume:</strong> low bleed 24–36 h; high bleed 48–72 h post-op once haemostasis achieved</li>
+          <li><strong>No bridging</strong> unless interruption &gt;96 h in a high-risk patient — seek specialist advice</li>
+          <li>Routine pre-op drug levels not required with standard interruption; for emergency surgery/bleeding, drug level is the most accurate measure (normal TT excludes dabigatran; dabigatran &lt;30 ng/mL safe for surgery). Idarucizumab for uncontrolled dabigatran bleeding — discuss haematology</li>
+          <li><strong>Neuraxial minimum haemostatic conditions:</strong> platelets &gt;75×10⁹/L · INR &lt;1.5 · aPTT &lt;45 s. Regional contraindicated with coagulopathy, severe thrombocytopenia or active anticoagulation — use ASRA COAGS app intervals</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">Antiplatelets &amp; coronary stents (NALHN)</div>
+        <ul class="blist">
+          <li><strong>Aspirin:</strong> continue for minor surgery (dental, skin, cataract, colonoscopy). Other surgery — low CV risk: stop ≤7 days pre-op; moderate/high CV risk: continue. Resume ≤24 h post-op</li>
+          <li><strong>Clopidogrel:</strong> stop 5 days pre-op · <strong>Ticagrelor:</strong> stop 3–5 days (30% residual effect at 2.5 days). Resume ≤24 h post-op</li>
+          <li><strong>Delay elective surgery:</strong> BMS 30 days · DES optimally 6 months (≥3 months if delay riskier than stent thrombosis) · BVS 12 months — do NOT interrupt DAPT within these windows</li>
+          <li>If P2Y12 inhibitor must stop: continue aspirin where possible, restart P2Y12 ASAP post-op. Bridging DAPT not recommended (tirofiban via IPU for selected high-risk)</li>
+          <li>Surgery in constrained spaces (intracranial, spinal, middle ear, posterior eye): stop DAPT</li>
+          <li>IVC filters are thrombogenic — only if VTE &lt;4 weeks + urgent surgery + US-proven thrombus (consult haematology); remove soon after surgery</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">★ NOF fracture on DOACs — OWI04248</div>
+        <div class="alert alert-amber" style="margin-bottom:10px">Target surgery within 24–48 h — do not apply standard elective hold times. Orthogeriatrics liaises with haematology each morning.</div>
+        <ul class="blist">
+          <li><strong>All:</strong> stop DOAC on presentation; send CBE, EUC, LFT, coags, G&amp;H + note time/date/dose of last dose</li>
+          <li><strong>Dabigatran:</strong> add thrombin clotting time (TCT) — proceed when <strong>TCT ≤20 s</strong> (normal TT excludes dabigatran). If delay &gt;48 h anticipated, discuss reversal with idarucizumab (Praxbind) 5 g IV — via haematology + Streamline Non-Formulary; effect immediate, lasts 24 h</li>
+          <li><strong>Apixaban / rivaroxaban:</strong> send drug-specific anti-Xa level — <strong>&lt;30 µg/L suggests minimal anticoagulant effect</strong>; serial levels help time surgery. Normal standard coags do NOT exclude drug (especially apixaban). No established universal cut-off — MDT decision weighing renal function, dose appropriateness &amp; delay risk</li>
+          <li><strong>Post-op:</strong> enoxaparin 40 mg SC daily starting 6 h post-op once haemostasis (AM surgery → 1800; PM surgery → 2200); continue prophylaxis 28 days (OWI00934). Restart usual anticoagulant at consultant level once haemostasis achieved</li>
+        </ul>
+      </div>
+    </div>
   </div>
 
   <!-- GLP1 -->
   <div id="page-glp1" class="page">
     <div class="page-title">GLP-1 receptor agonists &amp; SGLT2 inhibitors</div>
-    <div class="page-sub">ADS/ANZCA/GESA/NACOS 2025 · ADS-ANZCA Diabetes 2022 · ADS SGLT2i Alert 2022</div>
-    <div class="tag-strip"><span class="source-badge">ANZCA GLP-1 2025</span><span class="source-badge">ADS-ANZCA 2022</span><span class="source-badge">SGLT2i Alert 2022</span></div>
+    <div class="page-sub">ADS/ANZCA/GESA/NACOS 2025 · ADS-ANZCA Diabetes 2022 · NALHN OWI04030 SGLT2i (10/2023)</div>
+    <div class="tag-strip"><span class="source-badge">ANZCA GLP-1 2025</span><span class="source-badge">ADS-ANZCA 2022</span><span class="source-badge">NALHN OWI04030</span></div>
     <div class="grid-2">
       <div class="card">
         <div class="card-title" style="color:var(--green)">GLP-1 agonists — 2025 guidance</div>
@@ -1276,10 +1382,10 @@
         <ul class="steps">
           <li><div class="step-num">1</div><div class="step-text"><strong>Clinic:</strong> identify use, document drug/dose/frequency; counsel on 24h clear fluid diet</div></li>
           <li><div class="step-num">2</div><div class="step-text"><strong>24h before:</strong> clear fluid diet only; continue GLP-1</div></li>
-          <li><div class="step-num">3</div><div class="step-text"><strong>Day of:</strong> if clear fluid diet done → standard ANZCA fasting (6h/2h); confirm at team brief / handover</div></li>
+          <li><div class="step-num">3</div><div class="step-text"><strong>Day of:</strong> approved clear liquids (water, diluted cordial, black tea/coffee) ≤200 mL/hr from 0200 (AM/all-day list) or 0630 (PM list), then <strong>NBM from 2 h pre-op</strong> (OWI05728); confirm at team brief / handover</div></li>
           <li><div class="step-num">4</div><div class="step-text"><strong>If not done / uncertain:</strong> gastric ultrasound or minimally-sedated gastroscopy; IV erythromycin may be used</div></li>
         </ul>
-        <div class="alert alert-amber" style="margin-top:12px;margin-bottom:0">Do NOT use SipTilSend / reduced-fasting protocols for GLP-1 patients — standard 6h/2h fasting is the minimum.</div>
+        <div class="alert alert-amber" style="margin-top:12px;margin-bottom:0">GLP-1 RA / GIP-GLP-1 users are <strong>excluded from Sip Til Send</strong> (OWI05728 Table 1): clear-fluid diet from 0800 (AM list) / 1230 (PM list) the day before, approved clear liquids ≤200 mL/hr on the day, then NBM from 2 h pre-op.</div>
       </div>
       <div class="card">
         <div class="card-title" style="color:var(--red)">SGLT2 inhibitors — euglycaemic DKA risk</div>
@@ -1290,18 +1396,19 @@
           <tr><td>Empagliflozin</td><td>Jardiance</td><td>Jardiamet, Glyxambi</td></tr>
           <tr><td>Ertugliflozin</td><td>Steglatro</td><td>Segluromet, Steglujan</td></tr>
         </tbody></table></div>
-        <div class="section-header">Cessation (ADS-ANZCA 2022)</div>
-        <div class="table-wrap"><table><thead><tr><th>Surgery</th><th>Cease</th><th>Day of</th></tr></thead><tbody>
-          <tr><td>Major</td><td><span class="pill pill-red">3 days prior</span></td><td>Fingerprick ketones first</td></tr>
-          <tr><td>Day-stay (scope)</td><td><span class="pill pill-amber">Day of only</span></td><td>Minimise fasting</td></tr>
+        <div class="section-header">★ Cessation — NALHN OWI04030</div>
+        <div class="table-wrap"><table><thead><tr><th>Surgery</th><th>Cease</th><th>Notes</th></tr></thead><tbody>
+          <tr><td>≥1 day in hospital and/or bowel prep (incl. colonoscopy)</td><td><span class="pill pill-red">≥3 days pre-procedure</span></td><td>2 days prior + day of. Give a <strong>written hold plan</strong> at clinic; may need to up-titrate other glucose-lowering drugs. Fixed-dose combos: continue the second agent separately</td></tr>
+          <tr><td>Day-stay (incl. gastroscopy)</td><td><span class="pill pill-amber">Day of procedure only</span></td><td>Minimise fasting before and after</td></tr>
         </tbody></table></div>
-        <div class="section-header">Ketone decision (day of surgery)</div>
+        <div class="section-header">★ Not ceased on admission — ketones + blood gas (NALHN)</div>
         <div style="background:var(--bg3);border-radius:var(--radius);padding:13px;font-size:12.5px">
-          <div style="color:var(--green);font-weight:600;margin-bottom:6px">Ceased 3d + well + ketones &lt;1.7 → Proceed</div>
-          <div style="color:var(--amber);font-weight:600;margin-bottom:6px">Ketosis (&gt;1.0) no acidosis → endocrine advice; may proceed with monitoring + insulin/glucose if &lt;3.0</div>
-          <div style="color:var(--red);font-weight:600">Ketosis + acidosis (BE &lt;−5, pH &lt;7.35) → POSTPONE; escalate endocrine + critical care</div>
+          <div style="color:var(--green);font-weight:600;margin-bottom:6px">Ketones &lt;1.0 &amp; BE &gt;−5 → Proceed; hourly ketones + BGL intra-op, 2-hourly post-op until eating/drinking</div>
+          <div style="color:var(--amber);font-weight:600;margin-bottom:6px">Ketones &gt;1.0 &amp; BE &gt;−5 (ketosis, no acidosis) → endocrine/gen-med advice; may reflect starvation if HbA1c &lt;9% — consider proceeding with peri-op insulin + dextrose infusions</div>
+          <div style="color:var(--red);font-weight:600;margin-bottom:6px">Ketones &gt;1.0 &amp; BE &lt;−5 (ketosis + acidosis) → POSTPONE non-urgent surgery; escalate endocrine + critical care (MET if ward patient)</div>
+          <div style="color:var(--text3);font-size:11.5px">If blood gas analysis unavailable and ketones &gt;1.0 → do not proceed. Unwell patient → strongly consider postponing; check ketones &amp; BGL. HbA1c &gt;9% (75 mmol/mol) = insulin insufficiency, higher DKA risk.</div>
         </div>
-        <div class="alert alert-amber" style="margin-top:12px;margin-bottom:0"><strong>Blood glucose may be normal — do not be reassured by a normal BSL.</strong> Symptoms: abdominal pain, nausea, vomiting, malaise; ketones &gt;1.0; low base excess.</div>
+        <div class="alert alert-amber" style="margin-top:12px;margin-bottom:0"><strong>euDKA (NALHN definition): ketones &gt;1.0 mmol/L + BE &lt;−5 + BSL &lt;14 mmol/L — glucose may be normal; do not be reassured by a normal BSL.</strong> Suspect with abdominal pain, nausea, vomiting, fatigue. Manage: rehydration, IV insulin (+ dextrose if BGL &lt;15), hourly glucose/ketones/gases; endocrinology + critical-care review. <strong>Restart SGLT2i only when eating &amp; drinking normally</strong> (day surgery: consider a further 24 h delay); give written advice to seek help if unwell in the week after. Also indicated for HF (HFrEF) and proteinuric CKD — non-diabetic patients still carry (rare) ketoacidosis risk; same hold rules apply. Hyperglycaemia after holding: manage per OWI00560 Inpatient Insulin Management; contact endocrine if in doubt.</div>
       </div>
     </div>
   </div>
@@ -1309,24 +1416,24 @@
   <!-- FASTING -->
   <div id="page-fasting" class="page">
     <div class="page-title">Perioperative fasting</div>
-    <div class="page-sub">ANZCA PG07 Guideline on Pre-Anaesthesia Consultation and Patient Preparation (2024)</div>
-    <div class="tag-strip"><span class="source-badge">ANZCA PG07 2024</span></div>
+    <div class="page-sub">ANZCA PG07 (2024) · NALHN OWI05728 Preoperative Fasting Guidelines (effective 06/2026, review 06/2029)</div>
+    <div class="tag-strip"><span class="source-badge">ANZCA PG07 2024</span><span class="source-badge">NALHN OWI05728 06/2026</span></div>
     <div class="grid-3" style="margin-bottom:16px">
       <div class="card" style="border-color:var(--red);text-align:center"><div class="hero-num" style="color:var(--red);font-size:34px">6h</div><div style="font-size:13px;font-weight:600;margin:4px 0 2px">Solid food / milk</div><div style="font-size:12px;color:var(--text3)">Incl. chewing gum, candy. Light meal preferred over heavy.</div></div>
-      <div class="card" style="border-color:var(--amber);text-align:center"><div class="hero-num" style="color:var(--amber);font-size:34px">2h</div><div style="font-size:13px;font-weight:600;margin:4px 0 2px">Clear fluids</div><div style="font-size:12px;color:var(--text3)">ANZCA minimum. Water, clear juice, black tea/coffee. NOT milk/smoothies.</div><div style="font-size:11px;color:var(--teal);font-weight:700;margin-top:6px">★ LMH: Sip Till Send applies</div></div>
+      <div class="card" style="border-color:var(--amber);text-align:center"><div class="hero-num" style="color:var(--amber);font-size:34px">2h</div><div style="font-size:13px;font-weight:600;margin:4px 0 2px">Clear fluids</div><div style="font-size:12px;color:var(--text3)">ANZCA minimum. Water, clear juice, black tea/coffee. NOT milk/smoothies.</div><div style="font-size:11px;color:var(--teal);font-weight:700;margin-top:6px">★ NALHN: Sip Til Send applies (OWI05728)</div></div>
       <div class="card" style="border-color:var(--purple);text-align:center"><div class="hero-num" style="color:var(--purple);font-size:34px">4h</div><div style="font-size:13px;font-weight:600;margin:4px 0 2px">Breast milk (infant)</div><div style="font-size:12px;color:var(--text3)">Formula = solid (6h). Water/clear 2h in infants &gt;6 months.</div></div>
     </div>
-    <div class="alert alert-teal" style="margin-bottom:16px"><strong>★ LMH local practice — Sip Till Send (STS):</strong> Standard patients may continue clear fluids (water, black tea/coffee, clear juice) until called to theatre — this supersedes the 2h ANZCA minimum for eligible patients. <strong>STS does NOT apply to:</strong> GLP-1 agonist users · morbid obesity (BMI ≥40) · symptomatic GORD / known gastroparesis · opioid dependence · pregnancy ≥20 weeks · any other high aspiration risk.</div>
+    <div class="alert alert-teal" style="margin-bottom:16px"><strong>★ NALHN policy — Sip Til Send (OWI05728, effective 06/2026, LMH &amp; Modbury):</strong> Unless excluded, adult patients sip <strong>approved clear liquids — water, diluted cordial, black tea/coffee (no milk or sugar) — up to 200 mL/hr until sent for theatre</strong>. No sweets, lollies, antacids or chewing gum. Food ceases ≥6 h pre-op (from 0200 for AM/all-day lists; from 0630 for afternoon lists). ERAS carbohydrate drinks may continue to 2 h pre-op (≤200 mL/hr).<br><br><strong>Excluded from Sip Til Send (Table 1):</strong> GLP-1 RA / GIP-GLP-1 users · emergency abdominal surgery · gastrectomy / pancreatic surgery (incl. Whipple) · previous gastric bypass or multiple laparotomies · post-op ileus · NGT with &gt;500 mL/24 h drainage · gastroparesis · any NBM order or thickened fluids/fluid restriction · anaesthetist documents "Not Sip Til Send" in the EMR · patient preference. Scope excludes endoscopy/colonoscopy, cardiology and radiology procedures, and paediatrics.<br><br><strong>Note:</strong> obesity, GORD and opioid use are <strong>not</strong> automatic exclusions under OWI05728 — assess aspiration risk clinically (below) and document "Not Sip Til Send" in the EMR if concerned.</div>
     <div class="grid-2">
       <div>
         <div class="card">
           <div class="card-title">High aspiration risk — modified approach</div>
-          <div class="alert alert-amber" style="margin-bottom:10px">May need RSI or awake intubation — document clearly in the anaesthetic plan:</div>
+          <div class="alert alert-amber" style="margin-bottom:10px">May need RSI or awake intubation — document clearly in the anaesthetic plan. These are aspiration-risk factors, <strong>not automatic Sip Til Send exclusions</strong> — if concerned, document "Not Sip Til Send" in the EMR (OWI05728):</div>
           <ul class="blist"><li>Morbid obesity (BMI ≥40)</li><li>Known/suspected gastroparesis</li><li>Symptomatic GORD / active reflux</li><li>GLP-1 agonist use</li><li>Diabetic autonomic neuropathy</li><li>Large/symptomatic hiatus hernia</li><li>Previous bariatric surgery</li><li>Opioid dependence</li><li>Raised ICP</li><li>Pregnancy &gt;20 weeks</li></ul>
         </div>
         <div class="card" style="margin-top:14px">
           <div class="card-title">Medications morning of surgery</div>
-          <ul class="blist"><li>Essential meds with small sip (&lt;30 mL) water — allowed within 2h window</li><li>Document which meds taken AM of surgery in referral</li><li>BP meds: follow hold/continue rules</li><li>Inhalers: always take</li><li>Insulin: 80% basal, hold short-acting</li></ul>
+          <ul class="blist"><li>Most oral meds may be given up to 1 h pre-op with ≤30 mL water (OWI05728) — do not withhold purely for fasting</li><li>Document which meds taken AM of surgery in referral</li><li>BP meds: follow hold/continue rules</li><li>Inhalers: always take</li><li>Insulin: 80% basal, hold short-acting</li></ul>
         </div>
       </div>
       <div>
@@ -1343,9 +1450,9 @@
           <div class="card-title">Patient instruction template</div>
           <div style="background:var(--bg3);border-radius:var(--radius);padding:13px;font-size:12.5px;color:var(--text2);line-height:1.7">
             "Eat a light meal up to <strong style="color:var(--text)">6 hours before</strong> your operation time, then nothing to eat.<br><br>
-            You may drink <strong style="color:var(--text)">clear fluids</strong> (water, black tea/coffee, clear juice — NOT milk or smoothies) <strong style="color:var(--teal)">until you are called to theatre (Sip Till Send)</strong>.<br><br>
+            You may sip <strong style="color:var(--text)">approved clear liquids</strong> (water, diluted cordial, black tea/coffee — no milk or sugar; up to 200 mL per hour) <strong style="color:var(--teal)">until you are called to theatre (Sip Til Send)</strong>. No sweets, lollies or chewing gum.<br><br>
             Take regular medicines with a sip of water as directed. Do NOT take [held medicines] on the morning of surgery.<br><br>
-            If you use a GLP-1 medicine (Ozempic, Trulicity, Wegovy, Mounjaro), have <strong style="color:var(--text)">clear fluids only</strong> for 24 hours before — do NOT use Sip Till Send."
+            If you use a GLP-1 medicine (Ozempic, Trulicity, Wegovy, Mounjaro, Saxenda, Victoza), Sip Til Send does NOT apply: have <strong style="color:var(--text)">clear fluids only for the 24 hours before</strong> (water, clear apple juice, black tea/coffee, clear sports drinks, clear broth, plain jelly, clear icy poles), then from <strong style="color:var(--text)">2 hours before surgery: nothing at all</strong>."
           </div>
         </div>
       </div>
@@ -1795,15 +1902,18 @@
   <div id="page-localpathways" class="page">
     <div class="page-title">Local pathways — LMH / NALHN</div>
     <div class="page-sub">Site-specific selection &amp; referral criteria. Placeholders to be completed once the consultant group reaches consensus.</div>
-    <div class="tag-strip"><span class="source-badge">LMH local</span><span class="source-badge">Awaiting consensus</span></div>
-    <div class="alert alert-amber"><strong>Placeholders:</strong> the content below is intentionally blank pending agreement. Hrishi to provide SALHN medication suspension/cessation guidance for incorporation; Modbury/HDU criteria to be confirmed by the group.</div>
+    <div class="tag-strip"><span class="source-badge">LMH local</span><span class="source-badge">NALHN PPG incorporated 07/2026</span></div>
+    <div class="alert alert-teal"><strong>★ NALHN PPG documents now incorporated in this tool:</strong> OWI05728 Fasting / Sip Til Send (<span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="fasting">Fasting</span>) · OWI02488 Antithrombotic Therapy &amp; OWI04248 NOF-fracture DOACs (<span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="anticoag">Anticoagulation</span>) · OWI04030 SGLT2i (<span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="glp1">GLP-1 / SGLT2i</span>) · OWI02980 Patient Blood Management &amp; SSI00917 Cell Salvage (<span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="anaemia">Anaemia / PBM</span>) · SSI05003 Bariatric Handling (<span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="obesity">Obesity / OSA</span>).</div>
+    <div class="alert alert-amber"><strong>Still awaiting consensus:</strong> Modbury vs LMH selection thresholds, Modbury HDU criteria, IV iron trigger thresholds/lead time, TTE/MIBI ordering routes, and SALHN medication suspension guidance (Hrishi to supply).</div>
     <div class="grid-2">
-      <div class="card"><div class="card-title">Modbury vs LMH — patient selection</div><ul class="blist"><li><em>To be agreed:</em> ASA / BMI / OSA / cardiac thresholds for Modbury day-surgery suitability</li><li><em>To be agreed:</em> procedures suitable for Modbury vs LMH</li><li><em>To be agreed:</em> anticoagulation / complex-airway exclusions</li></ul></div>
+      <div class="card"><div class="card-title">Modbury vs LMH — patient selection</div><ul class="blist"><li><em>To be agreed:</em> ASA / BMI / OSA / cardiac thresholds for Modbury day-surgery suitability</li><li><em>To be agreed:</em> procedures suitable for Modbury vs LMH</li><li><em>To be agreed:</em> anticoagulation / complex-airway exclusions</li><li>★ Bariatric patients (SSI05003): BMI &gt;45 requires anaesthetic clinic review; both sites have bariatric equipment but LMH has the bariatric ICU bays &amp; ward rooms — see <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="obesity">Obesity / OSA</span></li></ul></div>
       <div class="card"><div class="card-title">Modbury HDU referrals</div><ul class="blist"><li><em>To be agreed:</em> which patients require HDU</li><li><em>To be agreed:</em> how to initiate / who authorises</li><li><em>To be agreed:</em> bed-booking process &amp; timing</li></ul></div>
-      <div class="card"><div class="card-title">Referral pathways from PAC</div><ul class="blist"><li><em>To be agreed:</em> peri-op medicine — whom &amp; when</li><li><em>To be agreed:</em> cardiology fast-track criteria</li><li><em>To be agreed:</em> respiratory / sleep referral route</li></ul></div>
-      <div class="card"><div class="card-title">Pre-op iron assessment &amp; infusion</div><ul class="blist"><li><em>To be agreed:</em> Hb/ferritin/TSAT trigger thresholds</li><li><em>To be agreed:</em> how to book the IV iron service at LMH</li><li><em>To be agreed:</em> minimum lead time before surgery</li></ul></div>
+      <div class="card"><div class="card-title">Referral pathways from PAC</div><ul class="blist"><li>★ <strong>High-Risk Preoperative Assessment Clinic</strong> — run by Perioperative Medicine (OWI02980): refer with the <strong>Internal Referral Form → OPD1</strong>; urgent reviews expedited via the Head of Unit or proxy</li><li>★ <strong>PAC pharmacist</strong> — refer if: ≥65 y on any medication · ≥5 medications · insulin · blood thinner other than aspirin · dose administration aid (OWI02980)</li><li><em>To be agreed:</em> cardiology fast-track criteria; respiratory / sleep referral route</li></ul></div>
+      <div class="card"><div class="card-title">Pre-op iron assessment &amp; infusion</div><ul class="blist"><li>★ Prescribe/administer per <strong>OWI01225 Intravenous Iron Infusions (Adults)</strong>; waitlist patients can be referred back to the GP with SA HealthPathways support (OWI02980)</li><li><em>To be agreed:</em> Hb/ferritin/TSAT trigger thresholds &amp; minimum lead time before surgery</li><li><em>To be agreed:</em> outpatient IV iron booking route at LMH (no current day-patient referral pathway per OWI02980 v3)</li></ul></div>
       <div class="card"><div class="card-title">Special investigations (TTE, MIBI)</div><ul class="blist"><li><em>To be agreed:</em> ordering route &amp; who can request</li><li><em>To be agreed:</em> expected turnaround &amp; follow-up responsibility</li></ul></div>
-      <div class="card"><div class="card-title">SALHN medication suspension guidance</div><ul class="blist"><li><em>Pending:</em> Hrishi to supply; to be reconciled with this tool's hold/continue rules</li></ul></div>
+      <div class="card"><div class="card-title">SALHN medication suspension guidance</div><ul class="blist"><li><em>Pending:</em> Hrishi to supply; to be reconciled with this tool's hold/continue rules</li><li>★ Meanwhile NALHN's own documents govern: OWI02488 (antithrombotics), OWI04030 (SGLT2i), OWI05728 (fasting &amp; GLP-1)</li></ul></div>
+      <div class="card"><div class="card-title">★ NOF fracture — anticoagulated (OWI04248)</div><ul class="blist"><li>Surgery target &lt;24 h; stop DOAC on presentation, send coags + drug level (TCT for dabigatran; anti-Xa for apixaban/rivaroxaban)</li><li>Orthogeriatrics ↔ haematology each morning; TCT ≤20 s or anti-Xa &lt;30 µg/L supports proceeding</li><li>Idarucizumab 5 g IV via haematology + Streamline Non-Formulary if dabigatran delay &gt;48 h — details on <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="anticoag">Anticoagulation</span></li></ul></div>
+      <div class="card"><div class="card-title">★ Cell salvage — LMH only (SSI00917)</div><ul class="blist"><li>Available at LMH theatres for selected procedures — flag likely candidates (anticipated major blood loss, refusal of allogeneic blood, rare phenotypes) at PAC</li><li>Anaesthetist consents (MR82A) &amp; orders in Sunrise — see <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="anaemia">Anaemia / PBM</span> for contraindications</li></ul></div>
     </div>
   </div>
 
@@ -1834,6 +1944,16 @@
         <li>CHEST 2022 Perioperative Antithrombotic</li>
         <li>SA Health Pre-op Assessment Pathway</li>
       </ul></div>
+      <div class="card"><div class="card-title">★ NALHN PPG documents (incorporated in this tool)</div><ul class="blist">
+        <li>OWI05728 Preoperative Fasting / Sip Til Send (06/2026)</li>
+        <li>OWI02488 Perioperative Antithrombotic Therapy (04/2024)</li>
+        <li>OWI04248 Oral Antithrombotics after NOF Fracture (06/2024)</li>
+        <li>OWI04030 Pre-op SGLT2 Inhibitors (10/2023)</li>
+        <li>OWI02980 Perioperative Patient Blood Management (11/2025)</li>
+        <li>SSI00917 Peri/Post-op Cell Salvage &amp; Reinfusion — LMH (11/2024)</li>
+        <li>SSI05003 Perioperative Bariatric Patient Handling (12/2025)</li>
+        <li>Referenced: OWI01210 Pre-op Diabetes · OWI00688 Hypoglycaemia · OWI01225 IV Iron · OWI00934 VTE Prophylaxis · OWI01104 Warfarin Reversal · OWI01243 Heparin Infusions · OWI00560 Inpatient Insulin</li>
+      </ul><div class="sublabel" style="margin-top:8px">Source PDFs live on the NALHN PPG intranet — informal copies when printed/downloaded.</div></div>
       <div class="card"><div class="card-title">Patient resources</div><ul class="blist">
         <li>SA Quitline — 13 7848</li>
         <li>Printable medicine instruction sheet — see <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="medtiming">Medication timing calculator</span></li>
@@ -1844,8 +1964,8 @@
   <!-- ANAEMIA / PBM -->
   <div id="page-anaemia" class="page">
     <div class="page-title">Pre-operative anaemia &amp; patient blood management</div>
-    <div class="page-sub">CPOC perioperative anaemia guideline 2025 · BSH 2024 · NBA PBM Module 2 · SA Health BloodSafe</div>
-    <div class="tag-strip"><span class="source-badge">CPOC 2025</span><span class="source-badge">BSH 2024</span><span class="source-badge">NBA PBM</span><span class="source-badge">BloodSafe SA</span></div>
+    <div class="page-sub">CPOC perioperative anaemia guideline 2025 · BSH 2024 · NBA PBM Module 2 · SA Health BloodSafe · NALHN OWI02980 (11/2025) · SSI00917 Cell Salvage (11/2024)</div>
+    <div class="tag-strip"><span class="source-badge">CPOC 2025</span><span class="source-badge">BSH 2024</span><span class="source-badge">NBA PBM</span><span class="source-badge">NALHN OWI02980</span><span class="source-badge">SSI00917</span></div>
     <div class="alert alert-blue"><strong>Why it matters:</strong> pre-operative anaemia is independently associated with increased transfusion, morbidity and mortality. It is common, detectable and treatable in the PAC. Iron deficiency is the commonest cause — detect and treat it <strong>weeks before</strong> surgery, not on the day.</div>
     <div class="alert alert-amber"><strong>Key threshold change:</strong> international consensus (CPOC/BSH 2024–25) now uses <strong>Hb &lt;130 g/L in BOTH sexes</strong> as the trigger to screen and optimise before moderate/major blood-loss surgery — replacing the older sex-specific WHO cut-offs (120 women / 130 men) and the ≥80 g/L transfusion trigger that was wrongly used as an "optimisation target".</div>
     <div class="grid-2">
@@ -1884,7 +2004,7 @@
             <tr><td>B12 / folate</td><td>Deficiency confirmed</td><td>Replace &amp; recheck 4–6 weeks</td></tr>
             <tr><td>EPO</td><td>CKD anaemia, Hb &lt;100, surgery within weeks</td><td>Haematology/renal-directed; ensure iron-replete first</td></tr>
           </tbody></table></div>
-          <div class="alert alert-teal" style="margin-top:12px;margin-bottom:0">Order via the NALHN outpatient IV iron service (see <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="localpathways">Local pathways</span> for booking — trigger thresholds &amp; lead time to be confirmed by the group).</div>
+          <div class="alert alert-teal" style="margin-top:12px;margin-bottom:0">★ NALHN (OWI02980): prescribe &amp; administer IV iron per <strong>OWI01225 Intravenous Iron Infusions (Adults)</strong>. For waitlist patients, the GP can manage screening &amp; iron replacement via SA HealthPathways (see <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="localpathways">Local pathways</span> — trigger thresholds &amp; lead time still to be confirmed by the group).</div>
         </div>
       </div>
     </div>
@@ -1893,6 +2013,29 @@
       <div class="card"><div class="card-title">1 · Optimise red cell mass</div><ul class="blist"><li>Detect &amp; treat anaemia early</li><li>Treat iron / B12 / folate deficiency</li><li>Manage CKD anaemia</li></ul></div>
       <div class="card"><div class="card-title">2 · Minimise blood loss</div><ul class="blist"><li>Stop/adjust antithrombotics appropriately</li><li>Tranexamic acid where indicated</li><li>Meticulous haemostasis; cell salvage for high-loss surgery</li></ul></div>
       <div class="card"><div class="card-title">3 · Optimise tolerance of anaemia</div><ul class="blist"><li>Restrictive transfusion (single-unit, reassess)</li><li>Transfuse to symptoms, not a number</li><li>Optimise cardiorespiratory reserve</li></ul></div>
+    </div>
+    <div class="section-header">★ NALHN local PBM — OWI02980 (11/2025)</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">PAC workflow &amp; pharmacist referral</div>
+        <ul class="blist">
+          <li>Assessment forms: <strong>MR 840</strong> NALHN Pre Anaesthetic Assessment (PAC) · <strong>MR 581</strong> Country Patient Anaesthetic Assessment (local GP/MO)</li>
+          <li>Waitlist patients: involve the GP for iron-deficiency anaemia screening/replacement — resources on SA HealthPathways</li>
+          <li><strong>Refer to the PAC pharmacist if any of:</strong> age ≥65 on any prescribed medication · ≥5 medications · on insulin · on blood thinners other than aspirin (warfarin, clopidogrel, prasugrel, ticagrelor, apixaban, rivaroxaban, dabigatran) · uses a dose administration aid (Webster pack, Dosette, Medisachet)</li>
+          <li><strong>Restrictive transfusion:</strong> no Hb "trigger" alone — assess clinical status; single-unit then reassess</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">Intraoperative cell salvage — LMH (SSI00917)</div>
+        <ul class="blist">
+          <li>Offered by LMH Anaesthetics for selected procedures; discuss &amp; consent pre-op (MR82A) — the anaesthetist orders "Autologous washed red blood cells (Cell Salvage)" in Sunrise</li>
+          <li>Option for patients declining allogeneic blood — closed circuit with extension line possible; verify consent pre-op</li>
+          <li><strong>Contraindicated</strong> with contamination by betadine, hydrogen peroxide, water/distilled water, alcohol, non-parenteral antibiotics, fibrin glue, collagen-based haemostatics</li>
+          <li>Leukocyte depletion filter used where malignancy possible, orthopaedic metal particles, or contaminated field (note: reports of hypotension with LDF)</li>
+          <li>Reinfusion expires 4 h after processing; must complete in theatre/PARU before ward discharge. Not with pressure bags</li>
+          <li>Potential complications: electrolyte imbalance, air/fat/cement embolism; salvaged-blood syndrome (rare)</li>
+        </ul>
+      </div>
     </div>
   </div>
 
@@ -1955,12 +2098,25 @@
           </tbody></table></div>
           <div class="alert alert-amber" style="margin-top:12px;margin-bottom:0">Confirm the dose with the patient's <strong>prescriber or dosing pharmacy</strong> before surgery and document it. Liaise early with addiction medicine / acute pain service for major surgery.</div>
         </div>
+        <div class="card" style="margin-top:14px">
+          <div class="card-title"><div class="card-title-icon" style="background:var(--purple-soft);color:var(--purple)">☰</div>Chronic pain patient — PAC actions</div>
+          <ul class="blist">
+            <li>Quantify the baseline: calculate <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="omedd">oMEDD →</span> and document it with the prescriber's name. ≥60 mg/day for ≥7 days = opioid-tolerant</li>
+            <li><strong>Continue</strong> usual opioids (incl. patches) up to and including the morning of surgery — abrupt cessation risks withdrawal and worse acute pain</li>
+            <li>Pre-op opioid <em>reduction</em> may improve outcomes for elective major surgery, but only as a planned, supported taper with the prescriber/pain clinic — not initiated in the PAC on the day</li>
+            <li>Note gabapentinoids, benzodiazepines &amp; cannabinoids — additive sedation with opioids; flag for the day-of-surgery anaesthetist</li>
+            <li>Set expectations: acute-on-chronic pain will be managed, not abolished; agree a functional goal and a discharge weaning plan back to baseline</li>
+            <li>High oMEDD (&gt;100), complex pain, opioid use disorder, or major surgery → refer APS / pain medicine <strong>before</strong> admission</li>
+            <li>oMEDD ≥40 → recommend take-home naloxone + education (FPM PS01(PM))</li>
+          </ul>
+          <div style="font-size:11.5px;color:var(--text3);margin-top:8px">Sources: ANZCA PS41(G) Position statement on acute pain management 2023 · FPM PS01(PM) &amp; Appendix 2 (2025) · Acute Pain Management: Scientific Evidence 5th ed (2020)</div>
+        </div>
       </div>
       <div>
         <div class="card">
           <div class="card-title">Assessment checklist</div>
           <ul class="blist">
-            <li>Current opioid type, total daily oral morphine equivalent, route (incl. patches)</li>
+            <li>Current opioid type, route (incl. patches) &amp; total daily dose → <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="omedd">oMEDD calculator</span></li>
             <li>OST agent, dose, prescriber &amp; dosing point</li>
             <li>Aberrant use, non-prescribed/illicit use, alcohol &amp; benzodiazepines</li>
             <li>OSA / sedation risk (compounded by opioids — see <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="stopbang">STOP-BANG</span>)</li>
@@ -1976,6 +2132,59 @@
             <li>Early acute pain service referral for major surgery / high baseline requirement</li>
             <li>Naloxone &amp; sedation-scoring plan post-op; caution with OSA</li>
             <li>Discharge plan: defined opioid quantity, GP/prescriber handover, no open-ended scripts</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- oMEDD CALCULATOR -->
+  <div id="page-omedd" class="page">
+    <div class="page-title">oMEDD — oral Morphine Equivalent Daily Dose</div>
+    <div class="page-sub">FPM ANZCA PS01(PM) Appendix 2 (2025 update) conversion factors · enter total daily doses; patches in mcg/hr</div>
+    <div class="tag-strip"><span class="source-badge">FPM PS01(PM) App 2 · Oct 2025</span><span class="source-badge">FPM Opioid Calculator</span><span class="source-badge">ANZCA PS41(G) 2023</span></div>
+    <div class="alert alert-amber"><strong>For dose comparison only — not for opioid switching/rotation.</strong> Giving a calculated "equivalent" dose of a replacement opioid can overdose the patient. Methadone and fentanyl lozenges are excluded (complex, variable kinetics) — involve APS / pain medicine. Count <strong>both</strong> modified-release and immediate-release doses.</div>
+    <div class="grid-2">
+      <div class="calc-box">
+        <div style="font-size:13px;font-weight:600;margin-bottom:6px">Oral (total mg/day)</div>
+        <div class="calc-row"><label>Morphine <span class="pts">×1</span><br><span style="font-size:11px;color:var(--text3)">MS Contin, Kapanol, Ordine, Sevredol</span></label><input type="number" min="0" class="om-in" data-f="1" oninput="calcOMEDD()" style="width:90px;padding:7px 10px;border:1px solid var(--border2);border-radius:var(--radius);background:var(--bg);color:var(--text);font-family:var(--mono);font-size:13px"></div>
+        <div class="calc-row"><label>Oxycodone <span class="pts">×1.5</span><br><span style="font-size:11px;color:var(--text3)">Endone, OxyContin, Targin (oxycodone component)</span></label><input type="number" min="0" class="om-in" data-f="1.5" oninput="calcOMEDD()" style="width:90px;padding:7px 10px;border:1px solid var(--border2);border-radius:var(--radius);background:var(--bg);color:var(--text);font-family:var(--mono);font-size:13px"></div>
+        <div class="calc-row"><label>Hydromorphone <span class="pts">×5</span><br><span style="font-size:11px;color:var(--text3)">Dilaudid, Jurnista</span></label><input type="number" min="0" class="om-in" data-f="5" oninput="calcOMEDD()" style="width:90px;padding:7px 10px;border:1px solid var(--border2);border-radius:var(--radius);background:var(--bg);color:var(--text);font-family:var(--mono);font-size:13px"></div>
+        <div class="calc-row"><label>Tapentadol <span class="pts">×0.3</span><br><span style="font-size:11px;color:var(--text3)">Palexia SR / IR</span></label><input type="number" min="0" class="om-in" data-f="0.3" oninput="calcOMEDD()" style="width:90px;padding:7px 10px;border:1px solid var(--border2);border-radius:var(--radius);background:var(--bg);color:var(--text);font-family:var(--mono);font-size:13px"></div>
+        <div class="calc-row"><label>Tramadol <span class="pts">×0.2</span><br><span style="font-size:11px;color:var(--text3)">Tramal, Durotram XR, Zydol</span></label><input type="number" min="0" class="om-in" data-f="0.2" oninput="calcOMEDD()" style="width:90px;padding:7px 10px;border:1px solid var(--border2);border-radius:var(--radius);background:var(--bg);color:var(--text);font-family:var(--mono);font-size:13px"></div>
+        <div class="calc-row"><label>Codeine <span class="pts">×0.13</span><br><span style="font-size:11px;color:var(--text3)">Panadeine Forte, Mersyndol, Nurofen Plus (codeine component)</span></label><input type="number" min="0" class="om-in" data-f="0.13" oninput="calcOMEDD()" style="width:90px;padding:7px 10px;border:1px solid var(--border2);border-radius:var(--radius);background:var(--bg);color:var(--text);font-family:var(--mono);font-size:13px"></div>
+        <div style="font-size:13px;font-weight:600;margin:12px 0 6px">Transdermal (patch strength, mcg/hr)</div>
+        <div class="calc-row"><label>Fentanyl patch <span class="pts">×3</span><br><span style="font-size:11px;color:var(--text3)">Durogesic, Denpax — e.g. 25 mcg/hr → oMEDD 75</span></label><input type="number" min="0" class="om-in" data-f="3" oninput="calcOMEDD()" style="width:90px;padding:7px 10px;border:1px solid var(--border2);border-radius:var(--radius);background:var(--bg);color:var(--text);font-family:var(--mono);font-size:13px"></div>
+        <div class="calc-row"><label>Buprenorphine patch <span class="pts">×2</span><br><span style="font-size:11px;color:var(--text3)">Norspan — e.g. 10 mcg/hr → oMEDD 20</span></label><input type="number" min="0" class="om-in" data-f="2" oninput="calcOMEDD()" style="width:90px;padding:7px 10px;border:1px solid var(--border2);border-radius:var(--radius);background:var(--bg);color:var(--text);font-family:var(--mono);font-size:13px"></div>
+        <div style="font-size:13px;font-weight:600;margin:12px 0 6px">Sublingual (mg/day)</div>
+        <div class="calc-row"><label>Buprenorphine SL <span class="pts">×40</span><br><span style="font-size:11px;color:var(--text3)">Suboxone, Subutex, Temgesic — OST doses give very high oMEDD; interpret with addiction medicine</span></label><input type="number" min="0" class="om-in" data-f="40" oninput="calcOMEDD()" style="width:90px;padding:7px 10px;border:1px solid var(--border2);border-radius:var(--radius);background:var(--bg);color:var(--text);font-family:var(--mono);font-size:13px"></div>
+        <div style="font-size:13px;font-weight:600;margin:12px 0 6px">Parenteral (total mg/day; fentanyl mcg/day)</div>
+        <div class="calc-row"><label>Morphine s/c or IV <span class="pts">×3</span></label><input type="number" min="0" class="om-in" data-f="3" oninput="calcOMEDD()" style="width:90px;padding:7px 10px;border:1px solid var(--border2);border-radius:var(--radius);background:var(--bg);color:var(--text);font-family:var(--mono);font-size:13px"></div>
+        <div class="calc-row"><label>Oxycodone s/c or IV <span class="pts">×3</span></label><input type="number" min="0" class="om-in" data-f="3" oninput="calcOMEDD()" style="width:90px;padding:7px 10px;border:1px solid var(--border2);border-radius:var(--radius);background:var(--bg);color:var(--text);font-family:var(--mono);font-size:13px"></div>
+        <div class="calc-row"><label>Hydromorphone s/c or IV <span class="pts">×15</span></label><input type="number" min="0" class="om-in" data-f="15" oninput="calcOMEDD()" style="width:90px;padding:7px 10px;border:1px solid var(--border2);border-radius:var(--radius);background:var(--bg);color:var(--text);font-family:var(--mono);font-size:13px"></div>
+        <div class="calc-row"><label>Fentanyl s/c or IV (mcg/day) <span class="pts">×0.2</span></label><input type="number" min="0" class="om-in" data-f="0.2" oninput="calcOMEDD()" style="width:90px;padding:7px 10px;border:1px solid var(--border2);border-radius:var(--radius);background:var(--bg);color:var(--text);font-family:var(--mono);font-size:13px"></div>
+        <hr>
+        <div style="display:flex;align-items:baseline;gap:12px"><div class="calc-score" id="om-score">0</div><div style="color:var(--text3)">mg oMEDD / day</div><button onclick="document.querySelectorAll('.om-in').forEach(i=>i.value='');calcOMEDD()" class="seg-btn" style="flex:0 0 auto;margin-left:auto">Reset</button></div>
+        <div class="calc-result" id="om-result"><div style="font-size:13px;color:var(--text2)">Enter the total daily doses (or patch strength) to calculate oMEDD.</div></div>
+      </div>
+      <div>
+        <div class="card">
+          <div class="card-title">Interpretation — FPM traffic lights</div>
+          <div class="table-wrap"><table><thead><tr><th>oMEDD</th><th>Signal</th><th>PAC action</th></tr></thead><tbody>
+            <tr><td><span class="pill pill-green">&lt;40 mg</span></td><td>Lower risk</td><td>Standard multimodal plan; consider take-home naloxone with any opioid script</td></tr>
+            <tr><td><span class="pill pill-amber">40–100 mg</span></td><td>≈4-fold ↑ risk of cardiorespiratory event above 40</td><td>Recommend take-home naloxone + education; treat as opioid-tolerant; explicit post-op analgesia &amp; sedation-monitoring plan</td></tr>
+            <tr><td><span class="pill pill-red">&gt;100 mg</span></td><td>≈11-fold ↑ risk</td><td>APS / pain medicine referral pre-op for major surgery; OSA screen; avoid same-day discharge with new sedatives</td></tr>
+          </tbody></table></div>
+          <div class="alert alert-blue" style="margin-top:12px;margin-bottom:0"><strong>Opioid-tolerant</strong> (ASER/POQI): ≥60 mg oMEDD daily for ≥7 days. Continue baseline opioid peri-operatively and plan multimodal, opioid-sparing analgesia on top — see <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="opioids">Opioids / OST</span>.</div>
+        </div>
+        <div class="card" style="margin-top:14px">
+          <div class="card-title">Cautions</div>
+          <ul class="blist">
+            <li>Comparison tool only — <strong>never</strong> prescribe the "equivalent" dose when rotating opioids; reduce for incomplete cross-tolerance and titrate</li>
+            <li>Marked inter-patient PK/PD variability; renal/hepatic impairment and drug interactions change exposure</li>
+            <li>Methadone, fentanyl lozenges &amp; neuraxial opioids are excluded from the table</li>
+            <li>Include PRN/IR use averaged over a typical day, not just the MR base</li>
+            <li>Factors: FPM ANZCA PS01(PM) Appendix 2, October 2025 — cross-check against the <a href="https://www.anzca.edu.au/safety-and-advocacy/opioid-calculator" target="_blank" rel="noopener" style="color:var(--accent)">FPM Opioid Calculator ↗</a></li>
           </ul>
         </div>
       </div>
@@ -2033,6 +2242,10 @@
   </div>
 
   </div>
+<footer style="margin:28px 0 12px;padding:14px 4px 0;border-top:1px solid var(--border2);font-size:11.5px;color:var(--text3);line-height:1.7">
+  <strong>LMH Pre-Anaesthetic Clinic Reference — v3.2 (draft)</strong> · Last updated 11 July 2026 (fasting content aligned to NALHN OWI05728, effective 06/2026) · Maintained by Dr James Hartley, Department of Anaesthesia &amp; Perioperative Medicine, LMH<br>
+  Decision-support draft collating existing published guidance — source guidelines and their dates are cited on each page. Not a substitute for clinical judgement, local policy or the product information; verify doses independently before prescribing. Developed with AI assistance; all clinical content requires consultant verification against primary sources. <strong>Not yet endorsed by NALHN — pending departmental sign-off.</strong>
+</footer>
 </main>
 </div>
 
@@ -2059,6 +2272,25 @@
     <div style="margin-bottom:8px">If you are unsure about any medicine, contact the Pre-Admission Clinic before your operation.</div>
     <div>Completed by (print &amp; sign): ____________________________&nbsp;&nbsp;Designation: ____________&nbsp;&nbsp;Date: ____________</div>
     <div style="margin-top:8px;font-size:10px;color:#333">No personal details were entered into the tool that generated this sheet. DRAFT — pending Clinical Oversight Committee approval as an official patient information document.</div>
+  </div>
+</div>
+
+<button id="report-fab" title="Report a content error or suggestion on this page" aria-haspopup="dialog">
+  <span aria-hidden="true">&#9873;</span><span>Report an issue</span>
+</button>
+<div id="report-overlay"></div>
+<div id="report-modal" role="dialog" aria-modal="true" aria-labelledby="rm-title">
+  <h3 id="rm-title">Report an issue with this page</h3>
+  <div class="rm-sub">Content errors, out-of-date guidance, broken calculators and suggestions all welcome.
+    Every report is logged, corrected and recorded in the project PDSA log.</div>
+  <div class="rm-ctx" id="rm-context"></div>
+  <label for="rm-text">What is wrong, or what would you change?</label>
+  <textarea id="rm-text" maxlength="1500" placeholder="e.g. The DOAC interval table gives 48 h for apixaban at CrCl 30-50 - the NALHN PPG says 72 h for high bleeding-risk surgery."></textarea>
+  <div id="rm-count">0 / 1500</div>
+  <div id="report-warn"><strong>Do not include any patient identifiers</strong> &mdash; no names, URNs, dates of birth or clinical details of an individual patient. Describe the guidance problem only.</div>
+  <div class="rm-actions">
+    <button id="rm-cancel" type="button">Cancel</button>
+    <button id="rm-send" type="button" disabled>Open email to send</button>
   </div>
 </div>
 
@@ -2137,7 +2369,10 @@ function calcDASI() {
 }
 
 /* CHADS */
-function calcCHADS() {
+function calcCHADS(el) {
+  if (el && el.checked && el.dataset.xg) {
+    document.querySelectorAll('#page-chads input[data-xg="' + el.dataset.xg + '"]').forEach(c => { if (c !== el) c.checked = false; });
+  }
   let s = 0;
   document.querySelectorAll('#page-chads input[type=checkbox]').forEach(c => { if (c.checked) s += parseInt(c.dataset.w); });
   document.getElementById('chads-score').textContent = s;
@@ -2160,6 +2395,23 @@ function calcSB() {
   document.getElementById('sb-result').innerHTML = `<div style="font-weight:600;color:${c};margin-bottom:5px">Score ${s}/8</div><div style="font-size:12.5px;color:var(--text2)">${t}</div>`;
 }
 
+/* oMEDD — FPM ANZCA PS01(PM) Appendix 2 (Oct 2025) conversion factors */
+function calcOMEDD() {
+  let t = 0;
+  document.querySelectorAll('.om-in').forEach(i => {
+    const v = parseFloat(i.value);
+    if (!isNaN(v) && v > 0) t += v * parseFloat(i.dataset.f);
+  });
+  document.getElementById('om-score').textContent = t % 1 === 0 ? t : t.toFixed(1);
+  const r = document.getElementById('om-result');
+  if (t === 0) { r.innerHTML = '<div style="font-size:13px;color:var(--text2)">Enter the total daily doses (or patch strength) to calculate oMEDD.</div>'; return; }
+  let c, l, x;
+  if (t < 40) { c='var(--green)'; l='Lower-risk range (<40 mg)'; x='Standard multimodal plan. Consider take-home naloxone and education with any outpatient opioid prescription (FPM guidance).'; }
+  else if (t <= 100) { c='var(--amber)'; l='40–100 mg — increased risk'; x='≈4-fold increased risk of a cardiorespiratory event above oMEDD 40. Recommend take-home naloxone + education. ' + (t >= 60 ? 'Meets opioid-tolerant threshold (≥60 mg ≥7 days): continue baseline opioid, plan multimodal opioid-sparing analgesia, document sedation-monitoring plan.' : 'If sustained ≥60 mg, treat as opioid-tolerant.'); }
+  else { c='var(--red)'; l='>100 mg — high risk'; x='≈11-fold increased risk of a cardiorespiratory event. Refer to APS / pain medicine before major surgery, screen for OSA (STOP-BANG), recommend take-home naloxone, and make an explicit post-op analgesia, sedation-monitoring and discharge-weaning plan.'; }
+  r.innerHTML = `<div style="font-weight:600;color:${c};margin-bottom:5px">${l}</div><div style="font-size:12.5px;color:var(--text2)">${x}</div>`;
+}
+
 /* ASA */
 let asaPick = null;
 function pickASA(el){ document.querySelectorAll('#asa-opts .seg-btn').forEach(b=>b.classList.remove('on')); el.classList.add('on'); asaPick = el.dataset.asa; renderASA(); }
@@ -2173,8 +2425,15 @@ function renderASA(){
 /* MED FILTER */
 function filterMeds() {
   const q = document.getElementById('med-search').value.toLowerCase().trim();
+  // Expand brand names → matching generic cards so typing a trade name works here too
+  const brandCards = new Set();
+  if (q.length >= 2 && typeof TRADE_NAMES !== 'undefined') {
+    brandToGenerics(q).filter(x => x.score >= 2).slice(0, 12).forEach(x => {
+      const c = findMedCard(x.g); if (c) brandCards.add(c);
+    });
+  }
   document.querySelectorAll('#med-list .drug-card').forEach(card => {
-    const hit = !q || (card.dataset.kw||'').includes(q) || card.textContent.toLowerCase().includes(q);
+    const hit = !q || (card.dataset.kw||'').includes(q) || card.textContent.toLowerCase().includes(q) || brandCards.has(card);
     card.style.display = hit ? 'flex' : 'none';
   });
   document.querySelectorAll('#med-list [data-group]').forEach(h => {
@@ -2214,57 +2473,144 @@ const blGrid = {
 const blLabels = { FBC:'Full blood count', Haem:'Haemostasis', Kidney:'Kidney function', ECG:'ECG', Lung:'Lung function / ABG' };
 /* Procedure → surgery-grade lookup (NICE surgical-severity grading) */
 const procGrades = [
-  {g:'minor', n:'Excision of skin lesion', kw:'mole naevus bcc scc lump cyst sebaceous lipoma wart'},
-  {g:'minor', n:'Drainage of abscess', kw:'incision i&d perianal pilonidal'},
-  {g:'minor', n:'Carpal tunnel release', kw:'hand median nerve'},
-  {g:'minor', n:'Trigger finger / ganglion / minor hand surgery', kw:'tendon'},
-  {g:'minor', n:'Removal of metalwork', kw:'plate screw orif'},
-  {g:'minor', n:'Examination under anaesthesia (EUA)', kw:''},
-  {g:'minor', n:'Cataract surgery', kw:'eye phaco lens ophthalmic'},
-  {g:'minor', n:'Cystoscopy', kw:'bladder flexible rigid'},
-  {g:'minor', n:'Grommets / myringotomy', kw:'ear ent tubes'},
-  {g:'minor', n:'Dental extraction', kw:'teeth tooth'},
-  {g:'minor', n:'Vasectomy', kw:''},
-  {g:'minor', n:'Circumcision', kw:''},
-  {g:'minor', n:'Ingrowing toenail / nail surgery', kw:'wedge'},
-  {g:'intermediate', n:'Inguinal / femoral hernia repair', kw:'groin hernia'},
-  {g:'intermediate', n:'Umbilical / incisional hernia repair', kw:'hernia'},
-  {g:'intermediate', n:'Varicose vein surgery', kw:'veins evlt'},
-  {g:'intermediate', n:'Tonsillectomy / adenoidectomy', kw:'throat ent tonsils'},
-  {g:'intermediate', n:'Knee arthroscopy', kw:'meniscus scope'},
-  {g:'intermediate', n:'Shoulder arthroscopy / subacromial decompression', kw:'rotator cuff'},
-  {g:'intermediate', n:'ACL reconstruction', kw:'knee ligament'},
-  {g:'intermediate', n:'Laparoscopic cholecystectomy', kw:'gallbladder lap chole gallstones'},
-  {g:'intermediate', n:'Appendicectomy', kw:'appendix appendectomy'},
-  {g:'intermediate', n:'Haemorrhoidectomy', kw:'piles anal'},
-  {g:'intermediate', n:'Breast lump / wide local excision', kw:'lumpectomy wle'},
-  {g:'intermediate', n:'Septoplasty / FESS / nasal surgery', kw:'sinus nose ent'},
-  {g:'intermediate', n:'Hysteroscopy / D&C', kw:'dilatation curettage uterus'},
-  {g:'intermediate', n:'Laparoscopic sterilisation', kw:'tubal ligation'},
-  {g:'intermediate', n:'Orchidopexy / hydrocele repair', kw:'testis scrotum'},
-  {g:'intermediate', n:'TURBT (bladder tumour resection)', kw:'bladder transurethral'},
-  {g:'intermediate', n:'Ureteroscopy / stone surgery', kw:'kidney stone urs lithotripsy'},
-  {g:'major', n:'Total abdominal hysterectomy (TAH)', kw:'uterus hysterectomy bso'},
-  {g:'major', n:'Laparoscopic / radical hysterectomy', kw:'uterus hysterectomy'},
-  {g:'major', n:'TURP / prostate resection', kw:'prostate transurethral'},
-  {g:'major', n:'Radical prostatectomy', kw:'prostate'},
-  {g:'major', n:'Total hip replacement (THR)', kw:'hip arthroplasty joint'},
-  {g:'major', n:'Total knee replacement (TKR)', kw:'knee arthroplasty joint'},
-  {g:'major', n:'Lumbar discectomy / laminectomy', kw:'spine back disc'},
-  {g:'major', n:'Spinal fusion', kw:'spine back'},
-  {g:'major', n:'Thyroidectomy / parathyroidectomy', kw:'thyroid neck'},
-  {g:'major', n:'Mastectomy ± axillary clearance', kw:'breast'},
-  {g:'major', n:'Colectomy / bowel resection', kw:'colon hemicolectomy anterior resection hartmann colorectal bowel'},
-  {g:'major', n:'Gastrectomy', kw:'stomach'},
-  {g:'major', n:'Oesophagectomy', kw:'oesophagus esophagus'},
-  {g:'major', n:'Whipple / pancreatic resection', kw:'pancreas pancreaticoduodenectomy'},
-  {g:'major', n:'Hepatectomy / liver resection', kw:'liver'},
-  {g:'major', n:'Nephrectomy', kw:'kidney renal'},
-  {g:'major', n:'Cystectomy', kw:'bladder'},
-  {g:'major', n:'Laparotomy', kw:'open abdomen'},
-  {g:'major', n:'Lung resection / lobectomy', kw:'thoracic chest lung'},
-  {g:'major', n:'AAA / major vascular surgery', kw:'aneurysm aorta bypass vascular'},
-  {g:'major', n:'Free flap / radical neck dissection', kw:'plastics head neck reconstruction'}
+  /* ---------- MINOR ---------- */
+  {g:'minor', n:'Excision of skin lesion', kw:'mole naevus nevus bcc scc melanoma lump cyst sebaceous lipoma wart skin tag shave curettage'},
+  {g:'minor', n:'Drainage of abscess', kw:'incision i&d perianal pilonidal breast abscess washout collection'},
+  {g:'minor', n:'Carpal tunnel release', kw:'hand median nerve decompression'},
+  {g:'minor', n:'Trigger finger / ganglion / minor hand surgery', kw:'tendon release cyst wrist'},
+  {g:'minor', n:'Removal of metalwork', kw:'plate screw nail orif hardware'},
+  {g:'minor', n:'Examination under anaesthesia (EUA)', kw:'eua exam anus rectum bladder knee'},
+  {g:'minor', n:'Cataract surgery', kw:'eye phaco phacoemulsification lens ophthalmic intraocular iol'},
+  {g:'minor', n:'Squint surgery / strabismus', kw:'eye ophthalmic muscle'},
+  {g:'minor', n:'Ptosis / blepharoplasty / chalazion / entropion', kw:'eyelid eye oculoplastic lid'},
+  {g:'minor', n:'Cystoscopy ± biopsy', kw:'bladder flexible rigid urology scope'},
+  {g:'minor', n:'JJ / ureteric stent insertion or removal', kw:'stent ureter urology double j'},
+  {g:'minor', n:'Prostate biopsy (TRUS / transperineal)', kw:'prostate biopsy trus template'},
+  {g:'minor', n:'Grommets / myringotomy', kw:'ear ent tubes tympanostomy'},
+  {g:'minor', n:'Microlaryngoscopy / panendoscopy / laryngoscopy', kw:'ent larynx vocal cord throat direct'},
+  {g:'minor', n:'Nasal cautery / manipulation of nasal fracture', kw:'ent nose epistaxis mun'},
+  {g:'minor', n:'Dental extraction / clearance / third molars', kw:'teeth tooth wisdom molar dental oral restorative'},
+  {g:'minor', n:'Vasectomy', kw:'sterilisation male urology'},
+  {g:'minor', n:'Circumcision', kw:'foreskin phimosis penis'},
+  {g:'minor', n:'Ingrowing toenail / nail surgery', kw:'wedge resection zadek toe'},
+  {g:'minor', n:'Digit / toe amputation', kw:'finger toe ray diabetic'},
+  {g:'minor', n:'Manipulation under anaesthesia (MUA) / joint injection', kw:'shoulder knee frozen ortho reduction cast'},
+  {g:'minor', n:'Gastroscopy (OGD) / endoscopy', kw:'upper gi scope stomach oesophagus endoscopy dilatation'},
+  {g:'minor', n:'Colonoscopy / flexible sigmoidoscopy', kw:'lower gi bowel scope polypectomy endoscopy'},
+  {g:'minor', n:'Bronchoscopy ± EBUS', kw:'lung airway respiratory chest scope'},
+  {g:'minor', n:'Fistula-in-ano / lateral sphincterotomy / anal fissure', kw:'anus perianal seton fistulotomy proctology'},
+  {g:'minor', n:'Bartholin’s cyst / abscess (marsupialisation)', kw:'gynae vulva word catheter'},
+  {g:'minor', n:'Hysteroscopy / D&C / ERPC / endometrial ablation', kw:'dilatation curettage uterus gynae mirena polyp novasure evacuation miscarriage'},
+  {g:'minor', n:'LLETZ / colposcopy / cone biopsy', kw:'cervix gynae cin loop cervical'},
+  {g:'minor', n:'Lymph node / skin / muscle biopsy', kw:'excision diagnostic node lymph'},
+  {g:'minor', n:'Port-a-cath / Hickman / PICC / tunnelled line', kw:'central venous access chemotherapy vascath dialysis catheter'},
+  {g:'minor', n:'PEG / gastrostomy insertion', kw:'feeding tube peg rig'},
+  {g:'minor', n:'Imaging or ECT under anaesthesia', kw:'mri ct scan sedation electroconvulsive psychiatry'},
+  {g:'minor', n:'Cardiac catheterisation / coronary angiogram ± PCI', kw:'angiography stent cardiology pci coronary'},
+
+  /* ---------- INTERMEDIATE ---------- */
+  {g:'intermediate', n:'Inguinal / femoral hernia repair', kw:'groin hernia herniorrhaphy mesh lichtenstein tep tapp'},
+  {g:'intermediate', n:'Umbilical / epigastric / small incisional hernia repair', kw:'hernia ventral paraumbilical abdominal wall mesh'},
+  {g:'intermediate', n:'Varicose vein surgery / EVLT / RFA', kw:'veins sapheno stripping avulsions sclerotherapy vascular'},
+  {g:'intermediate', n:'Angioplasty / peripheral stenting', kw:'vascular endovascular balloon limb iliac fem'},
+  {g:'intermediate', n:'AV fistula / graft formation', kw:'dialysis renal vascular access brachiocephalic radiocephalic'},
+  {g:'intermediate', n:'Tonsillectomy / adenoidectomy', kw:'throat ent tonsils adenoids uppp'},
+  {g:'intermediate', n:'Septoplasty / FESS / turbinate / nasal surgery', kw:'sinus nose ent sinuses septum rhinoplasty smr polypectomy'},
+  {g:'intermediate', n:'Tympanoplasty / mastoidectomy / stapedectomy / cochlear implant', kw:'ear ent myringoplasty hearing otology'},
+  {g:'intermediate', n:'Tracheostomy', kw:'ent airway percutaneous trachy'},
+  {g:'intermediate', n:'Knee arthroscopy', kw:'meniscus scope menisectomy chondroplasty ortho'},
+  {g:'intermediate', n:'Shoulder arthroscopy / subacromial decompression / rotator cuff repair', kw:'rotator cuff acromioplasty bankart ortho'},
+  {g:'intermediate', n:'Hip arthroscopy', kw:'ortho fai labral'},
+  {g:'intermediate', n:'ACL / knee ligament reconstruction', kw:'knee ligament cruciate acl pcl ortho'},
+  {g:'intermediate', n:'ORIF of ankle / wrist / forearm / small bone fracture', kw:'fracture fixation plate ortho distal radius trauma'},
+  {g:'intermediate', n:'Bunion / hallux valgus / forefoot surgery', kw:'foot osteotomy toe ortho scarf akin'},
+  {g:'intermediate', n:'Dupuytren’s fasciectomy / tendon repair', kw:'hand contracture plastics'},
+  {g:'intermediate', n:'Laparoscopic cholecystectomy', kw:'gallbladder lap chole gallstones biliary cholecystitis'},
+  {g:'intermediate', n:'ERCP ± sphincterotomy', kw:'biliary pancreas duct stone stent endoscopy'},
+  {g:'intermediate', n:'Appendicectomy', kw:'appendix appendectomy lap open'},
+  {g:'intermediate', n:'Haemorrhoidectomy / stapled haemorrhoidopexy', kw:'piles anal proctology haemorrhoids banding'},
+  {g:'intermediate', n:'Pilonidal sinus excision ± flap', kw:'natal cleft karydakis limberg'},
+  {g:'intermediate', n:'Diagnostic laparoscopy', kw:'lap abdomen adhesiolysis staging'},
+  {g:'intermediate', n:'Breast lump / wide local excision ± sentinel node biopsy', kw:'lumpectomy wle breast sentinel slnb hookwire'},
+  {g:'intermediate', n:'Split skin graft / local flap / skin cancer reconstruction', kw:'plastics ssg graft flap wound'},
+  {g:'intermediate', n:'Liposuction / minor body contouring', kw:'plastics cosmetic'},
+  {g:'intermediate', n:'Laparoscopic sterilisation / salpingectomy / ectopic', kw:'tubal ligation filshie fallopian ectopic gynae'},
+  {g:'intermediate', n:'Laparoscopic ovarian cystectomy / oophorectomy', kw:'ovary ovarian cyst gynae adnexal'},
+  {g:'intermediate', n:'TVT / mid-urethral sling / colposuspension', kw:'incontinence gynae urogynae tot stress'},
+  {g:'intermediate', n:'Orchidopexy / orchidectomy / hydrocele repair', kw:'testis scrotum testicle epididymal varicocele'},
+  {g:'intermediate', n:'TURBT (bladder tumour resection)', kw:'bladder transurethral urology tumour'},
+  {g:'intermediate', n:'Bladder neck incision / optical urethrotomy', kw:'urology stricture urethra'},
+  {g:'intermediate', n:'Ureteroscopy / laser stone surgery', kw:'kidney stone urs lithotripsy urology calculus'},
+  {g:'intermediate', n:'Penile prosthesis / minor penile surgery', kw:'urology implant peyronie'},
+  {g:'intermediate', n:'Vitrectomy / retinal detachment / trabeculectomy / DCR', kw:'eye ophthalmic retina glaucoma vitreoretinal dacryocystorhinostomy'},
+  {g:'intermediate', n:'ORIF mandible / facial fracture / TMJ surgery', kw:'maxfax jaw zygoma orbital face'},
+  {g:'intermediate', n:'Pacemaker / ICD / loop recorder insertion', kw:'cardiology device crt generator box change'},
+  {g:'intermediate', n:'EP study / cardiac ablation', kw:'cardiology arrhythmia af svt electrophysiology'},
+  {g:'intermediate', n:'Mediastinoscopy', kw:'thoracic chest node staging'},
+  {g:'intermediate', n:'VP shunt insertion / revision', kw:'neuro hydrocephalus ventriculoperitoneal shunt'},
+  {g:'intermediate', n:'Gastric band insertion or removal', kw:'bariatric obesity lap band'},
+
+  /* ---------- MAJOR / COMPLEX ---------- */
+  {g:'major', n:'Hiatus hernia repair / fundoplication', kw:'nissen toupet dor antireflux anti reflux gord gerd hiatal hiatus paraoesophageal paraesophageal oesophageal crural upper gi laparoscopic'},
+  {g:'major', n:'Heller myotomy / achalasia surgery', kw:'oesophagus poem upper gi cardiomyotomy'},
+  {g:'major', n:'Sleeve gastrectomy / gastric bypass (bariatric)', kw:'bariatric obesity roux en y weight loss metabolic'},
+  {g:'major', n:'Complex / recurrent ventral hernia repair (component separation)', kw:'hernia abdominal wall incisional mesh tar'},
+  {g:'major', n:'Total abdominal hysterectomy (TAH ± BSO)', kw:'uterus hysterectomy bso gynae open'},
+  {g:'major', n:'Laparoscopic / vaginal / radical hysterectomy', kw:'uterus hysterectomy gynae wertheim'},
+  {g:'major', n:'Myomectomy', kw:'fibroid uterus gynae'},
+  {g:'major', n:'Pelvic floor / prolapse repair', kw:'gynae urogynae sacrocolpopexy vaginal repair cystocele rectocele'},
+  {g:'major', n:'Ovarian cancer debulking / cytoreduction ± HIPEC', kw:'gynae oncology peritoneal staging omentectomy'},
+  {g:'major', n:'Vulvectomy ± groin node dissection', kw:'gynae oncology vulva'},
+  {g:'major', n:'Caesarean section', kw:'obstetric lscs delivery lower segment'},
+  {g:'major', n:'TURP / prostate resection / HoLEP', kw:'prostate transurethral urology bph greenlight'},
+  {g:'major', n:'Radical prostatectomy', kw:'prostate urology robotic ralp oncology'},
+  {g:'major', n:'Nephrectomy / partial nephrectomy / nephroureterectomy', kw:'kidney renal urology oncology'},
+  {g:'major', n:'Cystectomy ± ileal conduit', kw:'bladder urology urostomy oncology neobladder'},
+  {g:'major', n:'PCNL (percutaneous nephrolithotomy)', kw:'kidney stone urology staghorn'},
+  {g:'major', n:'Pyeloplasty / urethroplasty / reconstructive urology', kw:'urology puj stricture'},
+  {g:'major', n:'Renal or liver transplant', kw:'transplant kidney donor nephrectomy graft'},
+  {g:'major', n:'Total hip replacement (THR)', kw:'hip arthroplasty joint ortho primary'},
+  {g:'major', n:'Total knee replacement (TKR) / unicompartmental', kw:'knee arthroplasty joint ortho uka'},
+  {g:'major', n:'Shoulder / elbow / ankle replacement', kw:'arthroplasty joint ortho reverse'},
+  {g:'major', n:'Revision joint arthroplasty', kw:'hip knee revision ortho infected'},
+  {g:'major', n:'Hip fracture surgery (DHS / hemiarthroplasty / cannulated screws)', kw:'neck of femur nof fracture trauma ortho'},
+  {g:'major', n:'Femoral / tibial nailing / major long bone fixation', kw:'im nail fracture trauma ortho'},
+  {g:'major', n:'Lumbar discectomy / laminectomy / decompression', kw:'spine back disc neuro ortho stenosis'},
+  {g:'major', n:'Spinal fusion / instrumented spinal surgery', kw:'spine back acdf tlif plif scoliosis deformity'},
+  {g:'major', n:'Craniotomy (tumour, clipping, evacuation)', kw:'neuro brain aneurysm meningioma haematoma skull'},
+  {g:'major', n:'Burr holes / chronic subdural drainage', kw:'neuro brain sdh haematoma'},
+  {g:'major', n:'Deep brain stimulation / functional neurosurgery', kw:'neuro dbs parkinson electrode'},
+  {g:'major', n:'Thyroidectomy / parathyroidectomy', kw:'thyroid neck endocrine goitre hemithyroidectomy'},
+  {g:'major', n:'Adrenalectomy', kw:'endocrine phaeochromocytoma adrenal'},
+  {g:'major', n:'Mastectomy ± axillary clearance', kw:'breast oncology anc mx'},
+  {g:'major', n:'Breast reconstruction / DIEP / implant reconstruction', kw:'breast plastics flap ld tram'},
+  {g:'major', n:'Reduction mammoplasty / abdominoplasty / major body contouring', kw:'plastics breast reduction tummy tuck panniculectomy'},
+  {g:'major', n:'Colectomy / bowel resection', kw:'colon hemicolectomy anterior resection hartmann colorectal bowel sigmoid subtotal'},
+  {g:'major', n:'Abdominoperineal resection (APR) / rectal cancer surgery', kw:'rectum colorectal oncology tme stoma'},
+  {g:'major', n:'Small bowel resection / adhesiolysis for obstruction', kw:'ileum jejunum bowel obstruction laparotomy'},
+  {g:'major', n:'Stoma formation or reversal', kw:'ileostomy colostomy loop stoma closure'},
+  {g:'major', n:'Rectopexy / rectal prolapse repair', kw:'colorectal prolapse ventral mesh delorme'},
+  {g:'major', n:'Gastrectomy (total or subtotal)', kw:'stomach upper gi oncology'},
+  {g:'major', n:'Oesophagectomy', kw:'oesophagus esophagus ivor lewis upper gi oncology'},
+  {g:'major', n:'Whipple / pancreatic resection', kw:'pancreas pancreaticoduodenectomy distal pancreatectomy hpb'},
+  {g:'major', n:'Hepatectomy / liver resection', kw:'liver hpb hepatic segmentectomy'},
+  {g:'major', n:'Splenectomy', kw:'spleen haematology'},
+  {g:'major', n:'Laparotomy (incl. emergency / trauma)', kw:'open abdomen exploratory nela'},
+  {g:'major', n:'Cytoreductive surgery + HIPEC', kw:'peritonectomy oncology peritoneal'},
+  {g:'major', n:'Lung resection / lobectomy / pneumonectomy / VATS', kw:'thoracic chest lung wedge segmentectomy thoracotomy'},
+  {g:'major', n:'Pleurectomy / decortication / pleurodesis', kw:'thoracic chest empyema pneumothorax vats'},
+  {g:'major', n:'Thymectomy', kw:'thoracic myasthenia mediastinum'},
+  {g:'major', n:'CABG / cardiac valve surgery', kw:'cardiac bypass coronary avr mvr sternotomy on pump'},
+  {g:'major', n:'TAVI / structural cardiac intervention', kw:'cardiac aortic valve transcatheter mitraclip'},
+  {g:'major', n:'AAA repair (open or EVAR)', kw:'aneurysm aorta vascular endovascular'},
+  {g:'major', n:'Peripheral arterial bypass / endarterectomy', kw:'vascular fem pop aortobifemoral carotid cea limb ischaemia'},
+  {g:'major', n:'Major limb amputation (AKA / BKA)', kw:'vascular above below knee ischaemia'},
+  {g:'major', n:'Embolectomy / acute limb ischaemia surgery', kw:'vascular thrombectomy fasciotomy'},
+  {g:'major', n:'Parotidectomy / submandibular gland excision', kw:'ent salivary head neck facial nerve'},
+  {g:'major', n:'Laryngectomy / glossectomy / major head & neck resection', kw:'ent oncology mandibulectomy pharyngectomy'},
+  {g:'major', n:'Free flap / radical neck dissection', kw:'plastics head neck reconstruction microvascular fibula radial'},
+  {g:'major', n:'Orthognathic surgery / bimaxillary osteotomy', kw:'maxfax jaw le fort bsso mandible'},
+  {g:'major', n:'Major burns debridement / grafting', kw:'plastics burn escharotomy tbsa'}
 ];
 const gradeName = { minor:'Minor', intermediate:'Intermediate', major:'Major / complex' };
 let _procHits = [];
@@ -2274,12 +2620,40 @@ function setBlSurg(grade) {
   document.getElementById('bl-surg-eg').textContent = blExamples[grade];
   renderBl();
 }
+const _procStop = ['of','and','the','for','with','to','or','a','an','my','on','in','under','left','right','bilateral','elective','emergency','procedure','operation','op','surgery'];
+const _procSyn = { lap:'laparoscopic', laparascopic:'laparoscopic', gb:'gallbladder', chole:'cholecystectomy', hh:'hiatus', fundo:'fundoplication', appendix:'appendicectomy', appendectomy:'appendicectomy', hysterectomy:'hysterectomy', tka:'knee replacement', tha:'hip replacement', thr:'hip replacement', tkr:'knee replacement', nof:'hip fracture', ogd:'gastroscopy', egd:'gastroscopy', colonoscopy:'colonoscopy', esophagus:'oesophagus', esophagectomy:'oesophagectomy', reflux:'antireflux', gerd:'gord', hiatal:'hiatus' };
+function _procTok(s) {
+  return (s || '').toLowerCase().split(/[^a-z0-9]+/)
+    .map(t => _procSyn[t] || t)
+    .filter(t => t.length > 1 && _procStop.indexOf(t) === -1);
+}
 function searchProc(q) {
   const box = document.getElementById('bl-proc-result');
   q = (q || '').trim().toLowerCase();
   if (q.length < 2) { box.innerHTML = ''; return; }
-  _procHits = procGrades.filter(p => (p.n + ' ' + p.kw).toLowerCase().includes(q)).slice(0, 6);
-  if (!_procHits.length) { box.innerHTML = '<span style="color:var(--text3)">No match — pick the grade manually below.</span>'; return; }
+  const toks = _procTok(q);
+  if (!toks.length) { box.innerHTML = ''; return; }
+  const hays = procGrades.map(p => (p.n + ' ' + p.kw).toLowerCase());
+  /* down-weight tokens that appear across many procedures (e.g. "removal", "repair") */
+  const w = toks.map((t, ti) => {
+    const df = hays.filter(h => h.indexOf(t) !== -1).length;
+    const base = t.length >= 4 ? 2 : 1;
+    const pos = toks.length > 1 ? 1 + 0.35 * (toks.length - 1 - ti) / (toks.length - 1) : 1;
+    return base * (df <= 3 ? 1.6 : df <= 8 ? 1 : 0.3) * pos;
+  });
+  const scored = procGrades.map((p, pi) => {
+    const hay = hays[pi];
+    let score = 0;
+    toks.forEach((t, ti) => {
+      if (hay.indexOf(t) !== -1) score += w[ti];
+      else if (t.length >= 5 && hay.indexOf(t.slice(0, Math.max(4, t.length - 2))) !== -1) score += w[ti] * 0.5;
+    });
+    if (hay.indexOf(q) !== -1) score += 3;
+    if (p.n.toLowerCase().indexOf(toks[0]) === 0) score += 1;
+    return { p: p, score: score };
+  }).filter(x => x.score > 0).sort((a, b) => b.score - a.score || a.p.n.length - b.p.n.length);
+  _procHits = scored.slice(0, 6).map(x => x.p);
+  if (!_procHits.length) { box.innerHTML = '<span style="color:var(--text3)">No match — try a single keyword (e.g. “fundoplication”), or pick the grade manually below.</span>'; return; }
   setBlSurg(_procHits[0].g);
   let html = '<div style="margin-bottom:4px"><strong style="color:var(--text)">' + _procHits[0].n + '</strong> → <strong style="color:var(--accent)">' + gradeName[_procHits[0].g] + '</strong> <span style="color:var(--text3)">— grade applied below</span></div>';
   if (_procHits.length > 1) {
@@ -2321,11 +2695,758 @@ function renderBl() {
 }
 renderBl();
 
+/* ===== TRADE NAME DATA (Australian brands) ===== */
+/* TRADE_NAMES — common Australian brand → {g:generic, c:class}.
+   Optional n: peri-op note for drugs NOT on the Hold/Continue card list. */
+const TRADE_NAMES = {
+  /* ---- Antiplatelets / anticoagulants ---- */
+  "plavix":{g:"clopidogrel",c:"Antiplatelet"},
+  "iscover":{g:"clopidogrel",c:"Antiplatelet"},
+  "co-plavix":{g:"clopidogrel + aspirin",c:"Antiplatelet (dual)"},
+  "brilinta":{g:"ticagrelor",c:"Antiplatelet"},
+  "effient":{g:"prasugrel",c:"Antiplatelet",n:"Thienopyridine antiplatelet — manage as for DAPT; do not stop after stent without cardiology. Not separately listed."},
+  "asasantin":{g:"aspirin + dipyridamole",c:"Antiplatelet (combination)"},
+  "persantin":{g:"dipyridamole",c:"Antiplatelet"},
+  "cartia":{g:"aspirin (antiplatelet)",c:"Antiplatelet"},
+  "astrix":{g:"aspirin (antiplatelet)",c:"Antiplatelet"},
+  "cardiprin":{g:"aspirin (antiplatelet)",c:"Antiplatelet"},
+  "disprin":{g:"aspirin (analgesic)",c:"NSAID / analgesic"},
+  "warfarin":{g:"warfarin",c:"Anticoagulant (VKA)"},
+  "coumadin":{g:"warfarin",c:"Anticoagulant (VKA)"},
+  "marevan":{g:"warfarin",c:"Anticoagulant (VKA)"},
+  "xarelto":{g:"rivaroxaban",c:"Anticoagulant (DOAC — factor Xa inhibitor)"},
+  "eliquis":{g:"apixaban",c:"Anticoagulant (DOAC — factor Xa inhibitor)"},
+  "pradaxa":{g:"dabigatran",c:"Anticoagulant (DOAC — direct thrombin inhibitor)"},
+  "lixiana":{g:"edoxaban",c:"Anticoagulant (DOAC — factor Xa inhibitor)",n:"Factor Xa inhibitor DOAC — manage as per anticoagulation protocol (as for apixaban/rivaroxaban)."},
+  "clexane":{g:"enoxaparin",c:"Anticoagulant (LMWH)"},
+  "fragmin":{g:"dalteparin",c:"Anticoagulant (LMWH)",n:"LMWH — manage as for enoxaparin per anticoagulation protocol."},
+  "arixtra":{g:"fondaparinux",c:"Anticoagulant (factor Xa inhibitor)",n:"Parenteral factor Xa inhibitor — long half-life; check anticoagulation protocol."},
+  "heparin":{g:"heparin",c:"Anticoagulant (UFH)"},
+  /* ---- Statins / lipids ---- */
+  "lipitor":{g:"atorvastatin",c:"Statin"},
+  "torvastat":{g:"atorvastatin",c:"Statin"},
+  "crestor":{g:"rosuvastatin",c:"Statin"},
+  "zocor":{g:"simvastatin",c:"Statin"},
+  "lipex":{g:"simvastatin",c:"Statin"},
+  "pravachol":{g:"pravastatin",c:"Statin"},
+  "lipostat":{g:"pravastatin",c:"Statin"},
+  "lescol":{g:"fluvastatin",c:"Statin"},
+  "vytorin":{g:"ezetimibe + simvastatin",c:"Statin + cholesterol absorption inhibitor"},
+  "ezetrol":{g:"ezetimibe",c:"Cholesterol absorption inhibitor"},
+  "atozet":{g:"ezetimibe + atorvastatin",c:"Statin + cholesterol absorption inhibitor"},
+  "lipidil":{g:"fenofibrate",c:"Fibrate"},
+  "lopid":{g:"gemfibrozil",c:"Fibrate"},
+  "questran":{g:"colestyramine",c:"Bile acid sequestrant"},
+  "repatha":{g:"evolocumab",c:"PCSK9 inhibitor",n:"Injectable PCSK9 inhibitor — generally continued; not separately listed. Confirm if unsure."},
+  "praluent":{g:"alirocumab",c:"PCSK9 inhibitor",n:"Injectable PCSK9 inhibitor — generally continued; not separately listed."},
+  /* ---- ACE inhibitors ---- */
+  "coversyl":{g:"perindopril",c:"ACE inhibitor"},
+  "renitec":{g:"enalapril",c:"ACE inhibitor"},
+  "tritace":{g:"ramipril",c:"ACE inhibitor"},
+  "ramace":{g:"ramipril",c:"ACE inhibitor"},
+  "monopril":{g:"fosinopril",c:"ACE inhibitor"},
+  "zestril":{g:"lisinopril",c:"ACE inhibitor"},
+  "prinivil":{g:"lisinopril",c:"ACE inhibitor"},
+  "capoten":{g:"captopril",c:"ACE inhibitor"},
+  "accupril":{g:"quinapril",c:"ACE inhibitor"},
+  "gopten":{g:"trandolapril",c:"ACE inhibitor"},
+  "coveram":{g:"perindopril + amlodipine",c:"ACE inhibitor + calcium channel blocker"},
+  /* ---- ARBs ---- */
+  "atacand":{g:"candesartan",c:"Angiotensin receptor blocker (ARB)"},
+  "avapro":{g:"irbesartan",c:"Angiotensin receptor blocker (ARB)"},
+  "karvea":{g:"irbesartan",c:"Angiotensin receptor blocker (ARB)"},
+  "cozaar":{g:"losartan",c:"Angiotensin receptor blocker (ARB)"},
+  "micardis":{g:"telmisartan",c:"Angiotensin receptor blocker (ARB)"},
+  "olmetec":{g:"olmesartan",c:"Angiotensin receptor blocker (ARB)"},
+  "diovan":{g:"valsartan",c:"Angiotensin receptor blocker (ARB)"},
+  "teveten":{g:"eprosartan",c:"Angiotensin receptor blocker (ARB)"},
+  "avalide":{g:"irbesartan + hydrochlorothiazide",c:"ARB + thiazide diuretic"},
+  "coaprovel":{g:"irbesartan + hydrochlorothiazide",c:"ARB + thiazide diuretic"},
+  "atacand plus":{g:"candesartan + hydrochlorothiazide",c:"ARB + thiazide diuretic"},
+  "micardis plus":{g:"telmisartan + hydrochlorothiazide",c:"ARB + thiazide diuretic"},
+  "twynsta":{g:"telmisartan + amlodipine",c:"ARB + calcium channel blocker"},
+  "exforge":{g:"valsartan + amlodipine",c:"ARB + calcium channel blocker"},
+  "entresto":{g:"sacubitril + valsartan",c:"ARNI (neprilysin inhibitor + ARB)",n:"ARNI — manage as for ACE inhibitor / ARB (generally withhold on the morning of surgery). Not separately listed."},
+  /* ---- Beta blockers ---- */
+  "tenormin":{g:"atenolol",c:"Beta blocker"},
+  "noten":{g:"atenolol",c:"Beta blocker"},
+  "betaloc":{g:"metoprolol",c:"Beta blocker"},
+  "lopresor":{g:"metoprolol",c:"Beta blocker"},
+  "toprol":{g:"metoprolol",c:"Beta blocker"},
+  "metohexal":{g:"metoprolol",c:"Beta blocker"},
+  "bicor":{g:"bisoprolol",c:"Beta blocker"},
+  "dilatrend":{g:"carvedilol",c:"Beta blocker"},
+  "coreg":{g:"carvedilol",c:"Beta blocker"},
+  "nebilet":{g:"nebivolol",c:"Beta blocker"},
+  "inderal":{g:"propranolol",c:"Beta blocker"},
+  "trandate":{g:"labetalol",c:"Beta blocker"},
+  "presolol":{g:"labetalol",c:"Beta blocker"},
+  "visken":{g:"pindolol",c:"Beta blocker"},
+  /* ---- Calcium channel blockers ---- */
+  "norvasc":{g:"amlodipine",c:"Calcium channel blocker"},
+  "amlo":{g:"amlodipine",c:"Calcium channel blocker"},
+  "istin":{g:"amlodipine",c:"Calcium channel blocker"},
+  "plendil":{g:"felodipine",c:"Calcium channel blocker"},
+  "felodur":{g:"felodipine",c:"Calcium channel blocker"},
+  "zanidip":{g:"lercanidipine",c:"Calcium channel blocker"},
+  "adalat":{g:"nifedipine",c:"Calcium channel blocker"},
+  "cardizem":{g:"diltiazem",c:"Calcium channel blocker"},
+  "vasocardol":{g:"diltiazem",c:"Calcium channel blocker"},
+  "isoptin":{g:"verapamil",c:"Calcium channel blocker / antiarrhythmic"},
+  "anpec":{g:"verapamil",c:"Calcium channel blocker / antiarrhythmic"},
+  /* ---- Diuretics ---- */
+  "lasix":{g:"furosemide",c:"Loop diuretic"},
+  "frusid":{g:"furosemide",c:"Loop diuretic"},
+  "urex":{g:"furosemide",c:"Loop diuretic"},
+  "burinex":{g:"bumetanide",c:"Loop diuretic"},
+  "aldactone":{g:"spironolactone",c:"Potassium-sparing diuretic"},
+  "spiractin":{g:"spironolactone",c:"Potassium-sparing diuretic"},
+  "inspra":{g:"eplerenone",c:"Potassium-sparing diuretic (aldosterone antagonist)"},
+  "kspar":{g:"amiloride",c:"Potassium-sparing diuretic"},
+  "midamor":{g:"amiloride",c:"Potassium-sparing diuretic"},
+  "natrilix":{g:"indapamide",c:"Thiazide-like diuretic"},
+  "dapa-tabs":{g:"indapamide",c:"Thiazide-like diuretic"},
+  "hydrene":{g:"hydrochlorothiazide + triamterene",c:"Thiazide + potassium-sparing diuretic"},
+  "moduretic":{g:"hydrochlorothiazide + amiloride",c:"Thiazide + potassium-sparing diuretic"},
+  "hygroton":{g:"chlortalidone",c:"Thiazide-like diuretic"},
+  /* ---- Other cardiac / antihypertensives ---- */
+  "cordarone":{g:"amiodarone",c:"Antiarrhythmic"},
+  "aratac":{g:"amiodarone",c:"Antiarrhythmic"},
+  "tambocor":{g:"flecainide",c:"Antiarrhythmic"},
+  "rythmodan":{g:"disopyramide",c:"Antiarrhythmic"},
+  "lanoxin":{g:"digoxin",c:"Antiarrhythmic / cardiac glycoside"},
+  "sotacor":{g:"sotalol",c:"Beta blocker / antiarrhythmic"},
+  "cardol":{g:"sotalol",c:"Beta blocker / antiarrhythmic"},
+  "catapres":{g:"clonidine",c:"Centrally-acting antihypertensive"},
+  "physiotens":{g:"moxonidine",c:"Centrally-acting antihypertensive"},
+  "apresoline":{g:"hydralazine",c:"Vasodilator antihypertensive"},
+  "loniten":{g:"minoxidil",c:"Vasodilator antihypertensive"},
+  "minipress":{g:"prazosin",c:"Alpha-1 blocker"},
+  "anginine":{g:"glyceryl trinitrate",c:"Nitrate"},
+  "nitrolingual":{g:"glyceryl trinitrate",c:"Nitrate"},
+  "transiderm-nitro":{g:"glyceryl trinitrate (patch)",c:"Nitrate"},
+  "imdur":{g:"isosorbide mononitrate",c:"Nitrate"},
+  "duride":{g:"isosorbide mononitrate",c:"Nitrate"},
+  "isordil":{g:"isosorbide dinitrate",c:"Nitrate"},
+  "coralan":{g:"ivabradine",c:"Anti-anginal (If channel inhibitor)"},
+  "ikorel":{g:"nicorandil",c:"Anti-anginal (potassium channel activator)"},
+  "pexsig":{g:"perhexiline",c:"Anti-anginal"},
+  "revatio":{g:"sildenafil",c:"PDE-5 inhibitor (pulmonary hypertension)"},
+  "adcirca":{g:"tadalafil",c:"PDE-5 inhibitor (pulmonary hypertension)"},
+  "tracleer":{g:"bosentan",c:"Endothelin antagonist"},
+  "volibris":{g:"ambrisentan",c:"Endothelin antagonist"},
+  "opsumit":{g:"macitentan",c:"Endothelin antagonist"},
+  "adempas":{g:"riociguat",c:"Pulmonary hypertension (sGC stimulator)"},
+  /* ---- Diabetes ---- */
+  "diabex":{g:"metformin",c:"Biguanide"},
+  "diaformin":{g:"metformin",c:"Biguanide"},
+  "metex":{g:"metformin",c:"Biguanide"},
+  "glucophage":{g:"metformin",c:"Biguanide"},
+  "diamicron":{g:"gliclazide",c:"Sulfonylurea"},
+  "glyade":{g:"gliclazide",c:"Sulfonylurea"},
+  "amaryl":{g:"glimepiride",c:"Sulfonylurea"},
+  "daonil":{g:"glibenclamide",c:"Sulfonylurea"},
+  "minidiab":{g:"glipizide",c:"Sulfonylurea"},
+  "melizide":{g:"glipizide",c:"Sulfonylurea"},
+  "actos":{g:"pioglitazone",c:"Thiazolidinedione"},
+  "glucobay":{g:"acarbose",c:"Alpha-glucosidase inhibitor"},
+  "januvia":{g:"sitagliptin",c:"DPP-4 inhibitor"},
+  "galvus":{g:"vildagliptin",c:"DPP-4 inhibitor"},
+  "trajenta":{g:"linagliptin",c:"DPP-4 inhibitor"},
+  "nesina":{g:"alogliptin",c:"DPP-4 inhibitor"},
+  "onglyza":{g:"saxagliptin",c:"DPP-4 inhibitor"},
+  "janumet":{g:"sitagliptin + metformin",c:"DPP-4 inhibitor + biguanide"},
+  "galvumet":{g:"vildagliptin + metformin",c:"DPP-4 inhibitor + biguanide"},
+  "trajentamet":{g:"linagliptin + metformin",c:"DPP-4 inhibitor + biguanide"},
+  "forxiga":{g:"dapagliflozin",c:"SGLT2 inhibitor"},
+  "jardiance":{g:"empagliflozin",c:"SGLT2 inhibitor"},
+  "steglatro":{g:"ertugliflozin",c:"SGLT2 inhibitor"},
+  "xigduo":{g:"dapagliflozin + metformin",c:"SGLT2 inhibitor + biguanide"},
+  "jardiamet":{g:"empagliflozin + metformin",c:"SGLT2 inhibitor + biguanide"},
+  "segluromet":{g:"ertugliflozin + metformin",c:"SGLT2 inhibitor + biguanide"},
+  "glyxambi":{g:"empagliflozin + linagliptin",c:"SGLT2 inhibitor + DPP-4 inhibitor"},
+  "qtern":{g:"dapagliflozin + saxagliptin",c:"SGLT2 inhibitor + DPP-4 inhibitor"},
+  "trulicity":{g:"dulaglutide",c:"GLP-1 receptor agonist"},
+  "ozempic":{g:"semaglutide",c:"GLP-1 receptor agonist"},
+  "rybelsus":{g:"semaglutide (oral)",c:"GLP-1 receptor agonist"},
+  "wegovy":{g:"semaglutide",c:"GLP-1 receptor agonist"},
+  "victoza":{g:"liraglutide",c:"GLP-1 receptor agonist"},
+  "saxenda":{g:"liraglutide",c:"GLP-1 receptor agonist"},
+  "byetta":{g:"exenatide",c:"GLP-1 receptor agonist"},
+  "bydureon":{g:"exenatide (weekly)",c:"GLP-1 receptor agonist"},
+  "mounjaro":{g:"tirzepatide",c:"GIP/GLP-1 receptor agonist",n:"Dual GIP/GLP-1 agonist — manage as for GLP-1 agonists (aspiration / delayed gastric emptying). See GLP-1 page. Not separately listed."},
+  "xultophy":{g:"insulin degludec + liraglutide",c:"Long-acting insulin + GLP-1 agonist"},
+  /* ---- Insulins ---- */
+  "lantus":{g:"insulin glargine",c:"Long-acting insulin"},
+  "toujeo":{g:"insulin glargine",c:"Long-acting insulin"},
+  "optisulin":{g:"insulin glargine",c:"Long-acting insulin"},
+  "semglee":{g:"insulin glargine",c:"Long-acting insulin"},
+  "levemir":{g:"insulin detemir",c:"Long-acting insulin"},
+  "tresiba":{g:"insulin degludec",c:"Long-acting insulin"},
+  "novorapid":{g:"insulin aspart",c:"Rapid-acting insulin"},
+  "fiasp":{g:"insulin aspart",c:"Rapid-acting insulin"},
+  "humalog":{g:"insulin lispro",c:"Rapid-acting insulin"},
+  "apidra":{g:"insulin glulisine",c:"Rapid-acting insulin"},
+  "actrapid":{g:"insulin (neutral)",c:"Short-acting insulin"},
+  "humulin r":{g:"insulin (neutral)",c:"Short-acting insulin"},
+  "protaphane":{g:"insulin isophane",c:"Intermediate-acting insulin"},
+  "humulin nph":{g:"insulin isophane",c:"Intermediate-acting insulin"},
+  "mixtard":{g:"biphasic insulin (isophane/neutral)",c:"Mixed insulin"},
+  "novomix":{g:"biphasic insulin aspart",c:"Mixed insulin"},
+  "humalog mix":{g:"biphasic insulin lispro",c:"Mixed insulin"},
+  "ryzodeg":{g:"insulin degludec + aspart",c:"Mixed (long + rapid) insulin"},
+  /* ---- Thyroid ---- */
+  "oroxine":{g:"levothyroxine",c:"Thyroid hormone"},
+  "eutroxsig":{g:"levothyroxine",c:"Thyroid hormone"},
+  "neo-mercazole":{g:"carbimazole",c:"Anti-thyroid"},
+  /* ---- PPI / H2 / GI ---- */
+  "nexium":{g:"esomeprazole",c:"Proton pump inhibitor"},
+  "somac":{g:"pantoprazole",c:"Proton pump inhibitor"},
+  "losec":{g:"omeprazole",c:"Proton pump inhibitor"},
+  "acimax":{g:"omeprazole",c:"Proton pump inhibitor"},
+  "probitor":{g:"omeprazole",c:"Proton pump inhibitor"},
+  "pariet":{g:"rabeprazole",c:"Proton pump inhibitor"},
+  "zoton":{g:"lansoprazole",c:"Proton pump inhibitor"},
+  "pepcid":{g:"famotidine",c:"H2 antagonist"},
+  "pepcidine":{g:"famotidine",c:"H2 antagonist"},
+  "zantac":{g:"ranitidine",c:"H2 antagonist"},
+  "tazac":{g:"nizatidine",c:"H2 antagonist"},
+  "mylanta":{g:"aluminium hydroxide + magnesium hydroxide",c:"Antacid"},
+  "gaviscon":{g:"alginate + antacid",c:"Antacid"},
+  "buscopan":{g:"hyoscine butylbromide",c:"Antispasmodic"},
+  "maxolon":{g:"metoclopramide",c:"Dopamine antagonist antiemetic"},
+  "pramin":{g:"metoclopramide",c:"Dopamine antagonist antiemetic"},
+  "motilium":{g:"domperidone",c:"Dopamine antagonist antiemetic"},
+  "stemetil":{g:"prochlorperazine",c:"Dopamine antagonist antiemetic"},
+  "zofran":{g:"ondansetron",c:"5-HT3 antagonist antiemetic"},
+  "ondaz":{g:"ondansetron",c:"5-HT3 antagonist antiemetic"},
+  "movicol":{g:"macrogol",c:"Osmotic laxative"},
+  "osmolax":{g:"macrogol",c:"Osmotic laxative"},
+  "coloxyl":{g:"docusate (± senna)",c:"Stool softener / stimulant laxative"},
+  "duphalac":{g:"lactulose",c:"Osmotic laxative"},
+  "actilax":{g:"lactulose",c:"Osmotic laxative"},
+  "dulcolax":{g:"bisacodyl",c:"Stimulant laxative"},
+  "durolax":{g:"bisacodyl",c:"Stimulant laxative"},
+  "imodium":{g:"loperamide",c:"Opioid antidiarrhoeal"},
+  "gastrostop":{g:"loperamide",c:"Opioid antidiarrhoeal"},
+  "creon":{g:"pancreatic enzymes (pancreatin)",c:"Pancreatic enzyme replacement"},
+  "ursofalk":{g:"ursodeoxycholic acid",c:"Bile acid"},
+  "salofalk":{g:"mesalazine",c:"5-aminosalicylate"},
+  "pentasa":{g:"mesalazine",c:"5-aminosalicylate"},
+  "mesasal":{g:"mesalazine",c:"5-aminosalicylate"},
+  "colazide":{g:"balsalazide",c:"5-aminosalicylate"},
+  "dipentum":{g:"olsalazine",c:"5-aminosalicylate"},
+  "salazopyrin":{g:"sulfasalazine",c:"5-aminosalicylate / DMARD"},
+  "entyvio":{g:"vedolizumab",c:"Biologic (gut-selective integrin antagonist)"},
+  "xenical":{g:"orlistat",c:"Lipase inhibitor (weight loss)"},
+  /* ---- Analgesics / NSAIDs / opioids ---- */
+  "panadol":{g:"paracetamol",c:"Simple analgesic"},
+  "panamax":{g:"paracetamol",c:"Simple analgesic"},
+  "dymadon":{g:"paracetamol",c:"Simple analgesic"},
+  "panadol osteo":{g:"paracetamol (modified release)",c:"Simple analgesic"},
+  "nurofen":{g:"ibuprofen",c:"NSAID (non-selective)"},
+  "brufen":{g:"ibuprofen",c:"NSAID (non-selective)"},
+  "advil":{g:"ibuprofen",c:"NSAID (non-selective)"},
+  "voltaren":{g:"diclofenac",c:"NSAID (non-selective)"},
+  "fenac":{g:"diclofenac",c:"NSAID (non-selective)"},
+  "naprosyn":{g:"naproxen",c:"NSAID (non-selective)"},
+  "anaprox":{g:"naproxen",c:"NSAID (non-selective)"},
+  "indocid":{g:"indometacin",c:"NSAID (non-selective)"},
+  "orudis":{g:"ketoprofen",c:"NSAID (non-selective)"},
+  "oruvail":{g:"ketoprofen",c:"NSAID (non-selective)"},
+  "feldene":{g:"piroxicam",c:"NSAID (non-selective)"},
+  "ponstan":{g:"mefenamic acid",c:"NSAID (non-selective)"},
+  "toradol":{g:"ketorolac",c:"NSAID (non-selective)"},
+  "celebrex":{g:"celecoxib",c:"NSAID (selective COX-2)"},
+  "mobic":{g:"meloxicam",c:"NSAID (selective COX-2)"},
+  "mobilis":{g:"meloxicam",c:"NSAID (selective COX-2)"},
+  "arcoxia":{g:"etoricoxib",c:"NSAID (selective COX-2)"},
+  "endone":{g:"oxycodone",c:"Opioid (oral)"},
+  "oxynorm":{g:"oxycodone",c:"Opioid (oral)"},
+  "oxycontin":{g:"oxycodone (controlled release)",c:"Opioid (oral)"},
+  "targin":{g:"oxycodone + naloxone",c:"Opioid (oral)"},
+  "ordine":{g:"morphine (oral liquid)",c:"Opioid (oral)"},
+  "ms contin":{g:"morphine (controlled release)",c:"Opioid (oral)"},
+  "mscontin":{g:"morphine (controlled release)",c:"Opioid (oral)"},
+  "ms mono":{g:"morphine (controlled release)",c:"Opioid (oral)"},
+  "kapanol":{g:"morphine (controlled release)",c:"Opioid (oral)"},
+  "sevredol":{g:"morphine (immediate release)",c:"Opioid (oral)"},
+  "anamorph":{g:"morphine (immediate release)",c:"Opioid (oral)"},
+  "palexia":{g:"tapentadol",c:"Opioid (oral)"},
+  "tramal":{g:"tramadol",c:"Opioid (oral)"},
+  "zydol":{g:"tramadol",c:"Opioid (oral)"},
+  "tramedo":{g:"tramadol",c:"Opioid (oral)"},
+  "jurnista":{g:"hydromorphone (controlled release)",c:"Opioid (oral)"},
+  "dilaudid":{g:"hydromorphone",c:"Opioid (oral / parenteral)"},
+  "physeptone":{g:"methadone",c:"Opioid (oral)"},
+  "panadeine forte":{g:"paracetamol + codeine",c:"Opioid combination analgesic"},
+  "panadeine":{g:"paracetamol + codeine",c:"Opioid combination analgesic"},
+  "mersyndol":{g:"paracetamol + codeine + doxylamine",c:"Opioid combination analgesic"},
+  "durogesic":{g:"fentanyl (patch)",c:"Opioid (transdermal)"},
+  "denpax":{g:"fentanyl (patch)",c:"Opioid (transdermal)"},
+  "norspan":{g:"buprenorphine (patch)",c:"Opioid (transdermal)"},
+  "sublocade":{g:"buprenorphine (depot)",c:"Opioid substitution"},
+  "suboxone":{g:"buprenorphine + naloxone",c:"Opioid substitution"},
+  "subutex":{g:"buprenorphine",c:"Opioid substitution"},
+  "biodone":{g:"methadone (liquid)",c:"Opioid substitution"},
+  "lyrica":{g:"pregabalin",c:"Gabapentinoid (also antiepileptic)"},
+  "lyzalon":{g:"pregabalin",c:"Gabapentinoid"},
+  "neurontin":{g:"gabapentin",c:"Gabapentinoid (also antiepileptic)"},
+  "gantin":{g:"gabapentin",c:"Gabapentinoid"},
+  /* ---- Gout / rheum ---- */
+  "zyloprim":{g:"allopurinol",c:"Xanthine oxidase inhibitor"},
+  "progout":{g:"allopurinol",c:"Xanthine oxidase inhibitor"},
+  "adenuric":{g:"febuxostat",c:"Xanthine oxidase inhibitor",n:"Xanthine oxidase inhibitor — manage as for allopurinol (continue). Not separately listed."},
+  "colgout":{g:"colchicine",c:"Gout (anti-inflammatory)"},
+  "lengout":{g:"colchicine",c:"Gout (anti-inflammatory)"},
+  "plaquenil":{g:"hydroxychloroquine",c:"DMARD (antimalarial)"},
+  "arava":{g:"leflunomide",c:"DMARD"},
+  "benemid":{g:"probenecid",c:"Uricosuric"},
+  /* ---- Urology / BPH ---- */
+  "flomaxtra":{g:"tamsulosin",c:"Alpha-1 blocker"},
+  "duodart":{g:"dutasteride + tamsulosin",c:"5-alpha-reductase inhibitor + alpha-1 blocker"},
+  "avodart":{g:"dutasteride",c:"5-alpha-reductase inhibitor"},
+  "proscar":{g:"finasteride",c:"5-alpha-reductase inhibitor"},
+  "propecia":{g:"finasteride",c:"5-alpha-reductase inhibitor (alopecia)"},
+  "xatral":{g:"alfuzosin",c:"Alpha-1 blocker"},
+  "urorec":{g:"silodosin",c:"Alpha-1 blocker"},
+  "vesicare":{g:"solifenacin",c:"Anticholinergic (bladder)"},
+  "ditropan":{g:"oxybutynin",c:"Anticholinergic (bladder)"},
+  "oxytrol":{g:"oxybutynin (patch)",c:"Anticholinergic (bladder)"},
+  "detrusitol":{g:"tolterodine",c:"Anticholinergic (bladder)"},
+  "enablex":{g:"darifenacin",c:"Anticholinergic (bladder)"},
+  "betmiga":{g:"mirabegron",c:"Beta-3 agonist (bladder)"},
+  "minirin":{g:"desmopressin",c:"Vasopressin analogue"},
+  /* ---- ED / PDE5 ---- */
+  "viagra":{g:"sildenafil",c:"PDE-5 inhibitor"},
+  "cialis":{g:"tadalafil",c:"PDE-5 inhibitor"},
+  "levitra":{g:"vardenafil",c:"PDE-5 inhibitor",n:"PDE-5 inhibitor — manage as for sildenafil/tadalafil. Not separately listed."},
+  /* ---- Respiratory ---- */
+  "ventolin":{g:"salbutamol",c:"Short-acting beta-2 agonist (SABA)"},
+  "asmol":{g:"salbutamol",c:"Short-acting beta-2 agonist (SABA)"},
+  "airomir":{g:"salbutamol",c:"Short-acting beta-2 agonist (SABA)"},
+  "bricanyl":{g:"terbutaline",c:"Short-acting beta-2 agonist (SABA)"},
+  "serevent":{g:"salmeterol",c:"Long-acting beta-2 agonist (LABA)"},
+  "onbrez":{g:"indacaterol",c:"Long-acting beta-2 agonist (LABA)"},
+  "atrovent":{g:"ipratropium",c:"Short-acting antimuscarinic (SAMA)"},
+  "spiriva":{g:"tiotropium",c:"Long-acting antimuscarinic (LAMA)"},
+  "seebri":{g:"glycopyrronium",c:"Long-acting antimuscarinic (LAMA)"},
+  "bretaris":{g:"aclidinium",c:"Long-acting antimuscarinic (LAMA)"},
+  "incruse":{g:"umeclidinium",c:"Long-acting antimuscarinic (LAMA)"},
+  "flixotide":{g:"fluticasone",c:"Inhaled corticosteroid (ICS)"},
+  "pulmicort":{g:"budesonide",c:"Inhaled corticosteroid (ICS)"},
+  "qvar":{g:"beclometasone",c:"Inhaled corticosteroid (ICS)"},
+  "alvesco":{g:"ciclesonide",c:"Inhaled corticosteroid (ICS)"},
+  "symbicort":{g:"budesonide + formoterol",c:"Inhaled corticosteroid + LABA"},
+  "seretide":{g:"fluticasone + salmeterol",c:"Inhaled corticosteroid + LABA"},
+  "breo":{g:"fluticasone furoate + vilanterol",c:"Inhaled corticosteroid + LABA"},
+  "fostair":{g:"beclometasone + formoterol",c:"Inhaled corticosteroid + LABA"},
+  "flutiform":{g:"fluticasone + formoterol",c:"Inhaled corticosteroid + LABA"},
+  "dulera":{g:"mometasone + formoterol",c:"Inhaled corticosteroid + LABA"},
+  "anoro":{g:"umeclidinium + vilanterol",c:"LAMA + LABA"},
+  "ultibro":{g:"glycopyrronium + indacaterol",c:"LAMA + LABA"},
+  "spiolto":{g:"tiotropium + olodaterol",c:"LAMA + LABA"},
+  "brimica":{g:"aclidinium + formoterol",c:"LAMA + LABA"},
+  "trelegy":{g:"fluticasone + umeclidinium + vilanterol",c:"ICS + LAMA + LABA (triple)"},
+  "trimbow":{g:"beclometasone + glycopyrronium + formoterol",c:"ICS + LAMA + LABA (triple)"},
+  "breztri":{g:"budesonide + glycopyrronium + formoterol",c:"ICS + LAMA + LABA (triple)"},
+  "singulair":{g:"montelukast",c:"Leukotriene receptor antagonist"},
+  "lukair":{g:"montelukast",c:"Leukotriene receptor antagonist"},
+  "nuelin":{g:"theophylline",c:"Methylxanthine bronchodilator"},
+  /* ---- Antihistamines ---- */
+  "phenergan":{g:"promethazine",c:"Sedating antihistamine"},
+  "polaramine":{g:"dexchlorpheniramine",c:"Sedating antihistamine"},
+  "periactin":{g:"cyproheptadine",c:"Sedating antihistamine"},
+  "restavit":{g:"doxylamine",c:"Sedating antihistamine"},
+  "telfast":{g:"fexofenadine",c:"Less-sedating antihistamine"},
+  "fexotabs":{g:"fexofenadine",c:"Less-sedating antihistamine"},
+  "claratyne":{g:"loratadine",c:"Less-sedating antihistamine"},
+  "zyrtec":{g:"cetirizine",c:"Less-sedating antihistamine"},
+  "razene":{g:"cetirizine",c:"Less-sedating antihistamine"},
+  "aerius":{g:"desloratadine",c:"Less-sedating antihistamine"},
+  /* ---- Psychiatry: antidepressants ---- */
+  "lexapro":{g:"escitalopram",c:"SSRI antidepressant"},
+  "esipram":{g:"escitalopram",c:"SSRI antidepressant"},
+  "loxalate":{g:"escitalopram",c:"SSRI antidepressant"},
+  "cipramil":{g:"citalopram",c:"SSRI antidepressant"},
+  "celapram":{g:"citalopram",c:"SSRI antidepressant"},
+  "talam":{g:"citalopram",c:"SSRI antidepressant"},
+  "zoloft":{g:"sertraline",c:"SSRI antidepressant"},
+  "sertra":{g:"sertraline",c:"SSRI antidepressant"},
+  "eleva":{g:"sertraline",c:"SSRI antidepressant"},
+  "prozac":{g:"fluoxetine",c:"SSRI antidepressant"},
+  "lovan":{g:"fluoxetine",c:"SSRI antidepressant"},
+  "zactin":{g:"fluoxetine",c:"SSRI antidepressant"},
+  "aropax":{g:"paroxetine",c:"SSRI antidepressant"},
+  "paxtine":{g:"paroxetine",c:"SSRI antidepressant"},
+  "luvox":{g:"fluvoxamine",c:"SSRI antidepressant"},
+  "faverin":{g:"fluvoxamine",c:"SSRI antidepressant"},
+  "efexor":{g:"venlafaxine",c:"SNRI antidepressant"},
+  "effexor":{g:"venlafaxine",c:"SNRI antidepressant"},
+  "enlafax":{g:"venlafaxine",c:"SNRI antidepressant"},
+  "pristiq":{g:"desvenlafaxine",c:"SNRI antidepressant"},
+  "desfax":{g:"desvenlafaxine",c:"SNRI antidepressant"},
+  "cymbalta":{g:"duloxetine",c:"SNRI antidepressant"},
+  "andepra":{g:"duloxetine",c:"SNRI antidepressant"},
+  "joncia":{g:"milnacipran",c:"SNRI antidepressant"},
+  "endep":{g:"amitriptyline",c:"Tricyclic antidepressant"},
+  "tryptanol":{g:"amitriptyline",c:"Tricyclic antidepressant"},
+  "anafranil":{g:"clomipramine",c:"Tricyclic antidepressant"},
+  "tofranil":{g:"imipramine",c:"Tricyclic antidepressant"},
+  "allegron":{g:"nortriptyline",c:"Tricyclic antidepressant"},
+  "prothiaden":{g:"dosulepin",c:"Tricyclic antidepressant"},
+  "dothep":{g:"dosulepin",c:"Tricyclic antidepressant"},
+  "sinequan":{g:"doxepin",c:"Tricyclic antidepressant"},
+  "avanza":{g:"mirtazapine",c:"Other antidepressant (NaSSA)"},
+  "mirtazon":{g:"mirtazapine",c:"Other antidepressant (NaSSA)"},
+  "axit":{g:"mirtazapine",c:"Other antidepressant (NaSSA)"},
+  "tolvon":{g:"mianserin",c:"Other antidepressant"},
+  "valdoxan":{g:"agomelatine",c:"Other antidepressant (melatonergic)"},
+  "edronax":{g:"reboxetine",c:"Other antidepressant"},
+  "brintellix":{g:"vortioxetine",c:"Antidepressant (multimodal)"},
+  "aurorix":{g:"moclobemide",c:"MAOI (reversible)"},
+  "nardil":{g:"phenelzine",c:"MAOI (irreversible)"},
+  "parnate":{g:"tranylcypromine",c:"MAOI (irreversible)"},
+  /* ---- Psychiatry: antipsychotics / mood ---- */
+  "seroquel":{g:"quetiapine",c:"Antipsychotic"},
+  "delucon":{g:"quetiapine",c:"Antipsychotic"},
+  "syquet":{g:"quetiapine",c:"Antipsychotic"},
+  "zyprexa":{g:"olanzapine",c:"Antipsychotic"},
+  "ozin":{g:"olanzapine",c:"Antipsychotic"},
+  "risperdal":{g:"risperidone",c:"Antipsychotic"},
+  "rispa":{g:"risperidone",c:"Antipsychotic"},
+  "abilify":{g:"aripiprazole",c:"Antipsychotic"},
+  "abyraz":{g:"aripiprazole",c:"Antipsychotic"},
+  "invega":{g:"paliperidone",c:"Antipsychotic"},
+  "latuda":{g:"lurasidone",c:"Antipsychotic"},
+  "saphris":{g:"asenapine",c:"Antipsychotic"},
+  "solian":{g:"amisulpride",c:"Antipsychotic"},
+  "clopine":{g:"clozapine",c:"Antipsychotic"},
+  "clozaril":{g:"clozapine",c:"Antipsychotic"},
+  "serenace":{g:"haloperidol",c:"Antipsychotic"},
+  "haldol":{g:"haloperidol",c:"Antipsychotic"},
+  "largactil":{g:"chlorpromazine",c:"Antipsychotic"},
+  "stelazine":{g:"trifluoperazine",c:"Antipsychotic"},
+  "fluanxol":{g:"flupentixol",c:"Antipsychotic"},
+  "clopixol":{g:"zuclopenthixol",c:"Antipsychotic"},
+  "lithicarb":{g:"lithium carbonate",c:"Mood stabiliser"},
+  "quilonum":{g:"lithium carbonate",c:"Mood stabiliser"},
+  /* ---- Benzodiazepines / sedatives ---- */
+  "valium":{g:"diazepam",c:"Benzodiazepine"},
+  "antenex":{g:"diazepam",c:"Benzodiazepine"},
+  "ducene":{g:"diazepam",c:"Benzodiazepine"},
+  "temaze":{g:"temazepam",c:"Benzodiazepine"},
+  "normison":{g:"temazepam",c:"Benzodiazepine"},
+  "temtabs":{g:"temazepam",c:"Benzodiazepine"},
+  "xanax":{g:"alprazolam",c:"Benzodiazepine"},
+  "kalma":{g:"alprazolam",c:"Benzodiazepine"},
+  "alprax":{g:"alprazolam",c:"Benzodiazepine"},
+  "serepax":{g:"oxazepam",c:"Benzodiazepine"},
+  "alepam":{g:"oxazepam",c:"Benzodiazepine"},
+  "murelax":{g:"oxazepam",c:"Benzodiazepine"},
+  "mogadon":{g:"nitrazepam",c:"Benzodiazepine"},
+  "alodorm":{g:"nitrazepam",c:"Benzodiazepine"},
+  "rivotril":{g:"clonazepam",c:"Benzodiazepine"},
+  "paxam":{g:"clonazepam",c:"Benzodiazepine"},
+  "ativan":{g:"lorazepam",c:"Benzodiazepine"},
+  "frisium":{g:"clobazam",c:"Benzodiazepine"},
+  "hypnodorm":{g:"flunitrazepam",c:"Benzodiazepine"},
+  "stilnox":{g:"zolpidem",c:"Z-drug hypnotic"},
+  "imovane":{g:"zopiclone",c:"Z-drug hypnotic"},
+  "imrest":{g:"zopiclone",c:"Z-drug hypnotic"},
+  "circadin":{g:"melatonin (modified release)",c:"Melatonin"},
+  /* ---- Stimulants / addiction ---- */
+  "ritalin":{g:"methylphenidate",c:"Psychostimulant"},
+  "concerta":{g:"methylphenidate (modified release)",c:"Psychostimulant"},
+  "vyvanse":{g:"lisdexamfetamine",c:"Psychostimulant"},
+  "dexamphetamine":{g:"dexamfetamine",c:"Psychostimulant"},
+  "modavigil":{g:"modafinil",c:"Non-amphetamine psychostimulant"},
+  "modafin":{g:"modafinil",c:"Non-amphetamine psychostimulant"},
+  "duromine":{g:"phentermine",c:"Appetite suppressant (sympathomimetic)"},
+  "metermine":{g:"phentermine",c:"Appetite suppressant (sympathomimetic)"},
+  "champix":{g:"varenicline",c:"Smoking cessation"},
+  "zyban":{g:"bupropion",c:"Smoking cessation / antidepressant"},
+  "nicabate":{g:"nicotine replacement",c:"Smoking cessation (NRT)"},
+  "revia":{g:"naltrexone",c:"Opioid antagonist"},
+  /* ---- Neurology: antiepileptics / Parkinson's ---- */
+  "epilim":{g:"sodium valproate",c:"Antiepileptic"},
+  "valpro":{g:"sodium valproate",c:"Antiepileptic"},
+  "tegretol":{g:"carbamazepine",c:"Antiepileptic"},
+  "teril":{g:"carbamazepine",c:"Antiepileptic"},
+  "trileptal":{g:"oxcarbazepine",c:"Antiepileptic"},
+  "lamictal":{g:"lamotrigine",c:"Antiepileptic"},
+  "lamidus":{g:"lamotrigine",c:"Antiepileptic"},
+  "keppra":{g:"levetiracetam",c:"Antiepileptic"},
+  "kepcet":{g:"levetiracetam",c:"Antiepileptic"},
+  "dilantin":{g:"phenytoin",c:"Antiepileptic"},
+  "topamax":{g:"topiramate",c:"Antiepileptic"},
+  "epitomax":{g:"topiramate",c:"Antiepileptic"},
+  "vimpat":{g:"lacosamide",c:"Antiepileptic"},
+  "briviact":{g:"brivaracetam",c:"Antiepileptic"},
+  "zonegran":{g:"zonisamide",c:"Antiepileptic"},
+  "sabril":{g:"vigabatrin",c:"Antiepileptic"},
+  "fycompa":{g:"perampanel",c:"Antiepileptic"},
+  "madopar":{g:"levodopa + benserazide",c:"Parkinson's (dopaminergic)"},
+  "sinemet":{g:"levodopa + carbidopa",c:"Parkinson's (dopaminergic)"},
+  "kinson":{g:"levodopa + carbidopa",c:"Parkinson's (dopaminergic)"},
+  "stalevo":{g:"levodopa + carbidopa + entacapone",c:"Parkinson's (dopaminergic)"},
+  "sifrol":{g:"pramipexole",c:"Parkinson's (dopamine agonist)"},
+  "simipex":{g:"pramipexole",c:"Parkinson's (dopamine agonist)"},
+  "requip":{g:"ropinirole",c:"Parkinson's (dopamine agonist)"},
+  "repreve":{g:"ropinirole",c:"Parkinson's (dopamine agonist)"},
+  "neupro":{g:"rotigotine (patch)",c:"Parkinson's (dopamine agonist)"},
+  "apomine":{g:"apomorphine",c:"Parkinson's (dopamine agonist)"},
+  "comtan":{g:"entacapone",c:"Parkinson's (COMT inhibitor)"},
+  "azilect":{g:"rasagiline",c:"Parkinson's (MAO-B inhibitor)"},
+  "xadago":{g:"safinamide",c:"Parkinson's (MAO-B inhibitor)"},
+  "symmetrel":{g:"amantadine",c:"Parkinson's / antiviral"},
+  "aricept":{g:"donepezil",c:"Anticholinesterase (Alzheimer's)"},
+  "exelon":{g:"rivastigmine",c:"Anticholinesterase (Alzheimer's)"},
+  "reminyl":{g:"galantamine",c:"Anticholinesterase (Alzheimer's)"},
+  "ebixa":{g:"memantine",c:"NMDA antagonist (Alzheimer's)",n:"NMDA antagonist for dementia — generally continued. Not separately listed."},
+  "mestinon":{g:"pyridostigmine",c:"Anticholinesterase (myasthenia)"},
+  "serc":{g:"betahistine",c:"Vestibular (histamine analogue)"},
+  "sandomigran":{g:"pizotifen",c:"Migraine prophylaxis"},
+  /* ---- Bone / endocrine ---- */
+  "fosamax":{g:"alendronate",c:"Bisphosphonate"},
+  "alendro":{g:"alendronate",c:"Bisphosphonate"},
+  "actonel":{g:"risedronate",c:"Bisphosphonate"},
+  "aclasta":{g:"zoledronic acid",c:"Bisphosphonate (IV)"},
+  "bonviva":{g:"ibandronic acid",c:"Bisphosphonate"},
+  "prolia":{g:"denosumab",c:"RANKL inhibitor (osteoporosis)",n:"6-monthly SC injection — generally continued; timing led by treating team. Not separately listed."},
+  "xgeva":{g:"denosumab",c:"RANKL inhibitor (oncology dose)",n:"Denosumab (oncology) — managed by treating team. Not separately listed."},
+  "evista":{g:"raloxifene",c:"SERM",n:"SERM — VTE risk; consider withholding before higher-risk surgery (see card)."},
+  "sensipar":{g:"cinacalcet",c:"Calcimimetic"},
+  "regpara":{g:"cinacalcet",c:"Calcimimetic"},
+  "ostelin":{g:"colecalciferol (vitamin D)",c:"Vitamin D"},
+  "caltrate":{g:"calcium carbonate",c:"Calcium supplement"},
+  "rocaltrol":{g:"calcitriol",c:"Active vitamin D"},
+  /* ---- Steroids ---- */
+  "panafcort":{g:"prednisone",c:"Oral corticosteroid"},
+  "panafcortelone":{g:"prednisolone",c:"Oral corticosteroid"},
+  "redipred":{g:"prednisolone",c:"Oral corticosteroid"},
+  "predmix":{g:"prednisolone",c:"Oral corticosteroid"},
+  "solone":{g:"prednisolone",c:"Oral corticosteroid"},
+  "dexmethsone":{g:"dexamethasone",c:"Oral corticosteroid"},
+  "florinef":{g:"fludrocortisone",c:"Mineralocorticoid"},
+  "hysone":{g:"hydrocortisone",c:"Oral corticosteroid"},
+  /* ---- Immunosuppressants / biologics / DMARDs ---- */
+  "methoblastin":{g:"methotrexate",c:"Antimetabolite / DMARD"},
+  "ledertrexate":{g:"methotrexate",c:"Antimetabolite / DMARD"},
+  "imuran":{g:"azathioprine",c:"Immunosuppressant (antimetabolite)"},
+  "azamun":{g:"azathioprine",c:"Immunosuppressant (antimetabolite)"},
+  "neoral":{g:"ciclosporin",c:"Calcineurin inhibitor"},
+  "sandimmun":{g:"ciclosporin",c:"Calcineurin inhibitor"},
+  "prograf":{g:"tacrolimus",c:"Calcineurin inhibitor"},
+  "advagraf":{g:"tacrolimus (modified release)",c:"Calcineurin inhibitor"},
+  "cellcept":{g:"mycophenolate mofetil",c:"Immunosuppressant (antimetabolite)",n:"Antimetabolite immunosuppressant — manage with transplant/rheumatology team. Not separately listed."},
+  "myfortic":{g:"mycophenolate sodium",c:"Immunosuppressant (antimetabolite)",n:"Antimetabolite immunosuppressant — manage with treating team. Not separately listed."},
+  "rapamune":{g:"sirolimus",c:"mTOR inhibitor"},
+  "certican":{g:"everolimus",c:"mTOR inhibitor"},
+  "humira":{g:"adalimumab",c:"TNF-alpha antagonist (biologic)"},
+  "amgevita":{g:"adalimumab",c:"TNF-alpha antagonist (biologic)"},
+  "hadlima":{g:"adalimumab",c:"TNF-alpha antagonist (biologic)"},
+  "enbrel":{g:"etanercept",c:"TNF-alpha antagonist (biologic)"},
+  "remicade":{g:"infliximab",c:"TNF-alpha antagonist (biologic)"},
+  "inflectra":{g:"infliximab",c:"TNF-alpha antagonist (biologic)"},
+  "renflexis":{g:"infliximab",c:"TNF-alpha antagonist (biologic)"},
+  "simponi":{g:"golimumab",c:"TNF-alpha antagonist (biologic)"},
+  "cimzia":{g:"certolizumab",c:"TNF-alpha antagonist (biologic)"},
+  "actemra":{g:"tocilizumab",c:"Cytokine modulator (IL-6)"},
+  "orencia":{g:"abatacept",c:"Cytokine modulator (T-cell)"},
+  "kineret":{g:"anakinra",c:"Cytokine modulator (IL-1)"},
+  "benlysta":{g:"belimumab",c:"Cytokine modulator (BLyS)"},
+  "olumiant":{g:"baricitinib",c:"JAK inhibitor"},
+  "xeljanz":{g:"tofacitinib",c:"JAK inhibitor"},
+  "rinvoq":{g:"upadacitinib",c:"JAK inhibitor"},
+  "otezla":{g:"apremilast",c:"PDE-4 inhibitor (biologic-class)"},
+  "stelara":{g:"ustekinumab",c:"Biologic (IL-12/23)"},
+  "cosentyx":{g:"secukinumab",c:"Biologic (IL-17)"},
+  "taltz":{g:"ixekizumab",c:"Biologic (IL-17)"},
+  "tremfya":{g:"guselkumab",c:"Biologic (IL-23)"},
+  "skyrizi":{g:"risankizumab",c:"Biologic (IL-23)"},
+  /* ---- Oncology / hormonal ---- */
+  "nolvadex":{g:"tamoxifen",c:"SERM (antineoplastic)"},
+  "genox":{g:"tamoxifen",c:"SERM (antineoplastic)"},
+  "arimidex":{g:"anastrozole",c:"Aromatase inhibitor"},
+  "femara":{g:"letrozole",c:"Aromatase inhibitor"},
+  "aromasin":{g:"exemestane",c:"Aromatase inhibitor"},
+  "cosudex":{g:"bicalutamide",c:"Anti-androgen"},
+  "xtandi":{g:"enzalutamide",c:"Anti-androgen"},
+  "erleada":{g:"apalutamide",c:"Anti-androgen"},
+  "nubeqa":{g:"darolutamide",c:"Anti-androgen"},
+  "zytiga":{g:"abiraterone",c:"Hormonal antineoplastic"},
+  "glivec":{g:"imatinib",c:"Kinase inhibitor"},
+  "tasigna":{g:"nilotinib",c:"Kinase inhibitor"},
+  "sprycel":{g:"dasatinib",c:"Kinase inhibitor"},
+  "tagrisso":{g:"osimertinib",c:"Kinase inhibitor"},
+  "ibrance":{g:"palbociclib",c:"Kinase inhibitor (CDK4/6)"},
+  "kisqali":{g:"ribociclib",c:"Kinase inhibitor (CDK4/6)"},
+  "lynparza":{g:"olaparib",c:"PARP inhibitor (cytotoxic)"},
+  "venclexta":{g:"venetoclax",c:"BCL-2 inhibitor (cytotoxic)"},
+  "xeloda":{g:"capecitabine",c:"Antimetabolite (cytotoxic)"},
+  "revlimid":{g:"lenalidomide",c:"Thalidomide analogue"},
+  "pomalyst":{g:"pomalidomide",c:"Thalidomide analogue"},
+  /* ---- Hormones / contraceptive / HRT ---- */
+  "premarin":{g:"conjugated estrogens",c:"Hormone replacement therapy"},
+  "estrofem":{g:"estradiol",c:"Hormone replacement therapy"},
+  "progynova":{g:"estradiol",c:"Hormone replacement therapy"},
+  "sandrena":{g:"estradiol (gel)",c:"Hormone replacement therapy"},
+  "estradot":{g:"estradiol (patch)",c:"Hormone replacement therapy"},
+  "climara":{g:"estradiol (patch)",c:"Hormone replacement therapy"},
+  "livial":{g:"tibolone",c:"Hormone replacement therapy"},
+  "duavive":{g:"bazedoxifene + conjugated estrogens",c:"Hormone replacement therapy"},
+  "provera":{g:"medroxyprogesterone",c:"Progestogen"},
+  "primolut":{g:"norethisterone",c:"Progestogen"},
+  "visanne":{g:"dienogest",c:"Progestogen"},
+  "implanon":{g:"etonogestrel (implant)",c:"Progestogen contraceptive"},
+  "mirena":{g:"levonorgestrel (IUD)",c:"Progestogen contraceptive"},
+  "depo-provera":{g:"medroxyprogesterone (depot)",c:"Progestogen contraceptive"},
+  "microlut":{g:"levonorgestrel",c:"Progestogen contraceptive"},
+  "noriday":{g:"norethisterone",c:"Progestogen contraceptive"},
+  "levlen":{g:"levonorgestrel + ethinylestradiol",c:"Combined oral contraceptive"},
+  "microgynon":{g:"levonorgestrel + ethinylestradiol",c:"Combined oral contraceptive"},
+  "yaz":{g:"drospirenone + ethinylestradiol",c:"Combined oral contraceptive"},
+  "yasmin":{g:"drospirenone + ethinylestradiol",c:"Combined oral contraceptive"},
+  "brenda":{g:"cyproterone + ethinylestradiol",c:"Combined oral contraceptive"},
+  "diane":{g:"cyproterone + ethinylestradiol",c:"Combined oral contraceptive"},
+  /* ---- Misc ---- */
+  "lucrin":{g:"leuprorelin",c:"GnRH analogue",n:"GnRH analogue — managed by treating team. Not separately listed."},
+  "zoladex":{g:"goserelin",c:"GnRH analogue",n:"GnRH analogue — managed by treating team. Not separately listed."},
+  "eprex":{g:"epoetin alfa",c:"Erythropoietin agonist"},
+  "aranesp":{g:"darbepoetin alfa",c:"Erythropoietin agonist"},
+  "neorecormon":{g:"epoetin beta",c:"Erythropoietin agonist"},
+  "mircera":{g:"methoxy polyethylene glycol-epoetin beta",c:"Erythropoietin agonist"},
+  "resonium":{g:"sodium/calcium polystyrene sulfonate",c:"Potassium binder"},
+  "cyklokapron":{g:"tranexamic acid",c:"Antifibrinolytic"},
+  "konakion":{g:"vitamin K (phytomenadione)",c:"Vitamin K"},
+  "diamox":{g:"acetazolamide",c:"Carbonic anhydrase inhibitor"},
+  "tilade":{g:"nedocromil",c:"Mast cell stabiliser"}
+};
+
+
+
+/* ===== TRADE / BRAND NAME FINDER ===== */
+const TRADE_SALT = /^(sodium|calcium|potassium|magnesium|hydrochloride|sulfate|sulphate|acid|oral|liquid|patch|depot|gel|modified|release|controlled|immediate|biphasic|conjugated|estrogens|hydroxide|carbonate|inj|sc)$/;
+
+/* Split a generic into its active-ingredient terms (keeps parentheticals) */
+function ingredientTerms(generic) {
+  return generic.toLowerCase().split(/\s*\+\s*/).map(s => s.trim()).filter(Boolean);
+}
+
+/* Score how well one ingredient term matches a drug card.
+   Name/class matches outrank keyword-only matches; a full match that
+   includes a disambiguating parenthetical (e.g. "aspirin (antiplatelet)") wins outright. */
+function termLevel(card, term) {
+  const nameClass = ((card.querySelector('.drug-name') ? card.querySelector('.drug-name').textContent : '') + ' ' +
+                     (card.querySelector('.drug-class') ? card.querySelector('.drug-class').textContent : '')).toLowerCase();
+  const kw = (card.dataset.kw || '').toLowerCase();
+  const raw = term;
+  const stripped = term.replace(/\([^)]*\)/g, '').trim();
+  if (raw.includes('(') && nameClass.includes(raw)) return 5;
+  if (stripped && nameClass.includes(stripped)) return 3;
+  const words = stripped.split(/\s+/).filter(w => w.length >= 5 && !TRADE_SALT.test(w)).sort((a, b) => b.length - a.length);
+  for (const w of words) { if (nameClass.includes(w)) return 2; }
+  if (stripped && kw.includes(stripped)) return 1;
+  for (const w of words) { if (kw.includes(w)) return 1; }
+  return 0;
+}
+
+/* Find the best-matching Hold/Continue drug card for a generic, or null */
+function findMedCard(generic) {
+  const cards = [...document.querySelectorAll('#med-list .drug-card')];
+  const terms = ingredientTerms(generic);
+  let best = null, bestScore = 0;
+  for (const c of cards) {
+    let s = 0;
+    for (const t of terms) s += termLevel(c, t);
+    if (s > bestScore) { bestScore = s; best = c; }
+  }
+  return bestScore > 0 ? best : null;
+}
+
+/* Resolve a query to scored brand matches (also matches generic names) */
+function brandToGenerics(q) {
+  q = q.toLowerCase().trim();
+  if (q.length < 2 || typeof TRADE_NAMES === 'undefined') return [];
+  const res = [];
+  for (const b in TRADE_NAMES) {
+    const e = TRADE_NAMES[b];
+    let score = 0;
+    if (b === q) score = 5;
+    else if (b.startsWith(q)) score = 4;
+    else if (q.length >= 3 && b.includes(q)) score = 3;
+    else if (e.g.toLowerCase().startsWith(q)) score = 2;
+    else if (q.length >= 3 && e.g.toLowerCase().includes(q)) score = 1;
+    if (score) res.push({ brand: b, g: e.g, c: e.c, n: e.n || '', score });
+  }
+  res.sort((a, b) => b.score - a.score || a.brand.localeCompare(b.brand));
+  return res;
+}
+
+function tradeOpenCard(generic) {
+  const c = findMedCard(generic);
+  go('meds');
+  const inp = document.getElementById('med-search');
+  if (inp) { inp.value = ''; filterMeds(); }
+  if (c) {
+    c.scrollIntoView({ block: 'center' });
+    c.style.transition = 'box-shadow .2s';
+    c.style.boxShadow = '0 0 0 2px var(--accent)';
+    setTimeout(() => { c.style.boxShadow = ''; }, 1800);
+  }
+}
+
+function tradeLookup() {
+  const q = document.getElementById('trade-search').value.trim();
+  const out = document.getElementById('trade-results');
+  if (q.length < 2) {
+    out.innerHTML = '<div style="color:var(--text3);font-size:13px;padding:8px 2px">Start typing a brand name above…</div>';
+    return;
+  }
+  const matches = brandToGenerics(q).slice(0, 30);
+  if (!matches.length) {
+    out.innerHTML = '<div class="alert alert-amber">No brand matching “' + q.replace(/</g, '&lt;') + '” found. Check spelling, or confirm with pharmacy / the dispensing label. Generic names can be searched on the <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="meds">Hold / Continue page</span>.</div>';
+    bindJumps();
+    return;
+  }
+  const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
+  out.innerHTML = matches.map(m => {
+    const card = findMedCard(m.g);
+    let advice = '';
+    if (card) {
+      const pill = card.querySelector('.pill');
+      const action = card.querySelector('.drug-action');
+      const grp = card.querySelector('.drug-name');
+      advice += '<div style="margin-top:8px;display:flex;align-items:flex-start;gap:8px">' +
+        (pill ? '<span class="' + pill.className + '" style="margin-top:1px">' + pill.textContent + '</span>' : '') +
+        '<div style="font-size:12.5px;color:var(--text2)">' +
+        (grp ? '<strong>' + grp.textContent + '</strong> — ' : '') +
+        (action ? action.innerHTML : '') +
+        ' <span style="cursor:pointer;color:var(--accent);text-decoration:underline;white-space:nowrap" onclick="tradeOpenCard(\'' + m.g.replace(/'/g, "\\'") + '\')">view card →</span></div></div>';
+    }
+    if (m.n) {
+      advice += '<div class="alert alert-blue" style="margin:8px 0 0;font-size:12.5px">' + m.n + '</div>';
+    }
+    if (!card && !m.n) {
+      advice = '<div style="margin-top:8px;font-size:12.5px;color:var(--text3)">Not separately listed on the Hold/Continue page — apply the principles for its class and confirm if unsure.</div>';
+    }
+    return '<div class="drug-card" style="flex-direction:column;align-items:stretch">' +
+      '<div style="display:flex;align-items:baseline;gap:10px;flex-wrap:wrap">' +
+      '<span class="drug-name" style="font-size:15px">' + cap(m.brand) + '</span>' +
+      '<span style="color:var(--text3)">→</span>' +
+      '<span style="font-size:14px;font-weight:600;color:var(--accent)">' + m.g + '</span>' +
+      '<span class="pill pill-teal" style="margin-left:auto">' + m.c + '</span>' +
+      '</div>' + advice + '</div>';
+  }).join('');
+  bindJumps();
+}
+
 /* GLOBAL SEARCH — index all card titles, list items, table rows */
 let searchIndex = null;
 function buildIndex() {
   searchIndex = [];
-  const titles = {home:'Dashboard',rcri:'RCRI',dasi:'DASI / METs',chads:'CHA₂DS₂-VASc',stopbang:'STOP-BANG',asa:'ASA status',childpugh:'Child-Pugh',cardiac:'Cardiac',hypertension:'Hypertension',diabetes:'Diabetes',respiratory:'Respiratory',renal:'Renal / Hepatic',obesity:'Obesity / OSA',frailty:'Frailty',meds:'Medications',anticoag:'Anticoagulation',glp1:'GLP-1 / SGLT2i',fasting:'Fasting',bloods:'Pre-op bloods (NG45)',investigations:'Investigations',medtiming:'Medication timing',vte:'VTE prophylaxis',referral:'Chart summary',localpathways:'Local pathways (LMH)',highrisk:'High-risk operations',links:'Links & forms',anaemia:'Anaemia / PBM',penfast:'PEN-FAST',opioids:'Opioids / OST',culturalsafety:'Cultural safety'};
+  const titles = {home:'Dashboard',rcri:'RCRI',dasi:'DASI / METs',chads:'CHA₂DS₂-VASc',stopbang:'STOP-BANG',asa:'ASA status',childpugh:'Child-Pugh',cardiac:'Cardiac',hypertension:'Hypertension',diabetes:'Diabetes',respiratory:'Respiratory',renal:'Renal / Hepatic',obesity:'Obesity / OSA',frailty:'Frailty',tradefinder:'Trade name finder',meds:'Medications',anticoag:'Anticoagulation',glp1:'GLP-1 / SGLT2i',fasting:'Fasting',bloods:'Pre-op bloods (NG45)',investigations:'Investigations',medtiming:'Medication timing',vte:'VTE prophylaxis',referral:'Chart summary',localpathways:'Local pathways (LMH)',highrisk:'High-risk operations',links:'Links & forms',anaemia:'Anaemia / PBM',penfast:'PEN-FAST',opioids:'Opioids / OST',culturalsafety:'Cultural safety'};
   pages.forEach(p => {
     const id = p.id.replace('page-','');
     const label = titles[id] || id;
@@ -2334,6 +3455,14 @@ function buildIndex() {
       if (txt.length > 8) searchIndex.push({page:id, label, txt});
     });
   });
+  // Index trade names so the global search resolves a brand straight to its generic
+  if (typeof TRADE_NAMES !== 'undefined') {
+    for (const b in TRADE_NAMES) {
+      const e = TRADE_NAMES[b];
+      const brand = b.charAt(0).toUpperCase() + b.slice(1);
+      searchIndex.push({page:'tradefinder', label:'Trade name', txt: brand + ' → ' + e.g + ' (' + e.c + ')'});
+    }
+  }
 }
 function globalSearch() {
   if (!searchIndex) buildIndex();
@@ -2429,8 +3558,8 @@ function calcMedTiming() {
       note:'Withhold the 2 days before + day of surgery (ADS-ANZCA 2022). Fingerprick ketones on day of surgery.', col:'var(--amber)',
       patient:'SGLT2 DIABETES TABLET (e.g. Jardiance, Forxiga): take your LAST dose in the MORNING (AM) of {d}. Do NOT take it on the 2 days before surgery or on the day of surgery.' },
     glp1_liquid: { label:'GLP-1 — clear-fluid diet from', lastDose:-1, time:'from the morning (AM)', dateLabel:'Clear fluids from',
-      note:'Clear-fluid diet for the 24h pre-op. CONTINUE the GLP-1 medicine itself (2025 guidance). Sip Till Send does NOT apply.', col:'var(--teal)',
-      patient:'GLP-1 MEDICINE (e.g. Ozempic, Mounjaro, Trulicity, Wegovy): KEEP taking it as normal. BUT from the MORNING (AM) of {d} have CLEAR FLUIDS ONLY (water, clear juice, black tea or coffee — no milk, no food) until your fasting time.' },
+      note:'Clear-fluid diet for the 24h pre-op. CONTINUE the GLP-1 medicine itself (2025 guidance). Excluded from Sip Til Send; NBM from 2 h pre-op (OWI05728).', col:'var(--teal)',
+      patient:'GLP-1 MEDICINE (e.g. Ozempic, Mounjaro, Trulicity, Wegovy): KEEP taking it as normal. BUT from the MORNING (AM) of {d} have CLEAR FLUIDS ONLY (water, clear apple juice, black tea or coffee, clear sports drinks, clear broth, plain jelly — no milk, no food), then from 2 HOURS before your operation have NOTHING at all.' },
     ocp:         { label:'Combined OCP / systemic HRT', lastDose:-28, time:'usual dose time',
       note:'Stop 4 weeks before major surgery with prolonged immobility. Discuss alternative contraception.', col:'var(--purple)',
       patient:'COMBINED PILL / HRT: take your LAST dose on {d}, then stop until you are fully mobile after surgery. Use alternative contraception in the meantime.' },
@@ -2474,7 +3603,7 @@ function calcMedTiming() {
   const cellState = (k, off) => {
     const cfg = configs[k];
     if (k === 'cpap') return off === 0 ? { t:'Bring it in', c:'#1d4ed8', bg:'#dbeafe' } : { t:'', c:'#999', bg:'#fff' };
-    if (k === 'glp1_liquid') return off < cfg.lastDose ? { t:'Take', c:'#166534', bg:'#dcfce7' } : { t:'Take + clear fluids', c:'#92400e', bg:'#fef3c7' };
+    if (k === 'glp1_liquid') return off < cfg.lastDose ? { t:'Take', c:'#166534', bg:'#dcfce7' } : (off === 0 ? { t:'CLEAR FLUIDS ONLY until fasting time', c:'#92400e', bg:'#fef3c7' } : { t:'Take + clear fluids', c:'#92400e', bg:'#fef3c7' });
     if (k === 'metformin_contrast') return off === 0 ? { t:'Hold if kidneys low', c:'#92400e', bg:'#fef3c7' } : { t:'Take', c:'#166534', bg:'#dcfce7' };
     if (off < cfg.lastDose) return { t:'Take', c:'#166534', bg:'#dcfce7' };
     if (off === cfg.lastDose) return { t:'LAST DOSE', c:'#166534', bg:'#bbf7d0', b:1 };
@@ -2526,7 +3655,7 @@ function printPatientSheet() {
     '<li>You may eat a light meal up to <strong>6 hours</strong> before your operation, then nothing to eat (no food, milk, chewing gum or lollies).</li>' +
     (window.psData.glp1
       ? '<li>Because you use a GLP-1 medicine: <strong>clear fluids only for the 24 hours before surgery</strong>, and stop all fluids 2 hours before your admission time unless the hospital tells you otherwise.</li>'
-      : '<li>You may drink <strong>clear fluids</strong> (water, clear juice, black tea/coffee — NOT milk) until you are called to theatre (Sip Till Send), unless the hospital tells you otherwise.</li>') +
+      : '<li>You may sip <strong>approved clear liquids</strong> (water, diluted cordial, black tea/coffee — no milk or sugar; up to 200 mL per hour) until you are called to theatre (Sip Til Send), unless the hospital tells you otherwise. No sweets, lollies or chewing gum.</li>') +
     '<li>Take any medicines you have been told to continue with a small sip of water.</li></ul>';
   document.body.classList.add('print-sheet');
   window.print();
@@ -2614,6 +3743,7 @@ function calcAnaemia(){
     else if(!isNaN(fer)&&fer<=100&&!isNaN(tsat)&&tsat<20){ pattern='Functional iron deficiency (ferritin 30–100, TSAT &lt;20%) → IV iron; look for inflammation/source.'; }
     else if(!isNaN(fer)&&fer>100&&!isNaN(tsat)&&tsat>=20){ pattern='Iron-replete — consider anaemia of chronic disease, renal cause, B12/folate, marrow. Check B12/folate/renal/CRP.'; }
     else if(!isNaN(tsat)&&tsat<20){ pattern='TSAT &lt;20% suggests iron deficiency (absolute or functional) — treat with iron &amp; recheck ferritin with CRP.'; }
+    else if(!isNaN(fer)&&fer>=30&&fer<=100){ pattern='Ferritin 30–100 with TSAT ≥20% (or TSAT unavailable) — indeterminate: check/repeat TSAT with CRP; treat as functional iron deficiency if inflammatory context.'; }
     if(pattern) lines.push(pattern);
   }
   if(anaemic){
@@ -2648,7 +3778,7 @@ function calcMini(){
   const add=(d,n)=>{const r=new Date(d);r.setDate(r.getDate()+n);return r;};
   const fmt=d=>d.toLocaleDateString('en-AU',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
   const m={ warfarin:{o:-6,t:'Last dose PM',n:'5 days off; check INR day before (target &lt;1.5).'},
-            apix:{o:-2,t:'Last dose PM',n:'Omit 1 full day (low-bleed) / 2 days (high). No bridging. Neuraxial: see ASRA 2025.'},
+            apix:{o:-2,t:'Last dose PM (low-bleed risk)',n:'Date shown = low-bleed (omit 1 full day). High-bleed: omit 2 days — use the full tool. No bridging. Neuraxial: see ASRA 2025.'},
             clopidogrel:{o:-6,t:'Last dose AM',n:'5 full days off. DAPT/stent: cardiology sign-off first.'},
             sglt2i:{o:-3,t:'Last dose AM',n:'Withhold 2 days before + day of surgery; ketones on day.'} }[miniDrug];
   const d=add(surg,m.o);
@@ -2658,6 +3788,81 @@ function calcMini(){
 }
 /* re-bind data-jump on dynamically inserted content */
 function bindJumps(){ document.querySelectorAll('[data-jump]').forEach(el => { if(!el._jb){ el._jb=true; el.addEventListener('click',()=>go(el.dataset.jump)); } }); }
+
+
+/* ================= ISSUE REPORTING =================
+   Sends via the user's mail client (mailto). No data leaves the browser
+   until the user presses send in Outlook. Nothing is stored or transmitted
+   by this file itself.
+   >>> CHECK THIS ADDRESS IS CORRECT BEFORE RELEASE <<< */
+const REPORT_EMAIL   = 'james.hartley@sa.gov.au';
+const REPORT_VERSION = 'v3.2 draft';
+
+(function () {
+  const fab     = document.getElementById('report-fab');
+  const overlay = document.getElementById('report-overlay');
+  const modal   = document.getElementById('report-modal');
+  const ctxBox  = document.getElementById('rm-context');
+  const text    = document.getElementById('rm-text');
+  const count   = document.getElementById('rm-count');
+  const sendBtn = document.getElementById('rm-send');
+  const cancel  = document.getElementById('rm-cancel');
+  if (!fab || !modal) return;
+  let lastFocus = null;
+
+  function currentPage() {
+    const nav = document.querySelector('.nav-item.active');
+    if (nav) return nav.textContent.trim();
+    const pg = document.querySelector('.page.active');
+    if (pg && pg.id) return pg.id.replace(/^page-/, '');
+    return 'Unknown page';
+  }
+  function stamp() {
+    const d = new Date(), pad = n => String(n).padStart(2, '0');
+    return pad(d.getDate()) + '/' + pad(d.getMonth() + 1) + '/' + d.getFullYear() +
+           ' ' + pad(d.getHours()) + ':' + pad(d.getMinutes());
+  }
+  let ctx = {};
+  function open() {
+    lastFocus = document.activeElement;
+    ctx = { page: currentPage(), version: REPORT_VERSION, when: stamp() };
+    ctxBox.textContent = 'Page: ' + ctx.page + '\nApp version: ' + ctx.version + '\nReported: ' + ctx.when;
+    ctxBox.style.whiteSpace = 'pre-line';
+    overlay.classList.add('open'); modal.classList.add('open');
+    text.value = ''; count.textContent = '0 / 1500'; sendBtn.disabled = true;
+    setTimeout(() => text.focus(), 30);
+  }
+  function close() {
+    overlay.classList.remove('open'); modal.classList.remove('open');
+    if (lastFocus) lastFocus.focus();
+  }
+  function send() {
+    const body =
+      'Issue report from the LMH Pre-Anaesthetic Clinic Reference\n\n' +
+      'Page:        ' + ctx.page + '\n' +
+      'App version: ' + ctx.version + '\n' +
+      'Reported:    ' + ctx.when + '\n\n' +
+      '--- Description ---\n' + text.value.trim() + '\n\n' +
+      '(Sent from the in-app Report an issue button. No patient identifiers should appear above.)';
+    const href = 'mailto:' + encodeURIComponent(REPORT_EMAIL) +
+      '?subject=' + encodeURIComponent('[PAC reference] Issue - ' + ctx.page + ' (' + ctx.version + ')') +
+      '&body=' + encodeURIComponent(body);
+    window.location.href = href;
+    close();
+  }
+  fab.addEventListener('click', open);
+  cancel.addEventListener('click', close);
+  overlay.addEventListener('click', close);
+  text.addEventListener('input', () => {
+    count.textContent = text.value.length + ' / 1500';
+    sendBtn.disabled = text.value.trim().length < 5;
+  });
+  sendBtn.addEventListener('click', send);
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && modal.classList.contains('open')) close();
+  });
+})();
+
 </script>
 </body>
 </html>
