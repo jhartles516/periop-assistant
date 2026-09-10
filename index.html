@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LMH Pre-Anaesthetic Clinic Reference — v4.11 draft</title>
+<title>LMH Pre-Anaesthetic Clinic Reference — v4.16 draft</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
@@ -386,7 +386,7 @@
   <div class="logo">
     <div class="logo-title">Pre-Anaesthetic Clinic</div>
     <div class="logo-sub">Lyell McEwin Hospital · NALHN</div>
-    <span class="logo-badge">SA HEALTH</span> <span class="logo-badge" style="background:rgba(230,162,60,0.22);color:#e6a23c">V4.11 DRAFT</span>
+    <span class="logo-badge">SA HEALTH</span> <span class="logo-badge" style="background:rgba(230,162,60,0.22);color:#e6a23c">V4.16 DRAFT</span>
   </div>
   <nav id="nav">
     <div class="nav-group">
@@ -403,6 +403,7 @@
       <div class="nav-item" data-page="renal"><span class="nav-dot" style="background:#a78bfa"></span><span>Renal / Hepatic</span></div>
       <div class="nav-item" data-page="anaemia"><span class="nav-dot" style="background:#c0392b"></span><span>Anaemia / IV iron <span class="nav-star" title="Backed by a NALHN policy document">★</span></span></div>
       <div class="nav-item" data-page="obesity"><span class="nav-dot" style="background:#f06fb0"></span><span>Obesity / OSA <span class="nav-star" title="Backed by a NALHN policy document">★</span></span></div>
+      <div class="nav-item" data-page="airway"><span class="nav-dot" style="background:#e6a23c"></span><span>Airway</span></div>
       <div class="nav-item" data-page="frailty"><span class="nav-dot" style="background:#8a91a0"></span><span>Frailty &amp; Elderly</span></div>
     </div>
     <div class="nav-group">
@@ -443,7 +444,7 @@
   <div class="rail-foot">
     <div class="rail-foot-txt">
       ANZCA PG07 2024 · ADS-ANZCA 2022 · ACC/AHA 2024 · ANZCA/ADS GLP-1 2025 · CHEST 2022 · ESAIC 2025 · ASRA 5th ed 2025 · CPOC/BSH anaemia 2024–25
-      <br><br><span style="color:#ec6a5e">⚠ Reference only — verify against local NALHN policy. Discuss complex cases with a senior anaesthetist.</span><br><br><span style="color:#8db8f7">v4.11 DRAFT · 3 Sep 2026 · Renal/hepatic re-sourced<br>Runs entirely in your browser — nothing entered is stored or transmitted.</span>
+      <br><br><span style="color:#ec6a5e">⚠ Reference only — verify against local NALHN policy. Discuss complex cases with a senior anaesthetist.</span><br><br><span style="color:#8db8f7">v4.16 DRAFT · 8 Sep 2026 · Airway page added<br>Runs entirely in your browser — nothing entered is stored or transmitted.</span>
     </div>
   </div>
 </aside>
@@ -733,7 +734,7 @@
   <!-- STOP-BANG -->
   <div id="page-stopbang" class="page">
     <div class="page-title">STOP-BANG — OSA screening</div>
-    <div class="page-sub">Score ≥3 = high risk for moderate–severe obstructive sleep apnoea. Document on the anaesthetic record and plan accordingly.</div>
+    <div class="page-sub">Chung 2008/2016 · SASM 2016 · SOBA 2015 — 0–2 low · 3–4 intermediate · ≥5 high probability of moderate–severe OSA. Document on the anaesthetic record and plan accordingly.</div>
     <div class="grid-2">
       <div class="calc-box">
         <div class="calc-row"><input type="checkbox" data-w="1" onchange="calcSB()"><label><strong>S</strong> — Snoring loudly (heard through a closed door) <span class="pts">+1</span></label></div>
@@ -752,8 +753,8 @@
         <div class="card-title">Action by risk band</div>
         <div class="table-wrap"><table><thead><tr><th>Score</th><th>Risk</th><th>Action</th></tr></thead><tbody>
           <tr><td>0–2</td><td><span class="pill pill-green">Low</span></td><td>Standard perioperative planning</td></tr>
-          <tr><td>3–4</td><td><span class="pill pill-amber">Intermediate</span></td><td>Document on the chart; CPAP if known OSA; consider sleep study for major elective</td></tr>
-          <tr><td>5–8</td><td><span class="pill pill-red">High</span></td><td>Full airway assessment; sleep study if time; specify post-op CPAP/monitoring plan &amp; hand over to the day-of-surgery anaesthetist</td></tr>
+          <tr><td>3–4</td><td><span class="pill pill-amber">Intermediate</span></td><td>Document; plan mitigation; no delay for sleep testing unless a red flag (SASM 2016)</td></tr>
+          <tr><td>5–8</td><td><span class="pill pill-red">High</span></td><td>Proceed as diagnosed OSA with mitigation, or sleep-physician referral if time; red flags → evaluate first; pOSAr ≥5 → monitored bed / Modbury HDU; hand over to the day-of anaesthetist</td></tr>
         </tbody></table></div>
         <div class="alert alert-amber" style="margin-top:12px;margin-bottom:0">OSA + GLP-1 agonist + obesity compounds aspiration and airway risk — see the GLP-1/SGLT2i and Obesity pages.</div>
       </div>
@@ -907,7 +908,7 @@
   <!-- HYPERTENSION -->
   <div id="page-hypertension" class="page">
     <div class="page-title">Hypertension — perioperative management</div>
-    <div class="page-sub">Association of Anaesthetists / BIHS 2026 (Anaesthesia 2026;81:402) · National Heart Foundation of Australia 2016 · ACC/AHA 2024 §6.2 · no NALHN or CALHN guideline</div>
+    <div class="page-sub">Association of Anaesthetists / BIHS 2026 (Anaesthesia 2026;81:402) · National Heart Foundation of Australia 2016 · ACC/AHA 2024 §6.2</div>
     <div class="tag-strip"><span class="source-badge">AoA / BIHS 2026</span><span class="source-badge">Heart Foundation 2016</span><span class="source-badge">ACC/AHA 2024</span><span class="source-badge">CALHN-GDE06093</span></div>
 
     <div class="alert alert-blue"><strong>No local guideline.</strong> Thresholds and clinic actions follow the Association of Anaesthetists / BIHS 2026 guideline (the update of the 2016 AAGBI document Australian pre-admission clinics have used); grades and the urgency / emergency definitions are the Heart Foundation's Australian classification. There is no evidence that delaying surgery to optimise blood pressure improves outcomes — the aim is to avoid unnecessary cancellation while catching the few who are unsafe.</div>
@@ -1036,7 +1037,7 @@
   <!-- RESPIRATORY -->
   <div id="page-respiratory" class="page">
     <div class="page-title">Respiratory disease</div>
-    <div class="page-sub">ANZCA PG07BP 2024 Appendix 3 (smoking) · COPD-X Plan 2024 (Lung Foundation Australia) · AoA / RCP / SfE 2020 (steroid cover) · CALHN-GDE06093 (inhalers) · no NALHN guideline</div>
+    <div class="page-sub">ANZCA PG07BP 2024 Appendix 3 (smoking) · COPD-X Plan 2024 (Lung Foundation Australia) · AoA / RCP / SfE 2020 (steroid cover) · CALHN-GDE06093 (inhalers)</div>
     <div class="tag-strip"><span class="source-badge">ANZCA PG07BP 2024</span><span class="source-badge">COPD-X 2024</span><span class="source-badge">AoA 2020 steroids</span><span class="source-badge">CALHN-GDE06093</span></div>
 
     <div class="grid-2">
@@ -1093,7 +1094,7 @@
   <!-- RENAL -->
   <div id="page-renal" class="page">
     <div class="page-title">Renal &amp; hepatic disease</div>
-    <div class="page-sub">ESAIC 2025 §R7 (CKD) &amp; R8.7 (cirrhosis coagulation) · Kidney Health Australia CKD handbook 5th ed 2024 · AGA 2019 surgical risk in cirrhosis (Northup) · NALHN OWI02488 / OWI01210 for drug rules · no NALHN guideline</div>
+    <div class="page-sub">ESAIC 2025 §R7 (CKD) &amp; R8.7 (cirrhosis coagulation) · Kidney Health Australia CKD handbook 5th ed 2024 · AGA 2019 surgical risk in cirrhosis (Northup) · NALHN OWI02488 / OWI01210 for drug rules</div>
     <div class="tag-strip"><span class="source-badge">ESAIC 2025</span><span class="source-badge">Kidney Health Australia 2024</span><span class="source-badge">AGA 2019</span><span class="source-badge">NALHN OWI02488</span></div>
 
     <div class="grid-2">
@@ -1151,34 +1152,146 @@
   <!-- OBESITY -->
   <div id="page-obesity" class="page">
     <div class="page-title">Obesity &amp; obstructive sleep apnoea</div>
-    <div class="page-sub">ESAIC 2024–25 · STOP-BANG · ANZCA PG07 2024 · NALHN SSI05003 Bariatric Patient Handling (12/2025)</div>
-    <div class="tag-strip"><span class="source-badge">ESAIC 2024–25</span><span class="source-badge">ANZCA PG07 2024</span><span class="source-badge">NALHN SSI05003</span></div>
-    <div class="alert alert-teal"><strong>Local bariatric pathway (LMH &amp; Modbury):</strong> "bariatric" = <strong>≥2 of: weight ≥120 kg · BMI &gt;40 · seated hip width &gt;50 cm</strong>. At pre-admission, measure height, weight, BMI and width (sagittal &amp; coronal). <strong>BMI &gt;45 → anaesthetic clinic review required.</strong> Flag via the Pre-Admission Advice to Booking Office Form → HOMER Alert; booking office notes equipment needs on the ORMIS list (Special Equipment column). Theatres need ≥24 h notice (referring institutions asked for 48 h) to prepare positioning aids, bariatric table attachments and transfer equipment (Hovermatt/AirPal + Pat slide). Dependent patients need a bariatric bed + air-transfer mat; minimum 4 staff for lifter use/bed moves (up to 8 for manual assistance). LMH ICU bariatric bays 17–19; LMH bariatric ward rooms 1D/2D 13 &amp; 20, 1E/2E 5 &amp; 21 (ceiling hoist 350 kg).</div>
+    <div class="page-sub">SASM 2016 · AAGBI/SOBA 2015 · CDHB pOSAr (NZ) · CPOC OSA pathway · NALHN SSI05003</div>
+    <div class="tag-strip"><span class="source-badge">SASM 2016</span><span class="source-badge">AAGBI / SOBA 2015</span><span class="source-badge">CDHB pOSAr</span><span class="source-badge">NALHN SSI05003</span></div>
+
+    <div class="card" style="margin-bottom:16px">
+      <div class="card-title">In the anaesthetic clinic — five things</div>
+      <ul class="steps">
+        <li><div class="step-num">1</div><div class="step-text"><strong>Check the numbers</strong> — pre-admission nursing records height, weight, BMI and seated hip width (NALHN SSI05003); confirm they are on the chart. <strong>BMI &gt;45 is why the patient is in front of you</strong> — that alone triggers anaesthetic review</div></li>
+        <li><div class="step-num">2</div><div class="step-text"><strong>Screen for OSA</strong> — <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="stopbang">STOP-Bang</span> on everyone. Known OSA: record AHI, CPAP settings, adherence</div></li>
+        <li><div class="step-num">3</div><div class="step-text"><strong>Look for hypoventilation</strong> if BMI ≥35 or STOP-Bang ≥3 — SpO₂ on room air in clinic, bicarbonate on the routine bloods. <strong>SpO₂ &lt;95% or bicarbonate &gt;27 mmol/L suggests obesity hypoventilation</strong> → consider respiratory / sleep referral before elective surgery, and count it as severe OSA/OHS in the pOSAr (SOBA)</div></li>
+        <li><div class="step-num">4</div><div class="step-text"><strong>Score the pOSAr</strong> below. <strong>≥5 → monitored bed (Modbury: HDU referral)</strong> — document it now so the bed is planned <span style="font-size:11px;color:var(--text3)">(local rule, pending consultant group)</span></div></li>
+        <li><div class="step-num">5</div><div class="step-text"><strong>Make sure it is flagged</strong> — bariatric patients (≥2 of: ≥120 kg · BMI &gt;40 · hip width &gt;50 cm) need the HOMER alert and ORMIS equipment entry via the booking-office form, and theatres need 24 h notice; check pre-admission has done it. Tell the patient to bring their CPAP</div></li>
+      </ul>
+    </div>
+
+    <div class="calc-box" id="posar-box" style="margin-bottom:16px">
+      <div class="section-header" style="margin-top:0">Perioperative OSA risk (pOSAr) — who needs a monitored bed</div>
+      <div style="font-size:12.5px;color:var(--text2);margin-bottom:12px">Highest patient factor + highest procedural factor (Canterbury DHB cards, NZ). STOP-Bang ≥5 without a diagnosis counts as moderate.</div>
+      <div class="grid-2">
+        <div>
+          <div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-weight:600;margin-bottom:6px">Patient factor (take the higher)</div>
+          <div class="calc-seg" id="posar-osa" style="flex-wrap:wrap">
+            <div class="seg-btn on" data-v="0" onclick="posarPick(this,'posar-osa')">No / unlikely OSA</div>
+            <div class="seg-btn" data-v="1" onclick="posarPick(this,'posar-osa')">Mild (AHI 5–15)</div>
+            <div class="seg-btn" data-v="2" onclick="posarPick(this,'posar-osa')">Moderate (15–30) or STOP-Bang ≥5</div>
+            <div class="seg-btn" data-v="3" onclick="posarPick(this,'posar-osa')">Severe (&gt;30) or OHS</div>
+          </div>
+          <label class="calc-row" style="cursor:pointer;margin-top:8px"><input type="checkbox" id="posar-cpap" onchange="calcPosar()"><span style="font-size:12.5px;margin-left:8px">Compliant with CPAP (−1)</span></label>
+          <label class="calc-row" style="cursor:pointer"><input type="checkbox" id="posar-comorb" onchange="calcPosar()"><span style="font-size:12.5px;margin-left:8px">Severe cardiorespiratory comorbidity (counts 3)</span></label>
+        </div>
+        <div>
+          <div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-weight:600;margin-bottom:6px">Surgery &amp; anaesthesia</div>
+          <div class="calc-seg" id="posar-surg" style="flex-wrap:wrap">
+            <div class="seg-btn on" data-v="0" onclick="posarPick(this,'posar-surg')">Peripheral, no sedation</div>
+            <div class="seg-btn" data-v="1" onclick="posarPick(this,'posar-surg')">Peripheral, LA/RA + sedation</div>
+            <div class="seg-btn" data-v="2" onclick="posarPick(this,'posar-surg')">Peripheral under GA</div>
+            <div class="seg-btn" data-v="3" onclick="posarPick(this,'posar-surg')">Major surgery under GA</div>
+          </div>
+          <div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-weight:600;margin:10px 0 6px">Expected post-op opioid</div>
+          <div class="calc-seg" id="posar-op" style="flex-wrap:wrap">
+            <div class="seg-btn on" data-v="0" onclick="posarPick(this,'posar-op')">None</div>
+            <div class="seg-btn" data-v="1" onclick="posarPick(this,'posar-op')">Low-dose oral</div>
+            <div class="seg-btn" data-v="3" onclick="posarPick(this,'posar-op')">IV / PCA, neuraxial or high-dose oral</div>
+          </div>
+        </div>
+      </div>
+      <div class="calc-result" id="posar-result" style="margin-top:12px"><div style="font-size:13px;color:var(--text2)">Pick the patient and procedural factors.</div></div>
+      <div class="sublabel" style="margin-top:8px">Low-dose oral = morphine &lt;10 mg or codeine &lt;60 mg 4-hourly. Score built on Seet &amp; Chung (endorsed by SASM/ASA); Modbury HDU trigger is departmental practice pending the consultant group.</div>
+    </div>
+
     <div class="grid-2">
       <div>
         <div class="card">
-          <div class="card-title">Obesity considerations</div>
-          <div class="table-wrap"><table><thead><tr><th>BMI</th><th>Category</th><th>Considerations</th></tr></thead><tbody>
-            <tr><td>30–34.9</td><td>Class I</td><td>OSA screen; reflux; IV access</td></tr>
-            <tr><td>35–39.9</td><td>Class II</td><td>Airway assessment; CPAP history; respiratory reserve</td></tr>
-            <tr><td>≥40</td><td>Class III</td><td>High risk: OSA, difficult airway, VTE, wound healing. Plan senior involvement on the day; consider HDU</td></tr>
-            <tr><td>≥50</td><td>Super-obese</td><td>Very high risk; allocate to a consultant list; HDU/ICU planning</td></tr>
+          <div class="card-title">OSA — what the guidance says (SASM 2016)</div>
+          <div class="table-wrap"><table><thead><tr><th>Situation</th><th>Approach</th></tr></thead><tbody>
+            <tr><td><strong>Known OSA</strong></td><td>Continue CPAP before and after surgery. Further work-up usually only if non-adherent <em>and</em> a red flag is present</td></tr>
+            <tr><td><strong>Suspected</strong> (STOP-Bang ≥5)</td><td>Manage as OSA — plan mitigation, score the pOSAr; sleep-physician referral if time allows. Surgery is not usually delayed for a sleep study</td></tr>
+            <tr><td><strong>Red flags</strong></td><td>Obesity hypoventilation · severe pulmonary hypertension · resting hypoxaemia · uncontrolled systemic disease — these are the ones worth evaluating before elective surgery</td></tr>
+            <tr><td>Starting CPAP</td><td>Aim for 4–6 weeks on it before planned surgery (CPOC)</td></tr>
+            <tr><td>Day surgery</td><td>OSA alone need not exclude it if comorbidities are optimised and the operation suits regional / opioid-sparing technique (CPOC)</td></tr>
           </tbody></table></div>
-        </div>
-        <div class="card" style="margin-top:14px">
-          <div class="card-title">Airway assessment</div>
-          <ul class="blist"><li>Mallampati III/IV — increased difficult airway risk</li><li>Neck circumference &gt;40 cm — strong predictor</li><li>Mouth opening, thyromental distance, neck extension</li><li>Snoring/OSA history, previous difficult airway</li><li>Document "potential difficult airway — senior anaesthetist" if applicable</li></ul>
         </div>
       </div>
       <div>
         <div class="card">
-          <div class="card-title">OSA management</div>
-          <ul class="blist"><li>STOP-BANG ≥3 → document on the chart (<span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="stopbang">open calculator</span>)</li><li>Known OSA on CPAP: continue; bring device on admission</li><li>Untreated known OSA: document severity (AHI); specialist review for major</li><li>Suspected: sleep study if time; if urgent, document risk &amp; plan as presumed OSA</li><li>OHS: SpO₂ &lt;94% room air → ABG, pulmonary review</li></ul>
+          <div class="card-title">Obesity — what the guidance says (SOBA 2015)</div>
+          <div class="table-wrap"><table><thead><tr><th>Question</th><th>Answer</th></tr></thead><tbody>
+            <tr><td>Who needs a consultant?</td><td><strong>OS-MRS &gt;3</strong> — one point each: BMI &gt;50 · male · age &gt;45 · hypertension · VTE risk (prior VTE, IVC filter, hypoventilation, pulmonary hypertension)</td></tr>
+            <tr><td>Who needs HDU?</td><td><strong>Not BMI.</strong> Comorbidity, OS-MRS 4–5, poor functional capacity, the operation, or untreated OSA + parenteral opioids — or pOSAr ≥5</td></tr>
+            <tr><td>VTE</td><td>Prophylaxis and early mobilisation; extended prophylaxis by procedure. Oestrogen pill/HRT — <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="meds">Hold / Continue</span></td></tr>
+            <tr><td>Airway</td><td>Obesity and OSA predict difficulty (ESAIC) — full assessment and the awake-technique triggers on the <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="airway">Airway page</span></td></tr>
+            <tr><td>GLP-1 / tirzepatide</td><td>Continue; NALHN fasting pathway applies (clear fluids from the day before, approved clear liquids from 02:00) — <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="glp1">GLP-1 / SGLT2i</span></td></tr>
+          </tbody></table></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AIRWAY -->
+  <div id="page-airway" class="page">
+    <div class="page-title">Airway assessment</div>
+    <div class="page-sub">ESAIC 2025 §R6 (airway evaluation) · DAS 2020 awake tracheal intubation guideline · Cochrane 2018 bedside tests (Roth) · ANZCA PG07 2024</div>
+    <div class="tag-strip"><span class="source-badge">ESAIC 2025</span><span class="source-badge">DAS 2020 ATI</span><span class="source-badge">Cochrane 2018</span></div>
+
+    <div class="alert alert-red"><strong>The job in clinic is to predict the difficult airway and get that prediction to the consultant doing the list.</strong> A predicted or previously difficult airway must be documented, the patient told and consented for the likely technique, an airway alert issued for future procedures (ESAIC R6.6, 1C), and the day-of anaesthetist informed before the day.</div>
+
+    <div class="card" style="margin-bottom:16px">
+      <div class="card-title">In the anaesthetic clinic — four things</div>
+      <ul class="steps">
+        <li><div class="step-num">1</div><div class="step-text"><strong>Read the old charts first.</strong> Previous anaesthetic records (Sunrise, scanned notes, other hospitals), airway alert letters, Cormack–Lehane grade, device used, and anything the patient was told. A previous difficult or failed intubation is the strongest predictor there is — and predicts difficult extubation too</div></li>
+        <li><div class="step-num">2</div><div class="step-text"><strong>Examine — the ESAIC minimum set, not one test.</strong> No single bedside test is reliable; combine them (R6.2, 1A). Record the six below plus the face-mask and front-of-neck predictors</div></li>
+        <li><div class="step-num">3</div><div class="step-text"><strong>Decide:</strong> is laryngoscopy, mask ventilation, a supraglottic device, or front-of-neck access predicted difficult — and is more than one of them? Two or more predicted difficult is the awake-technique conversation (below)</div></li>
+        <li><div class="step-num">4</div><div class="step-text"><strong>If difficulty is predicted:</strong> write it on the chart in plain words ("predicted difficult laryngoscopy — MO 2.5 cm, ULBT 3, fixed flexion"), <strong>tell the consultant anaesthetist for the list</strong>, book onto a consultant list where possible, and discuss the plan with the patient (awake vs asleep, consent for both). Give an airway alert letter if there has been a previous difficulty</div></li>
+      </ul>
+    </div>
+
+    <div class="grid-2">
+      <div>
+        <div class="card">
+          <div class="card-title">Bedside predictors — what to record</div>
+          <div class="table-wrap"><table><thead><tr><th>Test</th><th>Predicts difficulty when</th><th>Note</th></tr></thead><tbody>
+            <tr><td><strong>Upper lip bite test</strong></td><td>Class 3 — lower incisors cannot reach the upper lip</td><td>Best single bedside test (Cochrane 2018: sens 0.67, spec 0.92)</td></tr>
+            <tr><td><strong>Inter-incisor gap</strong></td><td>&lt;3 cm (two finger-breadths)</td><td>&lt;2 cm: laryngoscope blade may not pass — awake-technique territory</td></tr>
+            <tr><td><strong>Mallampati</strong></td><td>III–IV (sitting, tongue out, no phonation; repeat with phonation)</td><td>Poor sensitivity alone — never reassuring on its own</td></tr>
+            <tr><td><strong>Thyromental distance</strong></td><td>&lt;6.5 cm (three finger-breadths)</td><td>Receding mandible / mandibular hypoplasia</td></tr>
+            <tr><td><strong>Neck extension</strong></td><td>&lt;80° or fixed (AS, RA, fused/fixed cervical spine, halo)</td><td>Also asks: is the cervical spine stable?</td></tr>
+            <tr><td><strong>Neck circumference</strong></td><td>&gt;40 cm (≥43 cm in men)</td><td>Combine with BMI, OSA / STOP-Bang</td></tr>
+          </tbody></table></div>
+          <div class="sublabel" style="margin-top:8px">Cut-offs are the conventional ones used in the Cochrane review; ESAIC 2025 Table 5. Also inspect for masses, scars, previous neck surgery or radiotherapy, edentulous or prominent teeth, beard, and ask about snoring / OSA.</div>
         </div>
         <div class="card" style="margin-top:14px">
-          <div class="card-title">Aspiration risk</div>
-          <div class="alert alert-amber">Obesity + GLP-1 agonist = compounded aspiration risk — see GLP-1/SGLT2i page. Gastroparesis, reflux &amp; poor glycaemic control add further risk.</div>
-          <ul class="blist"><li>GORD: PPI (or famotidine) course pre-op; sodium citrate day of</li><li>Active GORD/hiatus hernia: document on the anaesthetic record</li><li>Consider RSI for severe obesity with reflux</li></ul>
+          <div class="card-title">Difficult mask ventilation &amp; front-of-neck access</div>
+          <ul class="blist">
+            <li><strong>Mask:</strong> BMI &gt;30 / neck &gt;40 cm · beard · edentulous · Mallampati III–IV · snoring or OSA · age &gt;55 · neck radiotherapy · mandibular protrusion limited (ESAIC R6 minimum set)</li>
+            <li><strong>Front-of-neck:</strong> palpate the cricothyroid membrane — non-palpable (obesity, previous neck surgery, radiotherapy, goitre, fixed flexion) is a predictor in its own right (ESAIC Table 5); mark it if uncertain</li>
+            <li><strong>Physiology counts too:</strong> pre-existing hypoxaemia, poor reserve, pregnancy at term, aspiration risk — they shorten the safe apnoea time and change the plan (R6.4)</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="card">
+          <div class="card-title">When to think awake — DAS 2020</div>
+          <div style="font-size:13px;color:var(--text2);margin-bottom:8px">"Awake tracheal intubation must be considered in the presence of predictors of difficult airway management." The pattern is <strong>predicted difficult laryngoscopy <em>plus</em> predicted difficult rescue</strong> (mask, supraglottic device or front of neck), or a fixed anatomical reason the airway cannot be secured asleep.</div>
+          <ul class="blist">
+            <li><strong>Previous failed or very difficult intubation</strong>, or a previous "can't intubate, can't oxygenate"</li>
+            <li><strong>Mouth opening &lt;2 cm</strong>, trismus, or fixed jaw (TMJ ankylosis, mandibular fixation, post-radiotherapy fibrosis)</li>
+            <li><strong>Fixed or unstable cervical spine</strong> — ankylosing spondylitis with fixed flexion, rheumatoid atlanto-axial instability, halo, unstable fracture, severe kyphosis where neck extension is impossible</li>
+            <li><strong>Upper airway obstruction or distortion</strong> — stridor, laryngeal or hypopharyngeal tumour, large goitre with tracheal deviation, previous neck radiotherapy, deep neck infection, angio-oedema</li>
+            <li><strong>Predicted difficult intubation with a full stomach</strong> where an RSI would leave no rescue</li>
+            <li><strong>Morbid obesity or OSA <em>with</em> other anatomical predictors</strong> — obesity alone is not an indication</li>
+          </ul>
+          <div class="sublabel" style="margin-top:8px">Awake needs a cooperative patient with a topicalisable airway — heavy bleeding, allergy to local anaesthetic, or a patient who cannot cooperate pushes the plan toward an awake tracheostomy or a carefully planned asleep technique with the surgeon scrubbed. Bring the patient's expectations in early: sedation is an adjunct, not a substitute for topicalisation (DAS).</div>
+        </div>
+        <div class="card" style="margin-top:14px">
+          <div class="card-title">Document, alert, communicate</div>
+          <ul class="blist">
+            <li><strong>Chart:</strong> the six measurements, mask/FONA predictors, the prediction, the planned technique, and "consultant anaesthetist for list informed — Dr X, date"</li>
+            <li><strong>Sunrise alert</strong> for a known difficult airway; hand the patient an <strong>airway alert letter</strong> for future procedures (ESAIC R6.6) and tell them what it means</li>
+            <li><strong>Consent</strong> the patient for the likely technique, including awake intubation if that is the plan (R6.6)</li>
+            <li>Extubation is part of the plan: any difficult intubation, airway-conflict surgery (maxillofacial, ENT, thyroid, cervical spine) or prolonged prone/robotic surgery predicts a difficult extubation — flag it</li>
+          </ul>
         </div>
       </div>
     </div>
@@ -1187,35 +1300,49 @@
   <!-- FRAILTY -->
   <div id="page-frailty" class="page">
     <div class="page-title">Frailty &amp; the older surgical patient</div>
-    <div class="page-sub">ACC/AHA 2024 (frailty as risk modifier) · ANZCA PG07 2024 · Clinical Frailty Scale (Rockwood)</div>
-    <div class="tag-strip"><span class="source-badge">ACC/AHA 2024</span><span class="source-badge">CFS (Rockwood)</span></div>
-    <div class="alert alert-blue"><strong>ACC/AHA 2024:</strong> frailty is now an explicit risk modifier in perioperative cardiovascular assessment. Frailty independently predicts mortality, delirium, institutional discharge &amp; complications — assess routinely in older patients regardless of RCRI.</div>
+    <div class="page-sub">ACC/AHA 2024 §3.3 · ESAIC 2025 R9 · ANZSGM 2022 position statement (Aus/NZ) · Clinical Frailty Scale (Rockwood, Dalhousie)</div>
+    <div class="tag-strip"><span class="source-badge">ACC/AHA 2024</span><span class="source-badge">ESAIC 2025</span><span class="source-badge">ANZSGM 2022</span><span class="source-badge">CFS</span></div>
+
+    <div class="card" style="margin-bottom:16px">
+      <div class="card-title">In the anaesthetic clinic — four things</div>
+      <ul class="steps">
+        <li><div class="step-num">1</div><div class="step-text"><strong>Score the Clinical Frailty Scale</strong> in anyone <strong>≥65 having elevated-risk surgery</strong>, and in younger patients who look frail (ACC/AHA 2a; ESAIC 1C). Two minutes; it outperforms the other tools and predicts death, disability, length of stay and non-home discharge</div></li>
+        <li><div class="step-num">2</div><div class="step-text"><strong>CFS ≥5 = frail.</strong> Consider referral to geriatrics / perioperative medicine, and for elective or time-sensitive surgery consider <strong>delaying to optimise</strong> cognition, nutrition and comorbidity first (ESAIC R9.2); prehabilitation where there is time. Frailty roughly triples 30-day mortality and doubles complications</div></li>
+        <li><div class="step-num">3</div><div class="step-text"><strong>Assess delirium risk</strong> — routinely in older patients (ANZSGM). Frailty itself is the strongest predictor; add cognitive impairment, previous delirium, sensory impairment, polypharmacy, alcohol. Screen cognition (e.g. 4AT) <span style="font-size:11px;color:var(--text3)">(practice point)</span> and <strong>flag on the chart</strong> so the ward plans for it</div></li>
+        <li><div class="step-num">4</div><div class="step-text"><strong>Shared decision-making</strong> — expected functional and cognitive outcome, not just survival; the non-operative option is a legitimate part of the conversation (ANZSGM; ACC/AHA). Document goals of care and any advance care directive</div></li>
+      </ul>
+    </div>
+
     <div class="grid-2">
       <div>
         <div class="card">
-          <div class="card-title">Clinical Frailty Scale (CFS)</div>
+          <div class="card-title">Clinical Frailty Scale</div>
           <div class="table-wrap"><table><thead><tr><th>CFS</th><th>Descriptor</th></tr></thead><tbody>
             <tr><td>1</td><td>Very fit</td></tr>
-            <tr><td>2</td><td>Well</td></tr>
+            <tr><td>2</td><td>Fit</td></tr>
             <tr><td>3</td><td>Managing well</td></tr>
-            <tr><td>4</td><td>Vulnerable (symptoms limit activity)</td></tr>
-            <tr><td><span class="pill pill-amber">5</span></td><td>Mildly frail (needs help with IADLs)</td></tr>
-            <tr><td><span class="pill pill-amber">6</span></td><td>Moderately frail (help with all outside activities)</td></tr>
-            <tr><td><span class="pill pill-red">7</span></td><td>Severely frail (dependent for personal care)</td></tr>
-            <tr><td><span class="pill pill-red">8</span></td><td>Very severely frail</td></tr>
-            <tr><td><span class="pill pill-red">9</span></td><td>Terminally ill</td></tr>
+            <tr><td>4</td><td>Living with very mild frailty — symptoms limit activity</td></tr>
+            <tr><td><strong>5</strong></td><td><strong>Mildly frail</strong> — needs help with instrumental ADLs (finances, transport, medications, heavy housework)</td></tr>
+            <tr><td><strong>6</strong></td><td><strong>Moderately frail</strong> — help with all outside activities and housekeeping; often bathing</td></tr>
+            <tr><td><strong>7</strong></td><td><strong>Severely frail</strong> — dependent for personal care</td></tr>
+            <tr><td>8</td><td>Very severely frail — approaching end of life</td></tr>
+            <tr><td>9</td><td>Terminally ill — life expectancy &lt;6 months, not otherwise frail</td></tr>
           </tbody></table></div>
-          <div class="sublabel" style="margin-top:8px">CFS ≥5 = frail → higher peri-op risk; consider shared decision-making, prehabilitation, geriatric/perioperative medicine input.</div>
+          <div class="sublabel" style="margin-top:8px">Score the patient as they were two weeks before presentation, not on the day. © 2007–2020 Dalhousie University (Rockwood et al.) — reproduced pending a Permission for Use Agreement.</div>
         </div>
       </div>
       <div>
         <div class="card">
-          <div class="card-title">Assessment domains</div>
-          <ul class="blist"><li><strong>Cognition:</strong> screen for impairment &amp; delirium risk (4AT, Mini-Cog)</li><li><strong>Function:</strong> ADLs/IADLs, mobility, falls history</li><li><strong>Nutrition:</strong> unintentional weight loss, low albumin</li><li><strong>Polypharmacy:</strong> deprescribing opportunities; anticholinergic burden</li><li><strong>Sarcopenia:</strong> grip strength, gait speed</li><li><strong>Social:</strong> supports, discharge planning early</li></ul>
-        </div>
-        <div class="card" style="margin-top:14px">
-          <div class="card-title">Optimisation &amp; planning</div>
-          <ul class="blist"><li>Prehabilitation: exercise, nutrition, anaemia correction</li><li>Delirium prevention bundle; avoid high-risk drugs (benzos, anticholinergics)</li><li>Medication review &amp; deprescribing</li><li>Shared decision-making re: goals &amp; expected functional outcome</li><li>Early involvement of perioperative medicine / geriatrics for CFS ≥5</li><li>Consider HDU and explicit post-op delirium/mobility plan</li></ul>
+          <div class="card-title">What to ask about — CGA domains (ANZSGM)</div>
+          <div class="table-wrap"><table><thead><tr><th>Domain</th><th>In clinic</th></tr></thead><tbody>
+            <tr><td>Function</td><td>ADLs and instrumental ADLs, mobility aids, falls in the last year</td></tr>
+            <tr><td>Cognition</td><td>Known impairment, previous delirium, who holds capacity / decision-making authority</td></tr>
+            <tr><td>Nutrition</td><td>Unintentional weight loss, poor intake, low albumin</td></tr>
+            <tr><td>Medicines</td><td>Polypharmacy, anticholinergic and sedative burden — deprescribing is a pre-op opportunity; see <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="meds">Hold / Continue</span></td></tr>
+            <tr><td>Social</td><td>Who is at home, supports, likely discharge destination — start planning now</td></tr>
+            <tr><td>Goals</td><td>What the patient wants from the operation; advance care directive; substitute decision-maker</td></tr>
+          </tbody></table></div>
+          <div class="sublabel" style="margin-top:8px">Geriatrician-led comprehensive geriatric assessment reduces morbidity, mortality and functional decline in frail and multimorbid surgical patients (ANZSGM 2022).</div>
         </div>
       </div>
     </div>
@@ -2521,7 +2648,7 @@
 
   </div>
 <footer style="margin:28px 0 12px;padding:14px 4px 0;border-top:1px solid var(--border2);font-size:11.5px;color:var(--text3);line-height:1.7">
-  <strong>LMH Pre-Anaesthetic Clinic Reference — v4.11 (draft)</strong> · Last updated 3 September 2026 (Renal/hepatic rebuilt on ESAIC 2025 R7 and Table 6, the Kidney Health Australia 2024 handbook and the AGA 2019 cirrhosis update — historical Child-Pugh mortality percentages removed here and on the calculator; Cardiac second pass: MR/AR and MS recommendations, CIED §6.6, mechanical-valve bridging aligned to OWI02488, balloon-angioplasty class corrected; Respiratory rebuilt on ANZCA PG07BP Appendix 3, COPD-X 2024 and the AoA/RCP/SfE 2020 steroid-cover guideline — discredited under-4-weeks smoking line, unsourced FEV1 threshold, investigation table and tiered steroid regimen removed; Hypertension rebuilt on the Association of Anaesthetists / BIHS 2026 perioperative BP guideline with Heart Foundation 2016 grades and urgency/emergency definitions — proceed-unless line 180/120, ACEi/ARB taken on the day; Hold/Continue: all 124 cards checked against CALHN-GDE06093 — NSAID intervals, anticholinesterase split, GLP-1/SGLT2i/metformin cards aligned to NALHN, herbal card and full kinase-inhibitor list added, antiplatelet card now carries OWI02488; Cardiac: ACS line restated per ACC/AHA 2024, echo trigger + severe-AS definition, "what not to order" card; Diabetes: pioglitazone/acarbose and insulin-pump guidance cited to ADS-ANZCA 2022; Medication timing calculator and Dashboard quick-timing aligned to OWI02488 Table 6 — renal tiering now applies to all DOACs, restart windows corrected, GLP-1 patient wording matched to OWI05728, SGLT2i scope per OWI04030; Anticoagulation page rebuilt around NALHN OWI02488 as an interactive walkthrough — warfarin / DOAC / antiplatelet / NOF — with ASRA 5th ed 2025 block intervals and the generic PAUSE/BRIDGE/CHEST tables removed; per-page review-status machinery added but not yet displayed; Paste-a-list medication checker added to Hold / Continue; scope-of-use disclaimer added to every page and the Dashboard; navigation regrouped into Conditions / Medications / Planning / Scores &amp; calculators / Local; VTE prophylaxis page removed, with ★ marking pages backed by a NALHN policy document; Fasting tightened to NALHN OWI05728 and ANZCA PG07 2024: paediatric times corrected, GLP-1 patient instructions rewritten to §3.3.1 B, Sunrise fasting order documented, unsourced premedication table removed; Diabetes rebuilt to NALHN OWI01210 v6.0; Cardiac verified against ACC/AHA 2024) · Maintained by Dr James Hartley, Department of Anaesthesia &amp; Perioperative Medicine, LMH<br>
+  <strong>LMH Pre-Anaesthetic Clinic Reference — v4.16 (draft)</strong> · Last updated 8 September 2026 (New Airway page — ESAIC 2025 minimum assessment set, bedside predictors with Cochrane 2018 cut-offs, DAS 2020 awake-technique triggers, document/alert/inform-the-consultant workflow; Frailty reworked on ACC/AHA 2024 §3.3, ESAIC 2025 R9 and the ANZSGM 2022 position statement — who to score, what CFS ≥5 triggers, delirium risk, shared decision-making; Obesity/OSA simplified to a five-step PAC checklist, the pOSAr calculator and two rule tables; pOSAr perioperative OSA risk calculator added to Obesity/OSA — Modbury HDU rule now triggered at pOSAr ≥5; CPOC OSA pathway lines added; Obesity/OSA rebuilt on AAGBI/SOBA 2015 and SASM 2016 with the PAC-facing parts of SSI05003 — ward/equipment detail removed, HDU by OS-MRS and comorbidity not BMI, no delay for a sleep study unless red flags, Modbury HDU rule for OSA; STOP-Bang bands aligned; Renal/hepatic rebuilt on ESAIC 2025 R7 and Table 6, the Kidney Health Australia 2024 handbook and the AGA 2019 cirrhosis update — historical Child-Pugh mortality percentages removed here and on the calculator; Cardiac second pass: MR/AR and MS recommendations, CIED §6.6, mechanical-valve bridging aligned to OWI02488, balloon-angioplasty class corrected; Respiratory rebuilt on ANZCA PG07BP Appendix 3, COPD-X 2024 and the AoA/RCP/SfE 2020 steroid-cover guideline — discredited under-4-weeks smoking line, unsourced FEV1 threshold, investigation table and tiered steroid regimen removed; Hypertension rebuilt on the Association of Anaesthetists / BIHS 2026 perioperative BP guideline with Heart Foundation 2016 grades and urgency/emergency definitions — proceed-unless line 180/120, ACEi/ARB taken on the day; Hold/Continue: all 124 cards checked against CALHN-GDE06093 — NSAID intervals, anticholinesterase split, GLP-1/SGLT2i/metformin cards aligned to NALHN, herbal card and full kinase-inhibitor list added, antiplatelet card now carries OWI02488; Cardiac: ACS line restated per ACC/AHA 2024, echo trigger + severe-AS definition, "what not to order" card; Diabetes: pioglitazone/acarbose and insulin-pump guidance cited to ADS-ANZCA 2022; Medication timing calculator and Dashboard quick-timing aligned to OWI02488 Table 6 — renal tiering now applies to all DOACs, restart windows corrected, GLP-1 patient wording matched to OWI05728, SGLT2i scope per OWI04030; Anticoagulation page rebuilt around NALHN OWI02488 as an interactive walkthrough — warfarin / DOAC / antiplatelet / NOF — with ASRA 5th ed 2025 block intervals and the generic PAUSE/BRIDGE/CHEST tables removed; per-page review-status machinery added but not yet displayed; Paste-a-list medication checker added to Hold / Continue; scope-of-use disclaimer added to every page and the Dashboard; navigation regrouped into Conditions / Medications / Planning / Scores &amp; calculators / Local; VTE prophylaxis page removed, with ★ marking pages backed by a NALHN policy document; Fasting tightened to NALHN OWI05728 and ANZCA PG07 2024: paediatric times corrected, GLP-1 patient instructions rewritten to §3.3.1 B, Sunrise fasting order documented, unsourced premedication table removed; Diabetes rebuilt to NALHN OWI01210 v6.0; Cardiac verified against ACC/AHA 2024) · Maintained by Dr James Hartley, Department of Anaesthesia &amp; Perioperative Medicine, LMH<br>
   Decision-support draft collating existing published guidance — source guidelines and their dates are cited on each page. Not a substitute for clinical judgement, local policy or the product information; verify doses independently before prescribing. Complex or uncertain cases should be discussed with a senior anaesthetist. Developed with AI assistance; all clinical content requires consultant verification against primary sources. <strong>Not yet endorsed by NALHN — pending departmental sign-off.</strong>
 </footer>
 </main>
@@ -3295,8 +3422,8 @@ function calcSB() {
   document.getElementById('sb-score').textContent = s;
   let c,t;
   if (s<=2){c='var(--green)';t='Low OSA probability. Standard perioperative planning.';}
-  else if (s<=4){c='var(--amber)';t='Intermediate OSA risk. Document on the chart. CPAP if known OSA; consider sleep study for major elective.';}
-  else {c='var(--red)';t='High OSA risk. Full airway assessment; sleep study if time; specify a post-op CPAP/monitoring plan and hand over to the day-of-surgery anaesthetist.';}
+  else if (s<=4){c='var(--amber)';t='Intermediate probability of OSA. Document on the chart; plan mitigation (opioid-sparing, monitoring). Do not delay surgery for a sleep study unless a red flag is present (SASM 2016).';}
+  else {c='var(--red)';t='High probability of OSA. Proceed as for diagnosed OSA with mitigation, or refer to a sleep physician if time allows (SASM 2016 / SOBA). Red flags (hypoventilation, severe pulmonary hypertension, resting hypoxaemia, uncontrolled systemic disease) → evaluate before elective surgery. Score the pOSAr on the Obesity / OSA page — ≥5 → monitored bed / Modbury HDU. Hand over to the day-of anaesthetist.';}
   document.getElementById('sb-result').innerHTML = `<div style="font-weight:600;color:${c};margin-bottom:5px">Score ${s}/8</div><div style="font-size:12.5px;color:var(--text2)">${t}</div>`;
 }
 
@@ -4351,7 +4478,7 @@ function tradeLookup() {
 let searchIndex = null;
 function buildIndex() {
   searchIndex = [];
-  const titles = {home:'Dashboard',rcri:'RCRI',dasi:'DASI / METs',chads:'CHA₂DS₂-VASc',stopbang:'STOP-BANG',asa:'ASA status',childpugh:'Child-Pugh',cardiac:'Cardiac',hypertension:'Hypertension',diabetes:'Diabetes',respiratory:'Respiratory',renal:'Renal / Hepatic',obesity:'Obesity / OSA',frailty:'Frailty',tradefinder:'Trade name finder',meds:'Medications',anticoag:'Anticoagulation',glp1:'GLP-1 / SGLT2i',fasting:'Fasting',bloods:'Pre-op bloods (NG45)',investigations:'Investigations',medtiming:'Medication timing',referral:'Chart summary',localpathways:'Local pathways (LMH)',highrisk:'High-risk operations',links:'Links & forms',anaemia:'Anaemia / IV iron',penfast:'PEN-FAST',omedd:'oMEDD — opioid dose',opioids:'Opioids / OST',culturalsafety:'Cultural safety'};
+  const titles = {home:'Dashboard',rcri:'RCRI',dasi:'DASI / METs',chads:'CHA₂DS₂-VASc',stopbang:'STOP-BANG',asa:'ASA status',childpugh:'Child-Pugh',cardiac:'Cardiac',hypertension:'Hypertension',diabetes:'Diabetes',respiratory:'Respiratory',renal:'Renal / Hepatic',obesity:'Obesity / OSA',airway:'Airway',frailty:'Frailty',tradefinder:'Trade name finder',meds:'Medications',anticoag:'Anticoagulation',glp1:'GLP-1 / SGLT2i',fasting:'Fasting',bloods:'Pre-op bloods (NG45)',investigations:'Investigations',medtiming:'Medication timing',referral:'Chart summary',localpathways:'Local pathways (LMH)',highrisk:'High-risk operations',links:'Links & forms',anaemia:'Anaemia / IV iron',penfast:'PEN-FAST',omedd:'oMEDD — opioid dose',opioids:'Opioids / OST',culturalsafety:'Cultural safety'};
   pages.forEach(p => {
     const id = p.id.replace('page-','');
     const label = titles[id] || id;
@@ -4685,7 +4812,7 @@ function bindJumps(){ document.querySelectorAll('[data-jump]').forEach(el => { i
    by this file itself.
    >>> CHECK THIS ADDRESS IS CORRECT BEFORE RELEASE <<< */
 const REPORT_EMAIL   = 'james.hartley@sa.gov.au';
-const REPORT_VERSION = 'v4.11 draft';
+const REPORT_VERSION = 'v4.16 draft';
 
 (function () {
   const fab     = document.getElementById('report-fab');
@@ -4981,6 +5108,24 @@ function renderReviewStrips() {
 if (document.getElementById('ctw-q')) { ctwStart(); }
 if (document.getElementById('dtw-q')) { dtwStart(); }
 if (document.getElementById('atw-q')) { atwStart(); }
+/* pOSAr — perioperative OSA risk (Seet & Chung; CDHB cards) */
+function posarPick(el, id) { document.querySelectorAll('#' + id + ' .seg-btn').forEach(b => b.classList.remove('on')); el.classList.add('on'); calcPosar(); }
+function calcPosar() {
+  const box = document.getElementById('posar-result'); if (!box) return;
+  const v = id => parseInt((document.querySelector('#' + id + ' .seg-btn.on') || {dataset:{v:'0'}}).dataset.v);
+  let osa = v('posar-osa');
+  if (document.getElementById('posar-cpap').checked && osa > 0) osa -= 1;
+  const pat = Math.max(osa, document.getElementById('posar-comorb').checked ? 3 : 0);
+  const proc = Math.max(v('posar-surg'), v('posar-op'));
+  const s = pat + proc;
+  let c, t;
+  if (s >= 5) { c = 'var(--red)'; t = '<strong>Significantly increased perioperative OSA risk.</strong> Monitored bed overnight — Modbury: HDU referral (local rule); LMH: continuous alarmed oximetry, hourly obs, Airvo/CPAP. Anticipate difficult airway; regional where possible; anaesthetist-led opioid-sparing analgesia; extended PACU stay; document pOSAr ≥5 on the chart now.'; }
+  else if (s === 4) { c = 'var(--amber)'; t = '<strong>Increased risk.</strong> Ward with standard care; oximetry in PACU before transfer; minimise long-acting opioids and sedatives; escalate to a monitored bed if PACU shows snoring, apnoea &gt;10 s, RR &lt;8, SpO₂ &lt;90%, PaCO₂ &gt;50 or pain–sedation mismatch (each adds a point).'; }
+  else { c = 'var(--green)'; t = '<strong>Not increased.</strong> Standard care; home / day-case pathway is appropriate if comorbidities are optimised (CPOC). Known OSA still brings the CPAP.'; }
+  box.innerHTML = '<div style="font-weight:700;color:' + c + ';font-size:16px;margin-bottom:5px">pOSAr ' + s + ' — patient ' + pat + ' + procedure ' + proc + '</div><div style="font-size:12.5px;color:var(--text2)">' + t + '</div>';
+}
+if (document.getElementById('posar-result')) { calcPosar(); }
+
 </script>
 </body>
 </html>
