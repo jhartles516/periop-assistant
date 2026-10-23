@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LMH Pre-Anaesthetic Clinic Reference — v4.21 draft</title>
+<title>LMH Pre-Anaesthetic Clinic Reference — v4.23 draft</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
@@ -167,6 +167,7 @@
   @keyframes fade { from { opacity: 0; transform: translateY(4px);} to { opacity: 1; transform: none;} }
   .page-title { font-family: var(--serif); font-size: 24px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
   .page-sub { font-size: 13px; color: var(--text3); margin-bottom: 18px; }
+.verified-stamp { display:inline-block; font-size:12.5px; font-weight:600; color:var(--green); background:var(--green-soft, rgba(46,160,67,0.10)); border:1px solid currentColor; border-radius:6px; padding:4px 10px; margin:-8px 0 16px; }
   /* REVIEW / PROVENANCE STRIP */
   .review-strip { display:flex; flex-wrap:wrap; align-items:center; gap:6px 12px; font-size:12px; padding:7px 12px; border-radius:var(--radius); margin:-8px 0 18px; border:1px solid var(--border); background:var(--bg3); color:var(--text2); }
   .review-strip .rs-tag { font-weight:700; font-size:11px; letter-spacing:.04em; text-transform:uppercase; padding:2px 8px; border-radius:999px; }
@@ -392,7 +393,7 @@
   <div class="logo">
     <div class="logo-title">Pre-Anaesthetic Clinic</div>
     <div class="logo-sub">Lyell McEwin Hospital · NALHN</div>
-    <span class="logo-badge">SA HEALTH</span> <span class="logo-badge" style="background:rgba(230,162,60,0.22);color:#e6a23c">V4.21 DRAFT</span>
+    <span class="logo-badge">SA HEALTH</span> <span class="logo-badge" style="background:rgba(230,162,60,0.22);color:#e6a23c">V4.23 DRAFT</span>
   </div>
   <nav id="nav">
     <div class="nav-group">
@@ -450,7 +451,7 @@
   <div class="rail-foot">
     <div class="rail-foot-txt">
       ANZCA PG07 2024 · ADS-ANZCA 2022 · ACC/AHA 2024 · ANZCA/ADS GLP-1 2025 · CHEST 2022 · ESAIC 2025 · ASRA 5th ed 2025 · CPOC/BSH anaemia 2024–25
-      <br><br><span style="color:#ec6a5e">⚠ Reference only — verify against local NALHN policy. Discuss complex cases with a senior anaesthetist.</span><br><br><span style="color:#8db8f7">v4.21 DRAFT · 20 Oct 2026<br>Runs entirely in your browser — nothing entered is stored or transmitted.</span>
+      <br><br><span style="color:#ec6a5e">⚠ Reference only — verify against local NALHN policy. Discuss complex cases with a senior anaesthetist.</span><br><br><span style="color:#8db8f7">v4.23 DRAFT · 23 Oct 2026<br>Runs entirely in your browser — nothing entered is stored or transmitted.</span>
     </div>
   </div>
 </aside>
@@ -724,6 +725,7 @@
   <div id="page-asa" class="page">
     <div class="page-title">ASA Physical Status classification</div>
     <div class="page-sub">American Society of Anesthesiologists — standard documentation of pre-operative physical status. Add "E" for emergency.</div>
+    <div class="verified-stamp">✓ Verified by Dr David Papendorf – 23.10.26</div>
     <div class="tag-strip"><span class="source-badge">ASA Physical Status Classification 2020</span></div>
     <div class="grid-2">
       <div>
@@ -921,9 +923,10 @@
   <div id="page-diabetes" class="page">
     <div class="page-title">Diabetes — perioperative management</div>
     <div class="page-sub">NALHN OWI01210 (effective 06/2026) · ADS-ANZCA 2022 · ADS/ANZCA GLP-1 2025 (flowchart reproduced in OWI01210)</div>
+    <div class="verified-stamp">✓ Verified by Dr David Papendorf – 23.10.26</div>
     <div class="tag-strip"><span class="source-badge">NALHN OWI01210 06/2026</span><span class="source-badge">ADS-ANZCA 2022</span><span class="source-badge">GLP-1 2025 (via OWI01210)</span></div>
 
-    <div class="alert alert-red"><strong>Never omit insulin — in type 1 or type 2 diabetes.</strong> Basal (long-acting) insulin continues at the usual dose and the usual time, including the morning of surgery. Target peri-op BGL <strong>6–10 mmol/L</strong>; hypoglycaemia (&lt;4) is the main risk to avoid.</div>
+    <div class="alert alert-red"><strong>Never omit insulin — in type 1 or type 2 diabetes.</strong> Only <strong>long-acting (basal) or maintenance insulin</strong> continues unchanged — usual dose, usual time, including the morning of surgery. Mealtime (short-acting) and pre-mixed doses are held or reduced — follow the pathway below. Target peri-op BGL <strong>6–10 mmol/L</strong>; hypoglycaemia (&lt;4) is the main risk to avoid.</div>
 
     <div class="calc-box" id="dtw-box" style="margin-bottom:16px">
       <div class="section-header" style="margin-top:0">Which pathway is this patient on?</div>
@@ -931,7 +934,7 @@
       <div id="dtw-q"></div>
       <div style="margin-top:13px"><button class="ctw-restart" onclick="dtwStart()">Start again</button></div>
       <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border);font-size:12.5px;color:var(--text2);line-height:1.75">
-        <strong style="color:var(--text)">Whichever pathway:</strong> insulin is never omitted · <strong>4-hourly BGL</strong> once fasting begins · sliding-scale NovoRapid on the <strong>Variable Dose Insulin Chart MR214</strong> · <strong>BGL below 7.0</strong> → 5% dextrose 60–100 mL/hr · <strong>BGL above 18</strong> on admission or before surgery → IV insulin per standard protocol · the <strong>Diabetes &amp; Endocrine Service</strong> is always available if you are unsure.
+        <strong style="color:var(--text)">Whichever pathway:</strong> basal (long-acting) insulin is never omitted · <strong>4-hourly BGL</strong> once fasting begins · sliding-scale NovoRapid on the <strong>Variable Dose Insulin Chart MR214</strong> · <strong>BGL below 7.0</strong> → 5% dextrose 60–100 mL/hr · <strong>BGL above 18</strong> on admission or before surgery → IV insulin per standard protocol · the <strong>Diabetes &amp; Endocrine Service</strong> is always available if you are unsure.
       </div>
     </div>
 
@@ -1000,6 +1003,7 @@
   <div id="page-respiratory" class="page">
     <div class="page-title">Respiratory disease</div>
     <div class="page-sub">ANZCA PG07BP 2024 Appendix 3 (smoking) · COPD-X Plan 2024 (Lung Foundation Australia) · AoA / RCP / SfE 2020 (steroid cover) · CALHN-GDE06093 (inhalers)</div>
+    <div class="verified-stamp">✓ Verified by Dr David Papendorf – 23.10.26</div>
     <div class="tag-strip"><span class="source-badge">ANZCA PG07BP 2024</span><span class="source-badge">COPD-X 2024</span><span class="source-badge">AoA 2020 steroids</span><span class="source-badge">CALHN-GDE06093</span></div>
 
     <div class="grid-2">
@@ -1115,41 +1119,40 @@
   <!-- OBESITY -->
   <div id="page-obesity" class="page">
     <div class="page-title">Obesity &amp; obstructive sleep apnoea</div>
-    <div class="page-sub">NALHN SSI00270 (OSA monitoring — written for Modbury, applied to LMH) · SASM 2016 · AAGBI/SOBA 2015 · ASA 2014 OSA practice guidelines · CPOC OSA pathway · NALHN SSI05003</div>
-    <div class="tag-strip"><span class="source-badge">SASM 2016</span><span class="source-badge">AAGBI / SOBA 2015</span><span class="source-badge">ASA 2014</span><span class="source-badge">NALHN SSI00270</span><span class="source-badge">NALHN SSI05003</span></div>
+    <div class="page-sub">NALHN SSI00270 (OSA monitoring — written for Modbury, applied to LMH) · SASM 2016 · AAGBI/SOBA 2015 · ASA 2014 OSA practice guidelines · CPOC OSA pathway</div>
+    <div class="tag-strip"><span class="source-badge">SASM 2016</span><span class="source-badge">AAGBI / SOBA 2015</span><span class="source-badge">ASA 2014</span><span class="source-badge">NALHN SSI00270</span></div>
 
     <div class="card" style="margin-bottom:16px">
-      <div class="card-title">In the anaesthetic clinic — five things</div>
+      <div class="card-title">In the anaesthetic clinic — four things</div>
       <ul class="steps">
-        <li><div class="step-num">1</div><div class="step-text"><strong>Check the numbers</strong> — pre-admission nursing records height, weight, BMI and seated hip width; confirm they are on the chart. <strong>BMI &gt;45 is why the patient is in front of you</strong> — that alone triggers anaesthetic review</div></li>
-        <li><div class="step-num">2</div><div class="step-text"><strong>Screen for OSA</strong> — <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="stopbang">STOP-Bang</span> on everyone. Known OSA: record the apnoea–hypopnoea index (AHI), CPAP settings, adherence, and <strong>tell them to bring their CPAP</strong></div></li>
-        <li><div class="step-num">3</div><div class="step-text"><strong>Look for hypoventilation</strong> if BMI ≥35 or STOP-Bang ≥3 — SpO₂ on room air in clinic, bicarbonate on the routine bloods. <strong>SpO₂ &lt;95% or bicarbonate &gt;27 mmol/L = possible obesity hypoventilation:</strong> tell the list consultant, <strong>refer to respiratory and book HDU/ICU post-op</strong> (respiratory confirm with a blood gas). Tick obesity hypoventilation in the tool below until proven otherwise</div></li>
-        <li><div class="step-num">4</div><div class="step-text"><strong>Decide the bed — NALHN SSI00270, both sites.</strong> Overnight stay with moderate or severe OSA, STOP-Bang ≥5, or STOP-Bang ≥3 with moderate-to-high dose opioids → <strong>OSA monitored bed</strong>: at LMH a ward bed with overnight pulse oximetry ordered on Sunrise; at Modbury HDU. <strong>Confirmed moderate or severe OSA not using CPAP + major surgery, or obesity hypoventilation → HDU/ICU at either site.</strong> Use the tool below and document it now so the bed is planned</div></li>
-        <li><div class="step-num">5</div><div class="step-text"><strong>Make sure it is flagged</strong> — bariatric patients (≥2 of: ≥120 kg · BMI &gt;40 · hip width &gt;50 cm) need the HOMER alert and ORMIS equipment entry via the booking-office form, and theatres need 24 h notice; check pre-admission has done it</div></li>
+        <li><div class="step-num">1</div><div class="step-text"><strong>Screen for OSA</strong> — <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="stopbang">STOP-Bang</span> on everyone; check the booking form, GP referral, EMR and the patient's pre-admission questionnaire for a known diagnosis. Known OSA: record the AHI</div></li>
+        <li><div class="step-num">2</div><div class="step-text"><strong>Decide the bed</strong> — use the tool below (NALHN OSA guideline, both sites; a monitored bed means HDU). Document it so the bed is planned</div></li>
+        <li><div class="step-num">3</div><div class="step-text"><strong>Look for hypoventilation</strong> if BMI ≥35 or STOP-Bang ≥3 — SpO₂ on air and bicarbonate. <strong>SpO₂ &lt;95% or bicarbonate &gt;27 mmol/L = possible obesity hypoventilation</strong> → tell the list consultant; if not already diagnosed, refer to respiratory ± sleep study and <strong>consider deferring</strong>; if proceeding, set a target SpO₂ and book HDU/ICU <span style="font-size:11px;color:var(--text3)">(practice point)</span></div></li>
+        <li><div class="step-num">4</div><div class="step-text"><strong>Advise them to bring their CPAP</strong> if they have one — record settings and how reliably they use it</div></li>
       </ul>
     </div>
 
     <div class="calc-box" id="posar-box" style="margin-bottom:16px">
       <div class="section-header" style="margin-top:0">Who needs a monitored bed — pick the patient and the operation</div>
-      <div style="font-size:12.5px;color:var(--text2);margin-bottom:12px">NALHN SSI00270 for both sites, with the LMH and Modbury meaning of an OSA monitored bed. Nothing is stored.</div>
+      <div style="font-size:12.5px;color:var(--text2);margin-bottom:12px">NALHN OSA guideline, applied at LMH and Modbury. An OSA monitored bed means HDU at both (the policy needs ≥1:4 nursing; wards are 1:6). Nothing is stored.</div>
       <div class="grid-2">
         <div>
           <div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-weight:600;margin-bottom:6px">OSA status</div>
           <div class="calc-seg" id="posar-osa" style="flex-wrap:wrap"><div class="seg-btn on" data-v="none" onclick="posarPick(this,'posar-osa')" style="flex:1 1 30%">No / unlikely<br>STOP-Bang 0–2</div><div class="seg-btn" data-v="sb34" onclick="posarPick(this,'posar-osa')" style="flex:1 1 30%">Suspected<br>STOP-Bang 3–4</div><div class="seg-btn" data-v="sb5" onclick="posarPick(this,'posar-osa')" style="flex:1 1 30%">Suspected<br>STOP-Bang ≥5</div><div class="seg-btn" data-v="mild" onclick="posarPick(this,'posar-osa')" style="flex:1 1 30%">Confirmed mild<br>AHI 5–15</div><div class="seg-btn" data-v="mod" onclick="posarPick(this,'posar-osa')" style="flex:1 1 30%">Confirmed moderate<br>AHI 15–30</div><div class="seg-btn" data-v="sev" onclick="posarPick(this,'posar-osa')" style="flex:1 1 30%">Confirmed severe<br>AHI &gt;30</div></div>
-          <div style="margin-top:8px"><label class="calc-row" style="cursor:pointer"><input type="checkbox" id="posar-cpap" onchange="calcPosar()"><span style="font-size:12.5px;margin-left:8px">Uses CPAP reliably</span></label><label class="calc-row" style="cursor:pointer"><input type="checkbox" id="posar-ohs" onchange="calcPosar()"><span style="font-size:12.5px;margin-left:8px">Obesity hypoventilation suspected or confirmed</span></label><label class="calc-row" style="cursor:pointer"><input type="checkbox" id="posar-comorb" onchange="calcPosar()"><span style="font-size:12.5px;margin-left:8px">Severe cardiorespiratory comorbidity</span></label></div>
+          <div style="margin-top:8px"><label class="calc-row" style="cursor:pointer"><input type="checkbox" id="posar-cpap" onchange="calcPosar()"><span style="font-size:12.5px;margin-left:8px">Uses CPAP reliably</span></label><label class="calc-row" style="cursor:pointer"><input type="checkbox" id="posar-ohs" onchange="calcPosar()"><span style="font-size:12.5px;margin-left:8px">Obesity hypoventilation suspected or confirmed</span></label><label class="calc-row" style="cursor:pointer"><input type="checkbox" id="posar-comorb" onchange="calcPosar()"><span style="font-size:12.5px;margin-left:8px">COPD, or significant cardiac / cerebrovascular disease</span></label></div>
         </div>
         <div>
           <div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-weight:600;margin-bottom:6px">Stay</div>
           <div class="calc-seg" id="posar-stay" style="flex-wrap:wrap"><div class="seg-btn on" data-v="day" onclick="posarPick(this,'posar-stay')" style="flex:1 1 30%">Day procedure</div><div class="seg-btn" data-v="night" onclick="posarPick(this,'posar-stay')" style="flex:1 1 30%">Overnight stay</div></div>
-          <div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-weight:600;margin-bottom:6px;margin-top:10px">Surgery &amp; anaesthesia</div>
-          <div class="calc-seg" id="posar-surg" style="flex-wrap:wrap"><div class="seg-btn on" data-v="0" onclick="posarPick(this,'posar-surg')" style="flex:1 1 30%">Peripheral, no sedation</div><div class="seg-btn" data-v="1" onclick="posarPick(this,'posar-surg')" style="flex:1 1 30%">Peripheral, LA/RA + sedation</div><div class="seg-btn" data-v="2" onclick="posarPick(this,'posar-surg')" style="flex:1 1 30%">Peripheral under GA</div><div class="seg-btn" data-v="3" onclick="posarPick(this,'posar-surg')" style="flex:1 1 30%">Major surgery under GA</div></div>
-          <div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-weight:600;margin-bottom:6px;margin-top:10px">Expected post-op opioid (oxycodone-equivalent in 12 h)</div>
-          <div class="calc-seg" id="posar-op" style="flex-wrap:wrap"><div class="seg-btn on" data-v="none" onclick="posarPick(this,'posar-op')" style="flex:1 1 22%">None</div><div class="seg-btn" data-v="low" onclick="posarPick(this,'posar-op')" style="flex:1 1 22%">Low-dose oral<br>up to 10 mg</div><div class="seg-btn" data-v="high" onclick="posarPick(this,'posar-op')" style="flex:1 1 22%">Higher-dose oral<br>over 10 mg</div><div class="seg-btn" data-v="iv" onclick="posarPick(this,'posar-op')" style="flex:1 1 22%">IV / PCA<br>or neuraxial</div></div>
+          <div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-weight:600;margin-bottom:6px;margin-top:10px">Operation</div>
+          <label class="calc-row" style="cursor:pointer"><input type="checkbox" id="posar-major" onchange="calcPosar()"><span style="font-size:12.5px;margin-left:8px">Major surgery, or surgery affecting the airway or respiratory system</span></label>
+          <div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-weight:600;margin-bottom:6px;margin-top:10px">Expected post-op opioid (oral oxycodone-equivalent in 12 h)</div>
+          <div class="calc-seg" id="posar-op"><div class="seg-btn on" data-v="none" onclick="posarPick(this,'posar-op')">None or low-dose<br>up to 10 mg</div><div class="seg-btn" data-v="high" onclick="posarPick(this,'posar-op')">Moderate to high<br>over 10 mg</div></div>
         </div>
       </div>
       <div class="calc-result" id="posar-result" style="margin-top:12px"></div>
-      <div class="sublabel" style="margin-top:8px">Opioid doses are oxycodone-equivalent in 12 hours; SSI00270 counts more than 10 mg as moderate-to-high. An OSA monitored bed has continuous oximetry and at least 1:4 nursing (SSI00270). At Modbury that is only available in HDU; at LMH it is a ward bed with an overnight pulse oximetry order on Sunrise. HDU/ICU for poor CPAP use with major surgery, or obesity hypoventilation, is departmental practice. The &quot;also consider&quot; prompts come from SSI00270's first-night oximetry list.</div>
-      <details style="margin-top:10px"><summary style="cursor:pointer;font-size:13px;font-weight:600;padding:9px 13px;background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius)">The SSI00270 tables in full · click to expand</summary><div style="margin-top:10px">
+      <ul class="blist" style="margin-top:8px;font-size:12px;color:var(--text2)"><li>Opioid doses are oral oxycodone-equivalent in 12 hours; the guideline counts more than 10 mg as moderate-to-high.</li><li><strong>No HDU bed — Modbury</strong> (policy): monitor in the Day Procedure Unit until 19:30 while the anaesthetist or HDU registrar prioritises the bed; step-down at their discretion</li><li><strong>No HDU bed — LMH</strong> (practice): review in recovery — ward is acceptable at the anaesthetist's discretion once settled with no period of hypopnoea or apnoea for 1 hour, normal breathing and SpO₂ at baseline <span style="font-size:11px;color:var(--text3)">(practice point)</span></li></ul>
+      <details style="margin-top:10px"><summary style="cursor:pointer;font-size:13px;font-weight:600;padding:9px 13px;background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius)">The NALHN OSA guideline tables in full · click to expand</summary><div style="margin-top:10px">
       <div class="grid-2">
         <div>
           <div style="font-size:13px;font-weight:600;margin-bottom:6px">Confirmed OSA (sleep study)</div>
@@ -1172,8 +1175,8 @@
     </div>
 
     <div class="card" style="margin-bottom:16px">
-      <div class="card-title">Also in NALHN SSI00270 (Modbury, 04/2024)</div>
-      <ul class="blist"><li><strong>In clinic:</strong> record the STOP-Bang score or the AHI on the anaesthetic chart, get the sleep study result if there is one, and set a target oxygen saturation. A normal bicarbonate helps exclude obesity hypoventilation</li><li><strong>Severe OSA suspected and surgery is not urgent:</strong> consider delaying until a sleep study and treatment are done</li><li><strong>Keep on oximetry at least the first night</strong> if: high or neuraxial opioid requirement · not using CPAP when offered · airway or major surgery · obesity hypoventilation · COPD · significant cardiac or cerebrovascular disease</li><li><strong>Tell the patient</strong> about the risk from opioids, sedatives and alcohol in the week after the anaesthetic; the home team tells the GP about suspected OSA</li><li>This policy is written for Modbury; the app applies it to LMH too, with a ward bed and overnight pulse oximetry ordered on Sunrise as the LMH monitored bed</li></ul>
+      <div class="card-title">Also in the NALHN OSA guideline</div>
+      <ul class="blist"><li><strong>Signs of sleep apnoea in PACU</strong> that step the plan up to an extended stay or a monitored bed: very loud snoring · apnoeas over 10 seconds · slow, shallow breathing · desaturation below the target · choking or gasping while asleep</li><li><strong>Write into the plan:</strong> bring and use own CPAP (not after airway or ENT surgery) · opioid-sparing — paracetamol and NSAID if not contraindicated, regional block or local infiltration where possible · extreme caution combining opioids with sedatives · nurse 30–40° head-up or lateral · oxygen weaned overnight, off by 04:00 if saturating</li><li><strong>Keep on oximetry at least the first night</strong> if: high or neuraxial opioid requirement · not using CPAP when offered · airway or major surgery · obesity hypoventilation · COPD · significant cardiac or cerebrovascular disease</li><li><strong>Severe OSA suspected and surgery is not urgent:</strong> consider delaying until a sleep study and treatment are done</li><li><strong>Discharge:</strong> tell the patient about the risk from opioids, sedatives and alcohol in the week after the anaesthetic; the anaesthetist makes sure the home team knows about suspected OSA, and the home team tells the GP</li></ul>
     </div>
 
     <div class="grid-2">
@@ -1182,7 +1185,7 @@
           <div class="card-title">OSA — what the guidance says (SASM 2016 · CPOC)</div>
           <div class="table-wrap"><table><thead><tr><th>Situation</th><th>Approach</th></tr></thead><tbody>
             <tr><td><strong>Known OSA</strong></td><td>Continue CPAP before and after surgery. Further work-up usually only if non-adherent <em>and</em> a red flag is present</td></tr>
-            <tr><td><strong>Suspected</strong> (STOP-Bang ≥5)</td><td>Manage as OSA — plan mitigation and the bed (SSI00270); sleep-physician referral if time allows. Surgery is not usually delayed for a sleep study, but SSI00270 says to consider it when severe OSA is suspected and surgery is not urgent</td></tr>
+            <tr><td><strong>Suspected</strong> (STOP-Bang ≥5)</td><td>Manage as OSA — plan mitigation and the bed (tool above); sleep-physician referral if time allows. Surgery is not usually delayed for a sleep study, but the NALHN guideline says to consider it when severe OSA is suspected and surgery is not urgent</td></tr>
             <tr><td><strong>Red flags</strong></td><td>Obesity hypoventilation · severe pulmonary hypertension · resting hypoxaemia · uncontrolled systemic disease — these are the ones worth evaluating before elective surgery</td></tr>
             <tr><td>Starting CPAP</td><td>Aim for 4–6 weeks on it before planned surgery</td></tr>
             <tr><td>Day surgery</td><td>OSA on its own does not rule out day surgery if comorbidities are optimised and the operation suits a regional or opioid-sparing technique. Use the tool above to check the bed</td></tr>
@@ -1192,13 +1195,26 @@
       <div>
         <div class="card">
           <div class="card-title">Obesity — what the guidance says (SOBA 2015)</div>
+          <div style="font-size:12.5px;color:var(--text2);margin:-4px 0 10px">One-page summary: <a href="https://www.sobauk.co.uk/_files/ugd/373d41_eebe369c3c6b4021bff6f3da059aa796.pdf" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:underline">SOBA UK — Anaesthesia for Patients Living with Obesity (2022) ↗</a></div>
           <div class="table-wrap"><table><thead><tr><th>Question</th><th>Answer</th></tr></thead><tbody>
-            <tr><td>Who needs a consultant?</td><td><strong>OS-MRS &gt;3</strong> — one point each: BMI &gt;50 · male · age &gt;45 · hypertension · VTE risk (prior VTE, IVC filter, hypoventilation, pulmonary hypertension)</td></tr>
-            <tr><td>Who needs HDU?</td><td><strong>Not BMI.</strong> Comorbidity, OS-MRS 4–5, poor functional capacity, the operation, or untreated OSA + parenteral opioids. For OSA, use the monitored-bed tool above</td></tr>
+            <tr><td>Who needs a consultant?</td><td><strong>Obesity Surgery Mortality Risk Score 4–5</strong> — score it below. 4–5 means discuss with a consultant and an anaesthetist experienced with these patients</td></tr>
+            <tr><td>Who needs HDU?</td><td><strong>Not BMI.</strong> Comorbidity, a mortality risk score of 4–5, poor functional capacity, the operation, or untreated OSA + parenteral opioids. For OSA, use the monitored-bed tool above</td></tr>
             <tr><td>VTE</td><td>Prophylaxis and early mobilisation; extended prophylaxis by procedure. Oestrogen pill/HRT — <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="meds">Hold / Continue</span></td></tr>
             <tr><td>Airway</td><td>Obesity and OSA are difficult-airway features (DAS 2025) — full assessment and the awake-technique triggers on the <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="airway">Airway page</span></td></tr>
+            <tr><td>Regional / neuraxial</td><td><strong>Preferred to general anaesthesia where the operation allows</strong> — it avoids the airway and opioid risks, but an airway plan is still needed. <strong>Counsel and consent:</strong> blocks and neuraxial fail more often in obesity and may not be possible, so conversion to GA is part of the plan. Sitting position, long needles and ultrasound help</td></tr>
+            <tr><td>IV access</td><td>Often difficult — <strong>warn the patient</strong> it may take more than one attempt, ultrasound, or an unusual site (upper arm, anterior chest wall); ask about previous difficult access. Two cannulae in theatre; central access only if peripheral is impossible</td></tr>
             <tr><td>GLP-1 / tirzepatide</td><td>Continue; NALHN fasting pathway applies (clear fluids from the day before, approved clear liquids from 02:00) — <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="glp1">GLP-1 / SGLT2i</span></td></tr>
           </tbody></table></div>
+          <div class="calc-box" id="osmrs-box" style="margin-top:12px">
+            <div class="section-header" style="margin-top:0">Obesity Surgery Mortality Risk Score (OS-MRS)</div>
+            <div style="font-size:12.5px;color:var(--text2);margin-bottom:8px">One point each. Validated for gastric bypass; SOBA says it may apply to other surgery in obese patients. Nothing is stored.</div>
+            <label class="calc-row" style="cursor:pointer"><input type="checkbox" class="osmrs" onchange="calcOsmrs()"><span style="font-size:12.5px;margin-left:8px">BMI over 50</span></label>
+            <label class="calc-row" style="cursor:pointer"><input type="checkbox" class="osmrs" onchange="calcOsmrs()"><span style="font-size:12.5px;margin-left:8px">Male</span></label>
+            <label class="calc-row" style="cursor:pointer"><input type="checkbox" class="osmrs" onchange="calcOsmrs()"><span style="font-size:12.5px;margin-left:8px">Age over 45</span></label>
+            <label class="calc-row" style="cursor:pointer"><input type="checkbox" class="osmrs" onchange="calcOsmrs()"><span style="font-size:12.5px;margin-left:8px">Hypertension</span></label>
+            <label class="calc-row" style="cursor:pointer"><input type="checkbox" class="osmrs" onchange="calcOsmrs()"><span style="font-size:12.5px;margin-left:8px">Risk factor for pulmonary embolism — previous VTE, IVC filter, hypoventilation / sleep-disordered breathing, or pulmonary hypertension</span></label>
+            <div class="calc-result" id="osmrs-result" style="margin-top:10px"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -1208,6 +1224,7 @@
   <div id="page-airway" class="page">
     <div class="page-title">Airway assessment</div>
     <div class="page-sub">ANZCA Airway Management Working Group airway assessment resource 2016 (framework; educational resource, not College policy) · DAS 2025 unanticipated difficult intubation guidelines (airway assessment &amp; planning) · DAS 2020 awake tracheal intubation guideline · Cochrane 2018 bedside tests (Roth) · El-Ganzouri 1996 risk index · Langeron 2000 mask ventilation</div>
+    <div class="verified-stamp">✓ Verified by Dr David Papendorf – 23.10.26</div>
     <div class="tag-strip"><span class="source-badge">ANZCA AMWG 2016</span><span class="source-badge">DAS 2025</span><span class="source-badge">DAS 2020 ATI</span><span class="source-badge">Cochrane 2018</span><span class="source-badge">El-Ganzouri 1996</span><span class="source-badge">Langeron 2000</span></div>
 
     <div class="alert alert-red"><strong>Predict the difficult airway and tell the consultant doing the list.</strong> Assess every patient — including regional and sedation cases. Plan for difficulty with intubation, SAD, facemask ventilation and front-of-neck access.</div>
@@ -2362,7 +2379,7 @@
           <tr><td><strong>What you do</strong></td><td>Complete the <strong>paper referral form</strong> and flag it to the PAC nurses</td><td><strong>Discuss</strong> with the ICU consultant or registrar <strong>and</strong> complete the <strong>paper referral form</strong> — both are needed. Flag it to the PAC nurses</td></tr>
           <tr><td><strong>Whose patient</strong></td><td>Stays under the home team</td><td>Goes under the ICU bed card</td></tr>
         </tbody></table></div>
-        <ul class="blist" style="margin-top:10px"><li>Talk to a consultant anaesthetist before you refer, and tell the surgical team</li><li>At LMH the ICU contact is the Outreach Intensivist, via switchboard</li><li><strong>OSA needing a monitored bed (NALHN SSI00270, both sites):</strong> at LMH a ward bed with overnight pulse oximetry ordered on Sunrise; at Modbury HDU. Confirmed moderate or severe OSA not using CPAP with major surgery, or obesity hypoventilation → HDU/ICU at either site — see <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="obesity">Obesity / OSA</span></li></ul>
+        <ul class="blist" style="margin-top:10px"><li>Talk to a consultant anaesthetist before you refer, and tell the surgical team</li><li>At LMH the ICU contact is the Outreach Intensivist, via switchboard</li><li><strong>OSA needing a monitored bed (NALHN SSI00270, both sites):</strong> HDU at LMH or Modbury. Confirmed moderate or severe OSA not using CPAP with major surgery, or obesity hypoventilation → HDU/ICU at either site — see <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="obesity">Obesity / OSA</span></li></ul>
       </div>
       <div class="card"><div class="card-title">Referring to specialist teams</div>
         <ul class="blist"><li><strong>Routine referral:</strong> use <a href="https://nalhn.pinga.health/app/home" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:underline">PINGA ↗</a></li><li><strong>Urgent referral:</strong> discuss with the specialty registrar on the day, via switchboard</li><li><strong>Keep in the loop:</strong> the PAC nurses for follow-up — Jacqueline Ellis (<a href="mailto:Jacqueline.Ellis@sa.gov.au" style="color:var(--accent);text-decoration:underline">Jacqueline.Ellis@sa.gov.au</a>) or Karen Mingham (<a href="mailto:Karen.Mingham@sa.gov.au" style="color:var(--accent);text-decoration:underline">Karen.Mingham@sa.gov.au</a>) — and the consultant anaesthetist allocated to the list, if known</li></ul>
@@ -2426,7 +2443,7 @@
       <div class="card"><div class="card-title">Contacts</div><ul class="blist"><li><strong>Consultant advice:</strong> the consultant allocated to clinic, or the Duty Anaesthetist on 0466 153 358, or the remote anaesthetic consultant on call</li><li><strong>PAC nurses:</strong> Jacqueline Ellis, Nurse Unit Manager — <a href="mailto:Jacqueline.Ellis@sa.gov.au" style="color:var(--accent);text-decoration:underline">Jacqueline.Ellis@sa.gov.au</a> · Karen Mingham, Associate Nurse Unit Manager — <a href="mailto:Karen.Mingham@sa.gov.au" style="color:var(--accent);text-decoration:underline">Karen.Mingham@sa.gov.au</a></li><li><strong>IV iron, day-patient:</strong> Medical Infusion Service — <a href="mailto:HealthNalhnMedicalInfusionService@sa.gov.au" style="color:var(--accent);text-decoration:underline">HealthNalhnMedicalInfusionService@sa.gov.au</a>. Referral table and pre-filled email on <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="anaemia">Anaemia / IV iron</span></li><li><strong>IV iron at home:</strong> Hospital at Home, organised through the PAC nurses</li></ul></div>
       <div class="card"><div class="card-title">Paper forms kept in clinic</div><ul class="blist"><li><strong>MR 840</strong> — NALHN Pre Anaesthetic Assessment</li><li><strong>MR 581</strong> — Country Patient Anaesthetic Assessment (completed by the local GP)</li><li><strong>ICU / HDU referral form</strong></li><li><strong>Perioperative medicine referral form</strong></li><li><strong>MR82A</strong> — cell salvage consent</li><li><strong>Anaesthetic fact sheets</strong> for the patient to take home — general anaesthetic, or epidural / spinal / regional</li></ul><div class="sublabel" style="margin-top:8px">Cannot find a form? Ask the PAC nurses.</div></div>
       <div class="card"><div class="card-title">NALHN policy documents behind this tool</div><ul class="blist"><li>OWI05728 Preoperative Fasting / Sip Til Send (06/2026) — <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="fasting">Fasting</span></li><li>OWI01210 Pre &amp; Post-Operative Diabetes Management v6.0 (06/2026) — <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="diabetes">Diabetes</span></li><li>OWI04030 Pre-operative SGLT2 Inhibitors (10/2023) — <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="glp1">GLP-1 / SGLT2i</span></li><li>OWI02488 Perioperative Antithrombotic Therapy (04/2024) · OWI04248 Antithrombotics after neck of femur fracture (06/2024) — <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="anticoag">Anticoagulation</span></li><li>OWI02980 Perioperative Patient Blood Management (11/2025) · OWI01225 IV Iron Infusions, Adults (05/2024) · SSI00917 Cell Salvage, LMH (11/2024) — <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="anaemia">Anaemia / IV iron</span></li><li>SSI00270 OSA — Surgical Adult Patient Monitoring, Modbury (04/2024) · SSI05003 Perioperative Bariatric Patient Handling (12/2025) — <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="obesity">Obesity / OSA</span></li><li>OWI01938 Admitted Patients on Opioid Substitution (04/2026) · OWI02563 When-required Opioids (08/2026) — <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="opioids">Opioids / OST</span></li><li>OWI02467 Surgical Day Procedure Pathway (11/2024) · SSI02600 Discharge after a Day Procedure (04/2024) — <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="localpathways">Local pathways</span></li><li>CALHN-GDE06093 Pre-Operative Medication Management (2023; no NALHN equivalent) — <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="meds">Hold / Continue</span></li><li>Also referred to: OWI00688 Hypoglycaemia · OWI00560 Inpatient Insulin · OWI00934 VTE Prophylaxis · OWI01104 Warfarin Reversal · OWI01243 Heparin Infusions</li></ul><div class="sublabel" style="margin-top:8px">Current versions are on the NALHN policy portal (intranet). A printed or downloaded copy is an informal copy. National and international sources are listed on the <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="home">Dashboard</span>.</div></div>
-      <div class="card"><div class="card-title">Calculators outside this tool</div><ul class="blist"><li><a href="https://riskcalculator.facs.org/RiskCalculator/" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:underline">ACS NSQIP surgical risk calculator ↗</a></li><li><a href="https://data.nela.org.uk/riskcalculator/" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:underline">NELA risk calculator ↗</a> — 30-day mortality after emergency laparotomy (UK audit data)</li><li><a href="https://www.anzca.edu.au/safety-and-advocacy/opioid-calculator" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:underline">ANZCA / FPM opioid calculator ↗</a></li></ul></div>
+      <div class="card"><div class="card-title">Calculators outside this tool</div><ul class="blist"><li><a href="https://www.sobauk.co.uk/_files/ugd/373d41_eebe369c3c6b4021bff6f3da059aa796.pdf" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:underline">SOBA UK one-page guideline — Anaesthesia for Patients Living with Obesity (2022) ↗</a> (all SOBA guidelines: <a href="https://www.sobauk.co.uk/guidelines" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:underline">sobauk.co.uk/guidelines ↗</a>)</li><li><a href="https://riskcalculator.facs.org/RiskCalculator/" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:underline">ACS NSQIP surgical risk calculator ↗</a></li><li><a href="https://data.nela.org.uk/riskcalculator/" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:underline">NELA risk calculator ↗</a> — 30-day mortality after emergency laparotomy (UK audit data)</li><li><a href="https://www.anzca.edu.au/safety-and-advocacy/opioid-calculator" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:underline">ANZCA / FPM opioid calculator ↗</a></li></ul></div>
       <div class="card"><div class="card-title">For patients</div><ul class="blist"><li>Quitline — 13 7848</li><li>Printable medicine instruction sheet — from the <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="medtiming">Med timing calculator</span></li></ul></div>
     </div>
   </div>
@@ -2435,6 +2452,7 @@
   <div id="page-anaemia" class="page">
     <div class="page-title">Pre-operative anaemia &amp; IV iron</div>
     <div class="page-sub">CPOC 2025 anaemia guideline · NALHN OWI02980 Perioperative Patient Blood Management (11/2025) · OWI01225 IV Iron Infusions · SSI00917 Cell Salvage</div>
+    <div class="verified-stamp">✓ Verified by Dr David Papendorf – 23.10.26</div>
     <div class="tag-strip"><span class="source-badge">CPOC 2025</span><span class="source-badge">NALHN OWI02980</span><span class="source-badge">NALHN OWI01225</span><span class="source-badge">SSI00917</span></div>
     <div id="an-tabs" style="display:flex;gap:8px;margin:4px 0 14px">
       <div class="an-tab" data-t="workup" onclick="anTab('workup')" style="flex:1;padding:10px 8px;font-size:13.5px;font-weight:600;border:1px solid var(--border2);border-radius:8px;cursor:pointer;text-align:center;font-family:inherit">Anaemia work-up</div>
@@ -2740,7 +2758,7 @@
 
   </div>
 <footer style="margin:28px 0 12px;padding:14px 4px 0;border-top:1px solid var(--border2);font-size:11.5px;color:var(--text3);line-height:1.7">
-  <strong>LMH Pre-Anaesthetic Clinic Reference — v4.21 (draft)</strong> · Last updated 20 October 2026 · Maintained by Dr James Hartley, Department of Anaesthesia &amp; Perioperative Medicine, LMH<br>
+  <strong>LMH Pre-Anaesthetic Clinic Reference — v4.23 (draft)</strong> · Last updated 23 October 2026 · Maintained by Dr James Hartley, Department of Anaesthesia &amp; Perioperative Medicine, LMH<br>
   Decision-support draft collating existing published guidance — source guidelines and their dates are cited on each page. Not a substitute for clinical judgement, local policy or the product information; verify doses independently before prescribing. Complex or uncertain cases should be discussed with a senior anaesthetist. Developed with AI assistance; all clinical content requires consultant verification against primary sources. <strong>Not yet endorsed by NALHN — pending departmental sign-off.</strong>
 </footer>
 </main>
@@ -5115,7 +5133,7 @@ function bindJumps(){ document.querySelectorAll('[data-jump]').forEach(el => { i
    by this file itself.
    >>> CHECK THIS ADDRESS IS CORRECT BEFORE RELEASE <<< */
 const REPORT_EMAIL   = 'james.hartley@sa.gov.au';
-const REPORT_VERSION = 'v4.21 draft';
+const REPORT_VERSION = 'v4.23 draft';
 
 (function () {
   const fab     = document.getElementById('report-fab');
@@ -5429,10 +5447,11 @@ function calcPosar() {
   const box = document.getElementById('posar-result'); if (!box) return;
   const sel = id => (document.querySelector('#' + id + ' .seg-btn.on') || {dataset:{v:''}}).dataset.v;
   const chk = id => document.getElementById(id).checked;
-  const osa = sel('posar-osa'), stay = sel('posar-stay'), surg = parseInt(sel('posar-surg')), op = sel('posar-op');
+  const osa = sel('posar-osa'), stay = sel('posar-stay'), op = sel('posar-op');
+  const major = chk('posar-major');
   const cpap = chk('posar-cpap'), ohs = chk('posar-ohs'), comorb = chk('posar-comorb');
   const confirmed = (osa === 'mild' || osa === 'mod' || osa === 'sev');
-  const modHigh = (op === 'high' || op === 'iv');   /* SSI00270: more than 10 mg oxycodone-equivalent in 12 h, or parenteral / neuraxial */
+  const modHigh = (op === 'high');   /* SSI00270: more than 10 mg oxycodone-equivalent in 12 h */
 
   /* ---- NALHN SSI00270, Tables 1 and 2 ---- */
   let bed = false, review = false, extended = false;
@@ -5443,41 +5462,52 @@ function calcPosar() {
   else if (osa === 'mod') { if (stay === 'night') bed = true; }
   else if (osa === 'sev') { if (stay === 'night') bed = true; else if (!cpap) review = true; }
   const pp = ' <span style="font-size:11px;color:var(--text3)">(practice point)</span>';
-  const highRisk = (ohs || ((osa === 'mod' || osa === 'sev') && !cpap && surg === 3));   /* confirmed moderate/severe OSA, not using CPAP, major surgery */
-  const stepDown = bed && surg === 0 && (op === 'none' || op === 'low');   /* local or regional only, no sedation, no more than low-dose opioid */
+  const highRisk = (ohs || ((osa === 'mod' || osa === 'sev') && !cpap && major));   /* confirmed moderate/severe OSA, not using CPAP, major surgery */
   let pc, pt;
-  if (highRisk) { pc = 'var(--red)'; pt = '<strong>HDU / ICU — either site.</strong>'; }
-  else if (stepDown) { pc = 'var(--amber)'; pt = '<strong>Monitored bed not usually needed — anaesthetist\'s judgement.</strong>'; }
-  else if (bed) { pc = 'var(--red)'; pt = '<strong>OSA monitored bed overnight.</strong>'; }
+  if (highRisk && stay === 'day') { pc = 'var(--amber)'; pt = '<strong>Is a day procedure right for this patient?</strong>'; }
+  else if (highRisk) { pc = 'var(--red)'; pt = '<strong>HDU / ICU — either site.</strong>'; }
+  else if (bed) { pc = 'var(--red)'; pt = '<strong>OSA monitored bed overnight — HDU.</strong>'; }
   else if (extended) { pc = 'var(--amber)'; pt = '<strong>Extended stay and anaesthetic review before discharge.</strong>'; }
   else if (review) { pc = 'var(--amber)'; pt = '<strong>Standard care, with anaesthetic review before discharge.</strong>'; }
   else { pc = 'var(--green)'; pt = '<strong>Standard care.</strong>'; }
   let how = '';
-  if (highRisk) how = (ohs ? 'Obesity hypoventilation' : 'Not using CPAP with major surgery') + ' — book HDU/ICU at LMH or Modbury' + pp + '. Complete the paper form and flag it to the PAC nurses; LMH ICU also needs a consultant or registrar discussion.';
-  else if (stepDown) how = 'The SSI00270 table gives a monitored bed for any overnight stay at this OSA level, but it does not distinguish anaesthetic technique. After local or regional anaesthesia with no sedation and no more than low-dose opioid, ward care with the patient\'s own CPAP is reasonable' + pp + '. Document the decision.';
-  else if (bed) how = '<strong>LMH:</strong> ward bed with overnight continuous pulse oximetry — add the order on Sunrise. <strong>Modbury:</strong> HDU — complete the paper referral and flag it to the PAC nurses.';
+  if (highRisk && stay === 'day') how = (ohs ? 'Obesity hypoventilation — if not already diagnosed, refer to respiratory (± sleep study) first and consider deferring (step 3)' : 'Not using CPAP with major surgery') + '. Discuss with the list consultant; if admitted, book HDU/ICU' + pp + '.';
+  else if (highRisk) how = (ohs ? 'Obesity hypoventilation — refer to respiratory (± sleep study) if not already diagnosed' : 'Not using CPAP with major surgery') + ' — book HDU/ICU at LMH or Modbury' + pp + '. Complete the paper form and flag it to the PAC nurses; LMH ICU also needs a consultant or registrar discussion.';
+  else if (bed) how = 'Book HDU at LMH or Modbury — complete the paper form and flag it to the PAC nurses. If no LMH HDU bed is available, review in recovery: ward is acceptable at the anaesthetist\'s discretion once settled with no period of hypopnoea or apnoea for 1 hour' + pp + '.';
   else if (extended) how = 'At least 3 hours on continuous oximetry in the Day Procedure Unit if more than 10 mg oxycodone-equivalent is given.';
-  /* ---- step-up prompts: SSI00270 section 2.4.5 and the Canterbury cards ---- */
+  /* ---- 'also consider' prompts: SSI00270 section 2.4.5 ---- */
   const why = [];
-  if (surg === 3) why.push('major surgery');
-  if (op === 'iv') why.push('IV / PCA or neuraxial opioid');
+  if (major) why.push('major or airway surgery');
   if (confirmed && !cpap) why.push('not using CPAP');
   if (ohs) why.push('obesity hypoventilation');
-  if (comorb) why.push('severe cardiorespiratory comorbidity');
+  if (comorb) why.push('COPD or significant cardiac / cerebrovascular disease');
   let also = '';
   if (!bed && !highRisk && why.length && (osa !== 'none' || ohs || comorb)) {
-    if (osa === 'none') also = '<strong>Also consider:</strong> ' + why.join(', ') + ' — SSI00270 does not grade this patient, but the risk is higher. Discuss with the list consultant' + pp + '.';
-    else if (stay === 'night') also = '<strong>Also consider:</strong> ' + why.join(', ') + ' — keep on continuous oximetry for at least the first night (SSI00270), and consider a monitored bed.';
+    if (osa === 'none') also = '<strong>Also consider:</strong> ' + why.join(', ') + ' — the guideline does not grade this patient, but the risk is higher. Discuss with the list consultant' + pp + '.';
+    else if (stay === 'night') also = '<strong>Also consider:</strong> ' + why.join(', ') + ' — the guideline advises first-night SpO₂ monitoring for these patients; consider HDU (anaesthetist\'s judgement).';
     else also = '<strong>Also consider:</strong> ' + why.join(', ') + ' — is a day procedure right for this patient? Discuss with the list consultant' + pp + '.';
   }
   box.innerHTML =
-    '<div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-weight:600">NALHN SSI00270</div>' +
+    '<div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-weight:600">NALHN OSA guideline</div>' +
     '<div style="font-size:16px;color:' + pc + ';margin:3px 0 4px">' + pt + '</div>' +
     (how ? '<div style="font-size:12.5px;color:var(--text2)">' + how + '</div>' : '') +
     (also ? '<div style="font-size:12.5px;margin-top:8px;padding:8px 10px;border-left:3px solid var(--amber);background:var(--amber-soft)">' + also + '</div>' : '') +
     '<div style="font-size:11.5px;color:var(--text3);margin-top:8px">Signs of sleep apnoea after the procedure → step up to an extended stay or a monitored bed, whatever was planned.</div>';
 }
 if (document.getElementById('posar-result')) { calcPosar(); }
+/* OS-MRS — Obesity Surgery Mortality Risk Score (DeMaria 2007; SOBA 2015 Table 4) */
+function calcOsmrs() {
+  const box = document.getElementById('osmrs-result'); if (!box) return;
+  const n = document.querySelectorAll('.osmrs:checked').length;
+  let cls, mort, col, act;
+  if (n <= 1) { cls = 'Class A'; mort = '0.2–0.3%'; col = 'var(--green)'; act = 'Low risk on this score.'; }
+  else if (n <= 3) { cls = 'Class B'; mort = '1.1–1.5%'; col = 'var(--amber)'; act = 'Intermediate risk on this score.'; }
+  else { cls = 'Class C'; mort = '2.4–3.0%'; col = 'var(--red)'; act = 'Discuss with a consultant; an anaesthetist experienced with these patients; more likely to need closer post-op monitoring (HDU).'; }
+  box.innerHTML = '<div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-weight:600">OS-MRS</div>' +
+    '<div style="font-size:16px;color:' + col + ';margin:3px 0 4px"><strong>' + n + ' / 5 — ' + cls + '</strong> · mortality ' + mort + ' (bariatric surgery)</div>' +
+    '<div style="font-size:12.5px;color:var(--text2)">' + act + '</div>';
+}
+if (document.getElementById('osmrs-result')) { calcOsmrs(); }
 
 </script>
 </body>
