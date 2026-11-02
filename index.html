@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LMH Pre-Anaesthetic Clinic Reference — v4.23 draft</title>
+<title>LMH Pre-Anaesthetic Clinic Reference — v4.25 draft</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
@@ -167,6 +167,7 @@
   @keyframes fade { from { opacity: 0; transform: translateY(4px);} to { opacity: 1; transform: none;} }
   .page-title { font-family: var(--serif); font-size: 24px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
   .page-sub { font-size: 13px; color: var(--text3); margin-bottom: 18px; }
+#hb-box select.au { width:100%; max-width:280px; padding:6px 10px; border:1px solid var(--border2); border-radius:var(--radius); background:var(--bg2); color:var(--text); font-family:inherit; font-size:12.5px; justify-self:end; }
 .verified-stamp { display:inline-block; font-size:12.5px; font-weight:600; color:var(--green); background:var(--green-soft, rgba(46,160,67,0.10)); border:1px solid currentColor; border-radius:6px; padding:4px 10px; margin:-8px 0 16px; }
   /* REVIEW / PROVENANCE STRIP */
   .review-strip { display:flex; flex-wrap:wrap; align-items:center; gap:6px 12px; font-size:12px; padding:7px 12px; border-radius:var(--radius); margin:-8px 0 18px; border:1px solid var(--border); background:var(--bg3); color:var(--text2); }
@@ -393,7 +394,7 @@
   <div class="logo">
     <div class="logo-title">Pre-Anaesthetic Clinic</div>
     <div class="logo-sub">Lyell McEwin Hospital · NALHN</div>
-    <span class="logo-badge">SA HEALTH</span> <span class="logo-badge" style="background:rgba(230,162,60,0.22);color:#e6a23c">V4.23 DRAFT</span>
+    <span class="logo-badge">SA HEALTH</span> <span class="logo-badge" style="background:rgba(230,162,60,0.22);color:#e6a23c">V4.25 DRAFT</span>
   </div>
   <nav id="nav">
     <div class="nav-group">
@@ -451,7 +452,7 @@
   <div class="rail-foot">
     <div class="rail-foot-txt">
       ANZCA PG07 2024 · ADS-ANZCA 2022 · ACC/AHA 2024 · ANZCA/ADS GLP-1 2025 · CHEST 2022 · ESAIC 2025 · ASRA 5th ed 2025 · CPOC/BSH anaemia 2024–25
-      <br><br><span style="color:#ec6a5e">⚠ Reference only — verify against local NALHN policy. Discuss complex cases with a senior anaesthetist.</span><br><br><span style="color:#8db8f7">v4.23 DRAFT · 23 Oct 2026<br>Runs entirely in your browser — nothing entered is stored or transmitted.</span>
+      <br><br><span style="color:#ec6a5e">⚠ Reference only — verify against local NALHN policy. Discuss complex cases with a senior anaesthetist.</span><br><br><span style="color:#8db8f7">v4.25 DRAFT · 2 Nov 2026<br>Runs entirely in your browser — nothing entered is stored or transmitted.</span>
     </div>
   </div>
 </aside>
@@ -1127,7 +1128,7 @@
       <ul class="steps">
         <li><div class="step-num">1</div><div class="step-text"><strong>Screen for OSA</strong> — <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="stopbang">STOP-Bang</span> on everyone; check the booking form, GP referral, EMR and the patient's pre-admission questionnaire for a known diagnosis. Known OSA: record the AHI</div></li>
         <li><div class="step-num">2</div><div class="step-text"><strong>Decide the bed</strong> — use the tool below (NALHN OSA guideline, both sites; a monitored bed means HDU). Document it so the bed is planned</div></li>
-        <li><div class="step-num">3</div><div class="step-text"><strong>Look for hypoventilation</strong> if BMI ≥35 or STOP-Bang ≥3 — SpO₂ on air and bicarbonate. <strong>SpO₂ &lt;95% or bicarbonate &gt;27 mmol/L = possible obesity hypoventilation</strong> → tell the list consultant; if not already diagnosed, refer to respiratory ± sleep study and <strong>consider deferring</strong>; if proceeding, set a target SpO₂ and book HDU/ICU <span style="font-size:11px;color:var(--text3)">(practice point)</span></div></li>
+        <li><div class="step-num">3</div><div class="step-text"><strong>Look for hypoventilation</strong> if BMI ≥35 or STOP-Bang ≥3 — SpO₂ on air and bicarbonate. A raised bicarbonate on its own is common: if it is <strong>over 27 mmol/L</strong>, take a <strong>venous or arterial gas in clinic</strong> (no tourniquet for a venous sample) where the result will change the plan. <strong>SpO₂ &lt;95%, or a raised CO₂ on the gas = possible obesity hypoventilation</strong> → tell the list consultant; if not already diagnosed, refer to respiratory ± sleep study and <strong>consider deferring</strong>; if proceeding, set a target SpO₂ and book HDU/ICU <span style="font-size:11px;color:var(--text3)">(practice point)</span></div></li>
         <li><div class="step-num">4</div><div class="step-text"><strong>Advise them to bring their CPAP</strong> if they have one — record settings and how reliably they use it</div></li>
       </ul>
     </div>
@@ -1147,11 +1148,11 @@
           <div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-weight:600;margin-bottom:6px;margin-top:10px">Operation</div>
           <label class="calc-row" style="cursor:pointer"><input type="checkbox" id="posar-major" onchange="calcPosar()"><span style="font-size:12.5px;margin-left:8px">Major surgery, or surgery affecting the airway or respiratory system</span></label>
           <div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-weight:600;margin-bottom:6px;margin-top:10px">Expected post-op opioid (oral oxycodone-equivalent in 12 h)</div>
-          <div class="calc-seg" id="posar-op"><div class="seg-btn on" data-v="none" onclick="posarPick(this,'posar-op')">None or low-dose<br>up to 10 mg</div><div class="seg-btn" data-v="high" onclick="posarPick(this,'posar-op')">Moderate to high<br>over 10 mg</div></div>
+          <div class="calc-seg" id="posar-op"><div class="seg-btn on" data-v="none" onclick="posarPick(this,'posar-op')">None or low-dose<br>up to 10 mg in 12 h</div><div class="seg-btn" data-v="high" onclick="posarPick(this,'posar-op')">Moderate to high<br>over 10 mg in 12 h</div></div>
         </div>
       </div>
       <div class="calc-result" id="posar-result" style="margin-top:12px"></div>
-      <ul class="blist" style="margin-top:8px;font-size:12px;color:var(--text2)"><li>Opioid doses are oral oxycodone-equivalent in 12 hours; the guideline counts more than 10 mg as moderate-to-high.</li><li><strong>No HDU bed — Modbury</strong> (policy): monitor in the Day Procedure Unit until 19:30 while the anaesthetist or HDU registrar prioritises the bed; step-down at their discretion</li><li><strong>No HDU bed — LMH</strong> (practice): review in recovery — ward is acceptable at the anaesthetist's discretion once settled with no period of hypopnoea or apnoea for 1 hour, normal breathing and SpO₂ at baseline <span style="font-size:11px;color:var(--text3)">(practice point)</span></li></ul>
+      <ul class="blist" style="margin-top:8px;font-size:12px;color:var(--text2)"><li><strong>Moderate-to-high = more than 10 mg oral oxycodone in 12 hours</strong> (not per day). That is about the same as more than 15 mg oral morphine, <strong>75 mg tramadol</strong> or <strong>50 mg tapentadol</strong> in 12 hours — tramadol and tapentadol count. Equivalents from the FPM oMEDD factors.</li><li><strong>No HDU bed — Modbury</strong> (policy): monitor in the Day Procedure Unit until 19:30 while the anaesthetist or HDU registrar prioritises the bed; step-down at their discretion</li><li><strong>No HDU bed — LMH</strong> (practice): review in recovery — ward is acceptable at the anaesthetist's discretion once settled with no period of hypopnoea or apnoea for 1 hour, normal breathing and SpO₂ at baseline <span style="font-size:11px;color:var(--text3)">(practice point)</span></li></ul>
       <details style="margin-top:10px"><summary style="cursor:pointer;font-size:13px;font-weight:600;padding:9px 13px;background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius)">The NALHN OSA guideline tables in full · click to expand</summary><div style="margin-top:10px">
       <div class="grid-2">
         <div>
@@ -1346,7 +1347,7 @@
       <ul class="steps">
         <li><div class="step-num">1</div><div class="step-text"><strong>Score the Clinical Frailty Scale</strong> in anyone <strong>≥65 having elevated-risk surgery</strong>, and in younger patients who look frail. Under a minute; of all the frailty tools it is the most feasible and the most strongly linked to death and non-home discharge</div></li>
         <li><div class="step-num">2</div><div class="step-text"><strong>CFS ≥5 = frail.</strong> Consider referral to geriatrics / perioperative medicine, and for elective or time-sensitive surgery consider <strong>delaying to optimise</strong> cognition, nutrition and comorbidity first; prehabilitation where there is time</div></li>
-        <li><div class="step-num">3</div><div class="step-text"><strong>Assess delirium risk</strong> — routinely in older patients. Frailty itself is the strongest predictor; add cognitive impairment, previous delirium, sensory impairment, polypharmacy, alcohol. Screen cognition (e.g. 4AT) <span style="font-size:11px;color:var(--text3)">(practice point)</span> and <strong>flag on the chart</strong> so the ward plans for it</div></li>
+        <li><div class="step-num">3</div><div class="step-text"><strong>Assess delirium risk</strong> — routinely in older patients. Frailty itself is the strongest predictor; add cognitive impairment, previous delirium, sensory impairment, polypharmacy, alcohol. Record a <strong>baseline</strong> — AMT4 (age, date of birth, place, year) and attention (months of the year backwards) — so the ward has something to compare with; the full 4AT is for suspected delirium after surgery, as its acute-change item needs a baseline <span style="font-size:11px;color:var(--text3)">(practice point)</span>. <strong>Flag on the chart</strong> so the ward plans for it</div></li>
         <li><div class="step-num">4</div><div class="step-text"><strong>Shared decision-making</strong> — expected functional and cognitive outcome, not just survival; the non-operative option is a legitimate part of the conversation. Document goals of care and any advance care directive</div></li>
       </ul>
     </div>
@@ -1858,7 +1859,7 @@
   <div id="page-bloods" class="page">
     <div class="page-title">Pre-operative tests — who needs what</div>
     <div class="page-sub">Routine tests by ASA grade × surgery grade, plus the indication-based extras (ECG, biomarkers, echo, group &amp; hold)</div>
-    <div class="tag-strip"><span class="source-badge">NICE NG45 2016</span><span class="source-badge">Queensland SWAPNet 2021</span><span class="source-badge">Choosing Wisely Australia (ANZCA)</span><span class="source-badge">ACC/AHA 2024</span></div>
+    <div class="tag-strip"><span class="source-badge">NICE NG45 2016</span><span class="source-badge">Queensland SWAPNet 2021</span><span class="source-badge">Choosing Wisely Australia (ANZCA)</span><span class="source-badge">ACC/AHA 2024</span><span class="source-badge">ADS-ANZCA 2022 (HbA1c)</span><span class="source-badge">NBA PBM Module 2 · CPOC 2025 (iron)</span></div>
 
     <div class="alert alert-blue"><strong>Principle (Choosing Wisely Australia — ANZCA):</strong> avoid routine pre-operative blood tests, chest X-ray or spirometry; order in response to patient factors, symptoms and signs, disease, or the planned surgery. The grid below is NICE NG45, adopted for Australian practice by Queensland Health (SWAPNet 2021). Covers elective surgery in adults; <strong>excludes</strong> pregnancy, cardiothoracic surgery and neurosurgery. No NALHN rule — check against local pathology ordering practice.</div>
 
@@ -1907,6 +1908,51 @@
           <div id="bl-result"></div>
         </div>
       </div>
+    </div>
+
+    <div class="section-header">HbA1c — does this patient need one?</div>
+    <div class="calc-box" id="hb-box" style="margin-bottom:16px">
+      <div style="font-size:12.5px;color:var(--text2);margin-bottom:10px">ADS-ANZCA 2022 (§5.2.2 and Figure 2). Up to 30% of patients having surgery have undiagnosed diabetes. Not for screening in pregnancy. Nothing is stored.</div>
+      <div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-weight:600;margin-bottom:6px">Known diabetes?</div>
+      <div class="calc-seg" id="hb-dm"><div class="seg-btn" data-v="yes" onclick="hbPick(this,'hb-dm')">Yes</div><div class="seg-btn on" data-v="no" onclick="hbPick(this,'hb-dm')">No</div></div>
+      <div id="hb-yes" style="display:none;margin-top:8px">
+        <label class="calc-row" style="cursor:pointer"><input type="checkbox" id="hb-recent" onchange="calcHba1c()"><span style="font-size:12.5px;margin-left:8px">HbA1c already done in the last 3 months</span></label>
+      </div>
+      <div id="hb-no" style="margin-top:10px">
+        <div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-weight:600;margin-bottom:6px">Operation</div>
+        <div class="calc-seg" id="hb-surg"><div class="seg-btn on" data-v="major" onclick="hbPick(this,'hb-surg')">Major / complex</div><div class="seg-btn" data-v="minor" onclick="hbPick(this,'hb-surg')">Minor or intermediate</div></div>
+        <div id="hb-major-only">
+        <div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-weight:600;margin:12px 0 2px">Tick any that apply — one is enough</div>
+          <label class="calc-row" style="cursor:pointer"><input type="checkbox" class="hb-crit" onchange="calcHba1c()"><span style="font-size:12.5px;margin-left:8px">Over 40</span></label>
+          <label class="calc-row" style="cursor:pointer"><input type="checkbox" class="hb-crit" onchange="calcHba1c()"><span style="font-size:12.5px;margin-left:8px">Aboriginal or Torres Strait Islander, and over 18</span></label>
+          <label class="calc-row" style="cursor:pointer"><input type="checkbox" class="hb-crit" onchange="calcHba1c()"><span style="font-size:12.5px;margin-left:8px">BMI over 35</span></label>
+          <label class="calc-row" style="cursor:pointer"><input type="checkbox" class="hb-crit" id="hb-aus" onchange="calcHba1c()"><span style="font-size:12.5px;margin-left:8px">AUSDRISK 6 or more — intermediate or high risk <span style="color:var(--text3)">(Australian diabetes risk score — work it out below)</span></span></label>
+        <label class="calc-row" style="cursor:pointer"><input type="checkbox" class="hb-crit" id="hb-rbg" onchange="calcHba1c()"><span style="font-size:12.5px;margin-left:8px">Random glucose over 5.5 mmol/L</span></label>
+        </div>
+        <label class="calc-row" style="cursor:pointer"><input type="checkbox" id="hb-rbg12" onchange="calcHba1c()"><span style="font-size:12.5px;margin-left:8px">Random glucose over 12 mmol/L (if one has been done)</span></label>
+      </div>
+      <div class="calc-result" id="hb-result" style="margin-top:12px"></div>
+      <details style="margin-top:12px">
+        <summary style="cursor:pointer;font-size:13px;font-weight:600;padding:11px 15px;background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius-lg)">What is AUSDRISK? — explanation and calculator · click to expand</summary>
+        <div class="card" style="margin-top:8px">
+          <div style="font-size:12.5px;color:var(--text2);margin-bottom:10px"><strong>AUSDRISK</strong> is the <strong>Australian Type 2 Diabetes Risk Assessment Tool</strong> — ten quick questions, scored 0–35, that predict a person's chance of developing type 2 diabetes in the next 5 years. It was developed by the Baker Heart and Diabetes Institute for the Australian Government and is reproduced in ADS-ANZCA 2022 (Appendix B). <strong>5 or less</strong> = low risk · <strong>6–11</strong> = intermediate · <strong>12 or more</strong> = high. ADS-ANZCA: if AUSDRISK isn't practical in clinic, <strong>BMI over 35</strong> can stand in for it. It may overestimate risk under 25.</div>
+          <div class="au-grid" style="display:grid;grid-template-columns:1fr minmax(0,280px);gap:6px 12px;align-items:center;font-size:12.5px">
+            <span>Age</span><select class="au" id="au-age" onchange="calcAusdrisk()"><option value="0">Under 35</option><option value="2">35–44</option><option value="4">45–54</option><option value="6">55–64</option><option value="8">65 or over</option></select>
+            <span>Sex</span><select class="au" id="au-sex" onchange="calcAusdrisk()"><option value="0">Female</option><option value="3">Male</option></select>
+            <span>Aboriginal, Torres Strait Islander, Pacific Islander or Māori descent</span><select class="au" onchange="calcAusdrisk()"><option value="0">No</option><option value="2">Yes</option></select>
+            <span>Born in</span><select class="au" onchange="calcAusdrisk()"><option value="0">Australia</option><option value="2">Asia (incl. Indian subcontinent), Middle East, North Africa, Southern Europe</option><option value="0">Elsewhere</option></select>
+            <span>Parent or sibling with diabetes (type 1 or 2)</span><select class="au" onchange="calcAusdrisk()"><option value="0">No</option><option value="3">Yes</option></select>
+            <span>Ever found to have high blood glucose (health check, illness, pregnancy)</span><select class="au" onchange="calcAusdrisk()"><option value="0">No</option><option value="6">Yes</option></select>
+            <span>Takes blood-pressure medication</span><select class="au" onchange="calcAusdrisk()"><option value="0">No</option><option value="2">Yes</option></select>
+            <span>Smokes daily</span><select class="au" onchange="calcAusdrisk()"><option value="0">No</option><option value="2">Yes</option></select>
+            <span>Eats vegetables or fruit every day</span><select class="au" onchange="calcAusdrisk()"><option value="0">Yes</option><option value="1">No</option></select>
+            <span>At least 2.5 hours of physical activity a week</span><select class="au" onchange="calcAusdrisk()"><option value="0">Yes</option><option value="2">No</option></select>
+            <span>Waist, below the ribs at the navel, standing (cm)</span><input type="number" id="au-waist" placeholder="cm" oninput="calcAusdrisk()" style="justify-self:end;width:90px;padding:6px 10px;border:1px solid var(--border2);border-radius:var(--radius);background:var(--bg2);color:var(--text);font-family:inherit">
+          </div>
+          <label class="calc-row" style="cursor:pointer;margin-top:6px"><input type="checkbox" id="au-asian" onchange="calcAusdrisk()"><span style="font-size:12.5px;margin-left:8px">Asian, or Aboriginal or Torres Strait Islander descent — uses the lower waist cut-offs</span></label>
+          <div class="calc-result" id="au-result" style="margin-top:10px"></div>
+        </div>
+      </details>
     </div>
 
     <div class="section-header">Group &amp; screen and getting bloods done</div>
@@ -1968,7 +2014,8 @@
       <div class="card">
         <div class="card-title">Offer / consider regardless of grade</div>
         <ul class="blist">
-          <li><strong>HbA1c</strong> — offer to people <em>with diabetes</em> not tested in last 3 months. Do NOT routinely offer to people without diagnosed diabetes.</li>
+          <li><strong>HbA1c</strong> (ADS-ANZCA 2022) — known diabetes: if none in the last 3 months. No known diabetes, <strong>major surgery</strong>: if over 40, Aboriginal or Torres Strait Islander and over 18, BMI over 35, AUSDRISK (the Australian diabetes risk score) 6 or more, or random glucose over 5.5 mmol/L. Minor or intermediate surgery: consider a random glucose with the other bloods. Copy results to the GP. Use the <strong>HbA1c checker</strong> under the selector.</li>
+          <li><strong>Iron studies — ferritin, transferrin saturation, CRP</strong> (NBA PBM Module 2; CPOC 2025) — with the FBC whenever blood loss is expected: major surgery, a procedure that needs a group &amp; screen, or expected loss over 500 mL. See <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="anaemia">Anaemia / IV iron</span>.</li>
           <li><strong>Pregnancy test</strong> — sensitively ask all women of childbearing potential on day of surgery; test with consent if any doubt. Use a documented local protocol.</li>
           <li><strong>Echocardiography (resting)</strong> — not routine. Consider for a murmur with any cardiac symptom, signs or symptoms of heart failure, or suspected moderate-or-worse valve disease or pulmonary hypertension — do an ECG first (details below).</li>
         </ul>
@@ -1979,7 +2026,6 @@
           <li><strong>Urine dipstick</strong> — only midstream M/C/S if a UTI would change the decision to operate</li>
           <li><strong>Sickle cell test</strong> — instead ask about personal/family history; liaise with sickle cell service if known disease</li>
           <li><strong>Chest X-ray and spirometry</strong> — not routine before surgery</li>
-          <li><strong>HbA1c in non-diabetics</strong></li>
         </ul>
         <div class="alert alert-amber" style="margin-top:10px;margin-bottom:0"><strong>Anticoagulants:</strong> routine coagulation tests do not assess DOAC effect — DOAC levels can't be measured by routine coagulation testing. Make an individualised plan per local guidance (see <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="anticoag">Anticoagulation page</span>).</div>
       </div>
@@ -2063,7 +2109,7 @@
             <li><strong>Full blood count:</strong> expected significant blood loss, known or suspected anaemia (see <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="anaemia">Anaemia</span>), haematological disorder, immunosuppression, liver or kidney disease, chronic inflammatory disease</li>
             <li><strong>Kidney function:</strong> age over 65, hypertension, diabetes, chronic kidney disease, diuretics, ACE inhibitors or ARBs, NSAIDs, SGLT2 inhibitors, bowel preparation, planned contrast, DOAC or LMWH dosing. Known chronic kidney disease: eGFR and proteinuria (ESAIC 2025)</li>
             <li><strong>Coagulation:</strong> known or suspected bleeding disorder, liver disease, haematological malignancy, major bleeding-risk surgery; warfarin — INR the day before. Routine tests do not measure DOAC effect</li>
-            <li><strong>Glucose:</strong> random glucose above 11 mmol/L → HbA1c. SGLT2 inhibitors: ketones on the day of surgery (NALHN OWI04030) — see <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="glp1">GLP-1 / SGLT2i</span></li>
+            <li><strong>Glucose:</strong> random glucose over 5.5 mmol/L is one of the HbA1c criteria before major surgery; over 12 mmol/L → manage as diabetes (ADS-ANZCA 2022). SGLT2 inhibitors: ketones on the day of surgery (NALHN OWI04030) — see <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="glp1">GLP-1 / SGLT2i</span></li>
           </ul>
         </div>
         <div class="card" style="margin-top:14px">
@@ -2618,7 +2664,7 @@
     <div class="page-title">Chronic opioids, OST &amp; substance use</div>
     <div class="page-sub">ANZCA PS41(G) Acute pain 2023 · FPM PS01(PM) Opioids in chronic non-cancer pain 2025 (+ Appendix 2 oMEDD) · FPM/CPOC Surgery and Opioids 2021 (UK) · Australasian Anaesthesia 2023 (naltrexone) · NALHN OWI01938 (opioid substitution, 04/2026) · NALHN OWI02563 (when-required opioids, 08/2026)</div>
     <div class="tag-strip"><span class="source-badge">NALHN OWI01938</span><span class="source-badge">NALHN OWI02563</span><span class="source-badge">ANZCA PS41(G) 2023</span><span class="source-badge">FPM PS01(PM) 2025</span><span class="source-badge">FPM/CPOC 2021</span><span class="source-badge">Australasian Anaesthesia 2023</span></div>
-    <div class="alert alert-blue"><strong>Principle:</strong> patients on chronic opioids or opioid substitution therapy (OST — Suboxone, methadone, depot buprenorphine) have a higher baseline requirement and are at risk of withdrawal, under-treated pain and respiratory events. Identify them in the PAC, confirm the prescriber and current dose, and make an explicit multimodal plan.</div>
+    <div class="alert alert-blue"><strong>Principle:</strong> patients on chronic opioids or opioid substitution therapy (OST — Suboxone, methadone, depot buprenorphine) have a higher baseline requirement and are at risk of withdrawal, under-treated pain and respiratory events. Identify them in the PAC, confirm the prescriber and current dose, and make an explicit multimodal plan. <strong>Document the oMEDD in every assessment</strong> — <span style="cursor:pointer;text-decoration:underline" data-jump="omedd">oMEDD calculator</span>.</div>
     <div class="grid-2">
       <div>
         <div class="card">
@@ -2678,7 +2724,7 @@
     <div class="page-title">oMEDD — oral Morphine Equivalent Daily Dose</div>
     <div class="page-sub">FPM ANZCA PS01(PM) Appendix 2 (2025 update) conversion factors · enter total daily doses; patches in mcg/hr</div>
     <div class="tag-strip"><span class="source-badge">FPM PS01(PM) App 2 · Oct 2025</span><span class="source-badge">FPM Opioid Calculator</span><span class="source-badge">ANZCA PS41(G) 2023</span></div>
-    <div class="alert alert-amber"><strong>For dose comparison only — not for opioid switching/rotation.</strong> Giving a calculated "equivalent" dose of a replacement opioid can overdose the patient. Methadone and fentanyl lozenges are excluded (complex, variable kinetics) — involve APS / pain medicine. Count <strong>both</strong> modified-release and immediate-release doses.</div>
+    <div class="alert alert-amber"><strong>For dose comparison only — not for opioid switching/rotation.</strong> Giving a calculated "equivalent" dose of a replacement opioid can overdose the patient. Methadone and fentanyl lozenges are excluded (complex, variable kinetics) — involve APS / pain medicine. Count <strong>both</strong> modified-release and immediate-release doses. <strong>Document the oMEDD in every PAC assessment of a patient taking opioids.</strong></div>
     <div class="grid-2">
       <div class="calc-box">
         <div style="font-size:13px;font-weight:600;margin-bottom:6px">Oral (total mg/day)</div>
@@ -2758,7 +2804,7 @@
 
   </div>
 <footer style="margin:28px 0 12px;padding:14px 4px 0;border-top:1px solid var(--border2);font-size:11.5px;color:var(--text3);line-height:1.7">
-  <strong>LMH Pre-Anaesthetic Clinic Reference — v4.23 (draft)</strong> · Last updated 23 October 2026 · Maintained by Dr James Hartley, Department of Anaesthesia &amp; Perioperative Medicine, LMH<br>
+  <strong>LMH Pre-Anaesthetic Clinic Reference — v4.25 (draft)</strong> · Last updated 2 November 2026 · Maintained by Dr James Hartley, Department of Anaesthesia &amp; Perioperative Medicine, LMH<br>
   Decision-support draft collating existing published guidance — source guidelines and their dates are cited on each page. Not a substitute for clinical judgement, local policy or the product information; verify doses independently before prescribing. Complex or uncertain cases should be discussed with a senior anaesthetist. Developed with AI assistance; all clinical content requires consultant verification against primary sources. <strong>Not yet endorsed by NALHN — pending departmental sign-off.</strong>
 </footer>
 </main>
@@ -3600,7 +3646,10 @@ function filterMeds() {
     if (!anyHit) { const fz = fuzzyNameMatch(q); if (fz) { fuzzyWord = fz.kind === 'brand' ? fz.brand : fz.word; const c = fz.kind === 'brand' ? findMedCard(fz.g) : null; fuzzyCards = new Set(fz.kind === 'brand' ? (c ? [c] : []) : [...fz.cards]); } }
   }
   const note = document.getElementById('med-fuzzy-note');
-  if (note) note.innerHTML = fuzzyCards && fuzzyCards.size ? '<div class="alert alert-amber" style="margin:0 0 10px">No exact match for “' + q.replace(/</g,'&lt;') + '” — showing the closest match, <strong>' + fuzzyWord + '</strong>. Check the spelling.</div>' : '';
+  if (note) note.innerHTML = fuzzyCards && fuzzyCards.size ? '<div class="alert alert-amber" style="margin:0 0 10px">No exact match for “' + q.replace(/</g,'&lt;') + '” — showing the closest match, ' + fzLinks([fuzzyWord]) + '. Check the spelling.</div>' : '';
+  const _anyShown = !q || brandCards.size || (fuzzyCards && fuzzyCards.size) || [...document.querySelectorAll('#med-list .drug-card')].some(card => (card.dataset.kw||'').includes(q) || card.textContent.toLowerCase().includes(q));
+  const _sg = (note && q.length >= 2 && !_anyShown) ? fuzzySuggest(q) : [];
+  if (note && q.length >= 2 && !_anyShown) note.innerHTML = '<div class="alert alert-red" style="margin:0 0 10px"><strong>Nothing matches “' + q.replace(/</g,'&lt;') + '”.</strong>' + (_sg.length ? ' Did you mean ' + fzLinks(_sg) + '?' : '') + ' Check the spelling against the patient\'s list or the dispensing label, or try the brand name in the <span style="cursor:pointer;text-decoration:underline" onclick="go(\'tradefinder\')">Trade name finder</span>. A medicine not on this page has not been assessed — ask pharmacy.</div>';
   document.querySelectorAll('#med-list [data-group]').forEach(h => {
     const cards = medGroupCards(h);
     let shown = 0;
@@ -3863,16 +3912,39 @@ function renderBl() {
     return '<div style="display:flex;align-items:flex-start;gap:10px;padding:7px 0;border-bottom:1px solid var(--border)"><div style="flex:1;font-size:13px">' + blLabels[k] + '</div><div style="text-align:right">' + pill + txt + '</div></div>';
   }).join('');
   const offers = Object.keys(blLabels).filter(k => k !== 'Lung' && cell[k].startsWith('yes')).map(k => blLabels[k]);
+  const _hb = blHba1c(), _fe = blIron();
+  if (_fe[2]) offers.push('Iron studies (ferritin, TSAT, CRP)');
+  if (_hb[2]) offers.push('HbA1c');
   const summary = offers.length
     ? '<div class="alert alert-green" style="margin:0 0 10px">Routinely offer: <strong>' + offers.join(', ') + '</strong></div>'
     : '<div class="alert alert-blue" style="margin:0 0 10px">No bloods/tests routinely required for this combination — order only if individually indicated.</div>';
   document.getElementById('bl-result').innerHTML = summary + rows + blExtras() +
-    '<div class="sublabel" style="margin-top:8px">Plus: HbA1c if known diabetic &amp; none in 3 months; pregnancy test per protocol. Grid rows: NICE NG45 · extras: ACC/AHA 2024, NICE NG45, SWAPNet 2021, ESAIC 2025.</div>';
+    '<div class="sublabel" style="margin-top:8px">Plus: pregnancy test per protocol. Grid rows: NICE NG45 · extras: ADS-ANZCA 2022 (HbA1c), NBA PBM Module 2 and CPOC 2025 (iron studies), ACC/AHA 2024, NICE NG45, SWAPNet 2021, ESAIC 2025.</div>';
 }
 function toggleBlFlag(el) {
   el.classList.toggle('on');
   blState.flags[el.dataset.v] = el.classList.contains('on');
   renderBl();
+}
+/* HbA1c — ADS-ANZCA 2022 §5.2.2 and Figure 2 */
+function blHba1c() {
+  const f = blState.flags, major = blState.surg === 'major';
+  const pg = '<span class="pill pill-green">', pa = '<span class="pill pill-amber">';
+  const hbLink = ' — <span style="cursor:pointer;color:var(--accent);text-decoration:underline" onclick="document.getElementById(\'hb-box\').scrollIntoView({block:\'center\'})">HbA1c checker</span>';
+  if (major && blState.age !== 'u45') return [pg+'Offer</span>', 'ADS-ANZCA 2022 — major surgery and over 40 (no known diabetes), or known diabetes with none in 3 months. Copy the result to the GP' + hbLink, true];
+  if (major) return [pa+'Check criteria</span>', 'ADS-ANZCA 2022 — known diabetes: if none in 3 months. Otherwise offer if over 40, Aboriginal or Torres Strait Islander and over 18, BMI over 35, AUSDRISK (Australian diabetes risk score) 6 or more, or random glucose over 5.5' + hbLink, false];
+  if (f.dmrenal) return [pa+'If diabetic</span>', 'ADS-ANZCA 2022 — known diabetes with no HbA1c in the last 3 months. No known diabetes: consider a random glucose with the other bloods' + hbLink, false];
+  return [pa+'Consider random glucose</span>', 'ADS-ANZCA 2022 — minor or intermediate surgery: consider a random glucose with the other bloods; HbA1c only for known diabetes with none in 3 months' + hbLink, false];
+}
+/* Iron studies — NBA PBM Module 2 (pre-operative haemoglobin assessment template) · CPOC 2025 · Anaemia page */
+function blIron() {
+  const f = blState.flags, pr = blState.proc;
+  const pg = '<span class="pill pill-green">', pa = '<span class="pill pill-amber">', pn = '<span class="pill pill-gray">';
+  const link = ' — <span style="cursor:pointer;color:var(--accent);text-decoration:underline" onclick="go(\'anaemia\')">Anaemia / IV iron</span>';
+  if (blState.surg === 'major') return [pg+'Offer</span>', 'Ferritin, TSAT and CRP with the FBC — blood loss expected (NBA PBM Module 2; CPOC 2025)' + link, true];
+  if (pr && pr.gs === 'gs') return [pg+'Offer</span>', 'Ferritin, TSAT and CRP with the FBC — this procedure needs a group &amp; screen, so blood loss is possible (NBA PBM Module 2)' + link, true];
+  if (blState.surg === 'intermediate' && (f.cvd || f.dmrenal)) return [pa+'Consider</span>', 'Intermediate surgery with cardiovascular or renal disease (CPOC 2025)' + link, false];
+  return [pn+'Not routinely</span>', 'Unless anaemic on a recent FBC, or expected blood loss over 500 mL' + link, false];
 }
 function blExtras() {
   const f = blState.flags, age = blState.age, elevated = blState.surg !== 'minor', asa34 = blState.asa === '34';
@@ -3917,10 +3989,56 @@ function blExtras() {
     gs[1] += ' (working list)';
   }
   return '<div style="font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-weight:600;margin:14px 0 2px">Indication-based extras</div>' +
-    row('Group &amp; screen', gs[0], gs[1]) + row('ECG', ecg[0], ecg[1]) + row('BNP / NT-proBNP', bnp[0], bnp[1]) + row('Echocardiogram', echo[0], echo[1]) + row('Lung function tests', lung[0], lung[1]);
+    row('Group &amp; screen', gs[0], gs[1]) + row('Iron studies (ferritin, TSAT, CRP)', blIron()[0], blIron()[1]) + row('HbA1c', blHba1c()[0], blHba1c()[1]) + row('ECG', ecg[0], ecg[1]) + row('BNP / NT-proBNP', bnp[0], bnp[1]) + row('Echocardiogram', echo[0], echo[1]) + row('Lung function tests', lung[0], lung[1]);
 }
 
 renderBl();
+
+/* HbA1c checker — ADS-ANZCA 2022 §5.2.2 / Figure 2 */
+function hbPick(el, id) {
+  document.querySelectorAll('#' + id + ' .seg-btn').forEach(b => b.classList.remove('on'));
+  el.classList.add('on'); calcHba1c();
+}
+function calcHba1c() {
+  const box = document.getElementById('hb-result'); if (!box) return;
+  const sel = id => (document.querySelector('#' + id + ' .seg-btn.on') || { dataset: { v: '' } }).dataset.v;
+  const dm = sel('hb-dm') === 'yes', major = sel('hb-surg') === 'major';
+  document.getElementById('hb-yes').style.display = dm ? '' : 'none';
+  document.getElementById('hb-no').style.display = dm ? 'none' : '';
+  document.getElementById('hb-major-only').style.display = major ? '' : 'none';
+  const gp = '<div style="font-size:12px;color:var(--text3);margin-top:6px">Copy the result to the GP. Without known diabetes, 48 mmol/mol (6.5%) or more → manage as diabetes on the day, and the GP confirms with a fasting or random plasma glucose. 75 mmol/mol (9%) or more → consider deferring elective surgery — <span style="cursor:pointer;color:var(--accent);text-decoration:underline" onclick="go(\'diabetes\')">Diabetes</span>.</div>';
+  const out = (c, head, sub, extra) => { box.innerHTML = '<div style="font-size:16px;font-weight:700;color:' + c + ';margin-bottom:4px">' + head + '</div><div style="font-size:12.5px;color:var(--text2)">' + sub + '</div>' + (extra || ''); };
+  if (dm) {
+    if (document.getElementById('hb-recent').checked) return out('var(--green)', 'Not needed', 'Use the result from the last 3 months. Target under 75 mmol/mol (9%) for elective surgery.');
+    return out('var(--accent)', 'Order HbA1c', 'Known diabetes with no HbA1c in the last 3 months.', gp);
+  }
+  if (document.getElementById('hb-rbg12').checked) return out('var(--red)', 'Manage as diabetes', 'Random glucose over 12 mmol/L — treat as diabetes for the peri-operative plan, whatever the HbA1c. Order an HbA1c too.', gp);
+  const crit = [...document.querySelectorAll('.hb-crit')].filter(c => c.checked).length;
+  if (major) {
+    if (crit) return out('var(--accent)', 'Order HbA1c', crit + ' of 5 criteria — one is enough (major surgery, no known diabetes).', gp);
+    return out('var(--green)', 'Not needed', '0 of 5 criteria. Where diabetes is common in the population, ADS-ANZCA says screening everyone having major surgery is reasonable.');
+  }
+  return out('var(--text2)', 'HbA1c not routinely needed', 'Minor or intermediate surgery: consider a random glucose with the other bloods (ADS-ANZCA 2022). Over 12 mmol/L → manage as diabetes.');
+}
+function calcAusdrisk() {
+  const r = document.getElementById('au-result'); if (!r) return;
+  let t = 0; document.querySelectorAll('select.au').forEach(s => { t += parseInt(s.value) || 0; });
+  const w = parseFloat(document.getElementById('au-waist').value);
+  const male = document.getElementById('au-sex').value === '3', low = document.getElementById('au-asian').checked;
+  let wNote = '';
+  if (isNaN(w)) wNote = ' <span style="color:var(--text3)">· waist not entered (adds up to 7)</span>';
+  else {
+    const cut = low ? (male ? [90, 100] : [80, 90]) : (male ? [102, 110] : [88, 100]);
+    t += w < cut[0] ? 0 : (w <= cut[1] ? 4 : 7);
+  }
+  let band, c, risk;
+  if (t <= 5) { band = 'Low risk'; c = 'var(--green)'; risk = 'about 1 in 100 develop diabetes within 5 years'; }
+  else if (t <= 11) { band = 'Intermediate risk'; c = 'var(--amber)'; risk = t <= 8 ? 'about 1 in 50 within 5 years' : 'about 1 in 30 within 5 years'; }
+  else { band = 'High risk'; c = 'var(--red)'; risk = t <= 15 ? 'about 1 in 14 within 5 years' : (t <= 19 ? 'about 1 in 7 within 5 years' : 'about 1 in 3 within 5 years'); }
+  r.innerHTML = '<div style="font-size:16px;font-weight:700;color:' + c + '">AUSDRISK ' + t + ' — ' + band + '</div><div style="font-size:12.5px;color:var(--text2)">' + risk + wNote + '.' + (t >= 6 ? ' Counts as a criterion — ticked in the HbA1c checker above.' : '') + '</div>';
+  const cb = document.getElementById('hb-aus'); if (cb) { cb.checked = t >= 6; calcHba1c(); }
+}
+calcHba1c();
 
 /* ===== TRADE NAME DATA (Australian brands) ===== */
 /* TRADE_NAMES — common Australian brand → {g:generic, c:class}.
@@ -4678,6 +4796,39 @@ function fuzzyNameMatch(q) {
   return Object.assign({ dist: best, query: q }, h);
 }
 
+/* Wider "did you mean" net for misspellings the strict matcher won't auto-match.
+   Within the strict budget a word is matched (and flagged); beyond it, up to 2 edits (7+ letters) or 3 (11+)
+   are only ever SUGGESTED, and only when the first two letters agree. */
+function fuzzySuggest(q, n) {
+  q = (q || '').toLowerCase().trim();
+  if (q.length < 5) return [];
+  const ext = q.length >= 11 ? 3 : (q.length >= 7 ? 2 : 1), base = fuzzyBudget(q);
+  const best = {};
+  for (const e of fuzzyVocab()) {
+    const d = dlDistance(q, e.word, ext);
+    if (d > ext || d === 0) continue;
+    if (d > base && e.word.slice(0, 2) !== q.slice(0, 2)) continue;
+    const label = e.kind === 'brand' ? e.brand : e.word;
+    const key = 'g:' + (e.kind === 'brand' ? String(e.g).toLowerCase() : e.word);
+    if (!best[key] || best[key].d > d) best[key] = { w: label, d: d };
+  }
+  return Object.values(best).sort((a, b) => a.d - b.d || a.w.localeCompare(b.w)).slice(0, n || 3).map(x => x.w);
+}
+function fzLinks(list) {
+  return list.map(w => '<span style="cursor:pointer;text-decoration:underline;font-weight:600;color:var(--accent)" onclick="fzGo(\'' + String(w).replace(/[^a-z0-9 +\-]/gi, '') + '\')">' + w + '</span>').join(' or ');
+}
+/* Clicking a "did you mean" suggestion opens that drug's card on Hold / Continue */
+function fzGo(w) {
+  w = String(w).toLowerCase();
+  const gs = document.getElementById('gsearch');
+  if (gs && gs.value) { gs.value = ''; const sr = document.getElementById('search-results'); if (sr) sr.classList.remove('active'); }
+  let generic = w;
+  if (typeof TRADE_NAMES !== 'undefined' && TRADE_NAMES[w]) generic = TRADE_NAMES[w].g;
+  if (findMedCard(generic)) { tradeOpenCard(generic); return; }
+  go('meds');
+  const inp = document.getElementById('med-search'); if (inp) { inp.value = w; filterMeds(); }
+}
+
 function tradeOpenCard(generic) {
   const c = findMedCard(generic);
   go('meds');
@@ -4707,7 +4858,8 @@ function tradeLookup() {
     else if (fz && fz.kind === 'generic') { matches = brandToGenerics(fz.word).filter(x => x.score >= 2).slice(0, 10); if (!matches.length) matches = [{ brand: fz.word, g: fz.word, c: 'generic name', n: '', score: 0 }]; fuzzyNote = fz.word; }
   }
   if (!matches.length) {
-    out.innerHTML = '<div class="alert alert-amber">No brand matching “' + q.replace(/</g, '&lt;') + '” found. Check spelling, or confirm with pharmacy / the dispensing label. Generic names can be searched on the <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="meds">Hold / Continue page</span>.</div>';
+    const _sg = fuzzySuggest(q);
+    out.innerHTML = '<div class="alert alert-amber">No brand matching “' + q.replace(/</g, '&lt;') + '” found.' + (_sg.length ? ' Did you mean ' + fzLinks(_sg) + '?' : '') + ' Check spelling, or confirm with pharmacy / the dispensing label. Generic names can be searched on the <span style="cursor:pointer;color:var(--accent);text-decoration:underline" data-jump="meds">Hold / Continue page</span>.</div>';
     bindJumps();
     return;
   }
@@ -4787,7 +4939,16 @@ function globalSearch() {
     const safe = m.txt.length>220 ? m.txt.slice(0,220)+'…' : m.txt;
     const hl = safe.replace(re,'<mark>$1</mark>');
     return `<div class="sr-item" onclick="go('${m.page}')"><div class="sr-page">${m.label}</div><div class="sr-text">${hl}</div></div>`;
-  }).join('') || '<div style="color:var(--text3)">No matches.</div>';
+  }).join('') || gsNoMatch(q, terms);
+}
+function gsNoMatch(q, terms) {
+  const safe = q.replace(/</g,'&lt;');
+  let fz = null;
+  if (typeof fuzzyNameMatch === 'function') { fz = fuzzyNameMatch(q); if (!fz) for (const t of terms) { if (t.length >= 4) { fz = fuzzyNameMatch(t); if (fz) break; } } }
+  if (fz) { const w = fz.kind === 'brand' ? fz.brand : fz.word; return '<div class="alert alert-amber" style="margin:0">No match for “' + safe + '”. Did you mean ' + fzLinks([w]) + '? Check the spelling.</div>'; }
+  let sg = fuzzySuggest(q); if (!sg.length) for (const t of terms) { if (t.length >= 5) { sg = fuzzySuggest(t); if (sg.length) break; } }
+  if (sg.length) return '<div class="alert alert-amber" style="margin:0">No match for “' + safe + '”. Did you mean ' + fzLinks(sg) + '? Check the spelling.</div>';
+  return '<div class="alert alert-amber" style="margin:0">No match for “' + safe + '” — check the spelling. A medicine that is not in the app has not been assessed: ask pharmacy.</div>';
 }
 /* CHILD-PUGH */
 const cpState = { bili:1, alb:1, inr:1, ascites:1, enceph:1 };
@@ -5133,7 +5294,7 @@ function bindJumps(){ document.querySelectorAll('[data-jump]').forEach(el => { i
    by this file itself.
    >>> CHECK THIS ADDRESS IS CORRECT BEFORE RELEASE <<< */
 const REPORT_EMAIL   = 'james.hartley@sa.gov.au';
-const REPORT_VERSION = 'v4.23 draft';
+const REPORT_VERSION = 'v4.25 draft';
 
 (function () {
   const fab     = document.getElementById('report-fab');
@@ -5351,7 +5512,7 @@ function checkMedList() {
   if (unknown.length) {
     html += '<div class="alert alert-red" style="margin-bottom:12px"><strong>Not recognised — check these yourself (' + unknown.length + ')</strong>'
          +  '<ul class="blist" style="margin-top:6px">'
-         +  unknown.map(u => '<li>' + mlEsc(u) + '</li>').join('')
+         +  unknown.map(u => { let sg = []; for (const w of mlCleanLine(u).words) { if (w.length >= 5) { sg = fuzzySuggest(w); if (sg.length) break; } } return '<li>' + mlEsc(u) + (sg.length ? ' <span style="color:var(--text2)">— did you mean ' + fzLinks(sg) + '? Correct the line and check again.</span>' : '') + '</li>'; }).join('')
          +  '</ul><div style="margin-top:6px;font-size:12px">A medicine missing from this list has <strong>not</strong> been assessed. Look it up on this page or ask.</div></div>';
   }
   ML_GROUPS.forEach((g, i) => {
@@ -5491,8 +5652,7 @@ function calcPosar() {
     '<div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-weight:600">NALHN OSA guideline</div>' +
     '<div style="font-size:16px;color:' + pc + ';margin:3px 0 4px">' + pt + '</div>' +
     (how ? '<div style="font-size:12.5px;color:var(--text2)">' + how + '</div>' : '') +
-    (also ? '<div style="font-size:12.5px;margin-top:8px;padding:8px 10px;border-left:3px solid var(--amber);background:var(--amber-soft)">' + also + '</div>' : '') +
-    '<div style="font-size:11.5px;color:var(--text3);margin-top:8px">Signs of sleep apnoea after the procedure → step up to an extended stay or a monitored bed, whatever was planned.</div>';
+    (also ? '<div style="font-size:12.5px;margin-top:8px;padding:8px 10px;border-left:3px solid var(--amber);background:var(--amber-soft)">' + also + '</div>' : '') ;
 }
 if (document.getElementById('posar-result')) { calcPosar(); }
 /* OS-MRS — Obesity Surgery Mortality Risk Score (DeMaria 2007; SOBA 2015 Table 4) */
